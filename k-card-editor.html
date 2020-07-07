@@ -8,63 +8,68 @@
   <!-- 複数のページを作成することを考慮してbodyタグにIDをつける -->
   <body id = "k-card-editor">
     <!-- contentクラスでカードのサイズを規程する -->
+    <form action = "#">
     <div class = "content">
-      <!-- カードのレイアウトをside-barとmainに２分割する -->
-      <div class = "main">
-        <table>
-          <thead>
-            <tr>
-              <!-- カードの1段目の箇所にindexと連番が入力できるようにする -->
-              <th class = "text"><input type = "text" placeholder = "見出し" class = "index" >
-                <select>
-                  <option name = 1>1</option>
-                  <option name = 2>2</option>
-                  <option name = 3>3</option>
-                  <option name = 4>4</option>
-                  <option name = 5>5</option> 
-                </select>
-                /
-                <select>
-                  <option name = 1>1</option>
-                  <option name = 2>2</option>
-                  <option name = 3>3</option>
-                  <option name = 4>4</option>
-                  <option name = 5>5</option> 
-                </select>
-              </th>
-            </tr>  
-            <!-- カードの2段目の箇所にカードのタイトル名が入力できるようにする -->
-            <tr>
-              <th><input type = "text" colspan = 2 class = "title" placeholder = "タイトル名"></th>
-            </tr>      
-          </thead>
-          <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
-          <tbody>
-            <tr class = "blank-column"></tr>
-            <tr>
-              <td>
-                <textarea  class = "main-text" placeholder = "引用文・気付き"></textarea>
-              </td>
-            </tr> 
-          </tbody>
-          <tfoot>
-            <tr class = "blank-colun"></tr>
-            <tr>
-              <td><input type = "text" placeholder = "著者" class = "author"></td>
-            </tr>
-            <tr>
-              <td class = "book"><input type = "text" placeholder = "書名" class = "book-title"><input type = "number" class = "page" >P</td>
-            </tr>
-            <tr class = "blank-column"></tr>
-          </tfoot> 
-        </table>
+        <!-- カードのレイアウトをside-barとmainに２分割する -->
+        <div class = "main">
+          <table>
+            <thead>
+              <tr>
+                <!-- カードの1段目の箇所にindexと連番が入力できるようにする -->
+                <th class = "text"><input type = "text" placeholder = "見出し" class = "index" >
+                  <select>
+                    <option name = 1>1</option>
+                    <option name = 2>2</option>
+                    <option name = 3>3</option>
+                    <option name = 4>4</option>
+                    <option name = 5>5</option> 
+                  </select>
+                  /
+                  <select>
+                    <option name = 1>1</option>
+                    <option name = 2>2</option>
+                    <option name = 3>3</option>
+                    <option name = 4>4</option>
+                    <option name = 5>5</option> 
+                  </select>
+                </th>
+              </tr>  
+              <!-- カードの2段目の箇所にカードのタイトル名が入力できるようにする -->
+              <tr>
+                <th><input type = "text" colspan = 2 class = "title" placeholder = "タイトル名"></th>
+              </tr>      
+            </thead>
+            <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
+            <tbody>
+              <tr class = "blank-column"></tr>
+              <tr>
+                <td>
+                  <textarea  class = "main-text" placeholder = "引用文・気付き"></textarea>
+                </td>
+              </tr> 
+            </tbody>
+            <tfoot>
+              <tr class = "blank-colun"></tr>
+              <tr>
+                <td><input type = "text" placeholder = "著者" class = "author"></td>
+              </tr>
+              <tr>
+                <td class = "book"><input type = "text" placeholder = "書名" class = "book-title"><input type = "number" class = "page" >P</td>
+              </tr>
+              <tr class = "blank-column"></tr>
+            </tfoot> 
+          </table>
+        </div>
+        <aside class = "side-bar">
+          <div class = "blank"></div>
+          <input type = date class = "date">
+        </aside> 
       </div>
-      <aside class = "side-bar">
-        <div class = "blank"></div>
-        <input type = date class = "date">
-      </aside> 
+    </form>
+    <div>
+      <input type = "submit" value = "送信" id = "submit-button">
     </div>
   </body>
 </html>
     
-<!-- https://github.com/orange-rody/k-card-editor.git -->
+    <!-- https://github.com/orange-rody/k-card-editor.git -->

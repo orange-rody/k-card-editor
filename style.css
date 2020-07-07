@@ -7,7 +7,7 @@
 .content {
   width: 728px;
   height: 512px;
-  margin: 0 auto; 
+  margin: 50px auto; 
   background-color: aliceblue;
 }
 
@@ -45,6 +45,7 @@ table {
   width: 132px;
   height: 36px;
   top: 180px;
+  font-size: 12px;
 }
 
 thead tr th .index{
@@ -196,4 +197,36 @@ tfoot td .book-title {
 table {
   border-spacing: 0;
   border-collapse: collapse;
+}
+
+#submit-button {
+  display: block;
+  width: 80px;
+  height:50px;
+  margin: 0 auto;
+  background-color: dodgerblue;
+  color: #fff;
+  font-family: sans-serif;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  box-shadow: mediumblue 0px 3px;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+
+#submit-button:active {
+  transform: translateY(3px);
+  box-shadow: none;
+  border: none;
+  outline: 0;
+}
+
+#submit-button:focus {
+  outline: 0;
+  opacity: 1;
+}
+
+#submit-button:hover {
+  opacity: 0.8;
 }
