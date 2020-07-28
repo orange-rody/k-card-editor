@@ -6,37 +6,22 @@
     <link rel = "stylesheet" href = "style.css">
   </head>
   <!-- 複数のページを作成することを考慮してbodyタグにIDをつける -->
-  <body id = "k-card-editor">
+  <body id = "edittingPage">
     <!-- contentクラスでカードのサイズを規程する -->
-    <form action = "#">
+    <form id="k-card-editor" name='k-card-editor'>
     <div class = "content">
         <!-- カードのレイアウトをside-barとmainに２分割する -->
         <div class = "main">
           <table>
             <thead>
               <tr>
-                <!-- カードの1段目の箇所にindexと連番が入力できるようにする -->
-                <th class = "text"><input type = "text" placeholder = "見出し" class = "index" >
-                  <select>
-                    <option name = 1>1</option>
-                    <option name = 2>2</option>
-                    <option name = 3>3</option>
-                    <option name = 4>4</option>
-                    <option name = 5>5</option> 
-                  </select>
-                  /
-                  <select>
-                    <option name = 1>1</option>
-                    <option name = 2>2</option>
-                    <option name = 3>3</option>
-                    <option name = 4>4</option>
-                    <option name = 5>5</option> 
-                  </select>
+                <!-- カードの1段目の箇所にtitleと連番が入力できるようにする -->
+                <th class = "text"><input type = "text" placeholder = "タイトル" class = "title" name="title">                 
                 </th>
               </tr>  
-              <!-- カードの2段目の箇所にカードのタイトル名が入力できるようにする -->
+              <!-- カードの2段目の箇所にカードのリード文が入力できるようにする -->
               <tr>
-                <th><input type = "text" colspan = 2 class = "title" placeholder = "タイトル名"></th>
+                <th><input type = "leadSentence" colspan = 2 class = "title" name = "leadSentence" placeholder = "リード文"></th>
               </tr>      
             </thead>
             <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
@@ -44,17 +29,18 @@
               <tr class = "blank-column"></tr>
               <tr>
                 <td>
-                  <textarea  class = "main-text" placeholder = "引用文・気付き"></textarea>
-                </td>
+                  <textarea  class = "main-text" placeholder = "引用文・気付き" name = "mainText"></textarea>
+                </td>                
               </tr> 
             </tbody>
             <tfoot>
               <tr class = "blank-colun"></tr>
               <tr>
-                <td><input type = "text" placeholder = "著者" class = "author"></td>
+                <td><input type = "text" placeholder = "著者" class = "author" name = "author"></td>
               </tr>
               <tr>
-                <td class = "book"><input type = "text" placeholder = "書名" class = "book-title"><input type = "number" class = "page" >P</td>
+                <td class = "book"><input type = "text" placeholder = "書名" class = "book-title" name = "bookTitle">
+                P.<input type = "number" class = "pages" name="pages"></td>
               </tr>
               <tr class = "blank-column"></tr>
             </tfoot> 
@@ -62,14 +48,40 @@
         </div>
         <aside class = "side-bar">
           <div class = "blank"></div>
-          <input type = date class = "date">
+          <input type = date class = "writing-date" name="writingDate">
         </aside> 
       </div>
+      <div>
+        <input type = "submit" value = "送信" id = "submit-button">
+      </div>
     </form>
-    <div>
-      <input type = "submit" value = "送信" id = "submit-button">
-    </div>
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <!-- Previously loaded Firebase SDKs -->    
+    <script>
+      // TODO: Replace the following with your app's Firebase project configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAsdSNJ-pd_XlM2zQLD9D_tMC_fZWqaBuo",
+        authDomain: "k-card-editor.firebaseapp.com",
+        databaseURL: "https://k-card-editor.firebaseio.com",
+        projectId: "k-card-editor",
+        storageBucket: "k-card-editor.appspot.com",
+        messagingSenderId: "900874596960",
+        appId: "1:900874596960:web:43b32eeda2e10340210905",
+        measurementId: "G-4MPPMBCVF0"
+      };
+  
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src = "js/kCardEditorTest1.js"></script>
   </body>
 </html>
     
-    <!-- https://github.com/orange-rody/k-card-editor.git -->
+  

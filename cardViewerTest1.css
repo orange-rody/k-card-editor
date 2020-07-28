@@ -8,6 +8,7 @@ body {
   background-repeat: repeat;
   background-size: cover;
   background-attachment: fixed;
+  color:#333;
 }
 
 #mainCenter {
@@ -18,9 +19,18 @@ body {
 #cardViewer {
   width: 728px;
   height: 512px;
-  margin: 80px auto;
+  margin: 80px auto 0;
   border:1px solid #00ced1;
-  background-color: #f0ffff;
+  background-image: url("./k-card-image\(Edited\).png");
+  background-position: center top;
+  background-size: cover;
+}
+
+#cardStatus {
+  width: 728px;
+  height: 100px;
+  margin: 0 auto;
+  display: flex;
 }
 
 #cardMainArea {
@@ -30,11 +40,12 @@ body {
 }
 
 #cardSideArea {
-  margin: 96px 10px 0px 10px;
+  margin: 105px 10px 0px 10px;
   width: 112px;
   height: 512px;
   overflow-wrap: break-word;
 }
+
 
 #title:before {
   content:'-';
@@ -43,9 +54,10 @@ body {
   content:'-';
 }
 #title {
-  height: 48px;
-  line-height: 48px;
+  height: 50px;
+  line-height: 50px;
   margin: 0 20px;
+  overflow: ellipsis;
 }
 
 #leadSentence {
@@ -54,23 +66,77 @@ body {
   margin: 0 10px;
   font-size: 18px;
   line-height: 48px;
+  overflow: hidden;
 }
 
 #mainText {
-  height: 244px;
-  margin: 10px 20px 10px 10px;
+  height: 300px;
+  margin: 0px 20px 0px 10px;
   font-size: 18px;
+  line-height: 38px;
+  overflow: hidden;
 }
 
 
 
-#author, #bookTitle, #pages {
-  list-style: none;
-  margin: 10px 20px 10px 10px;
+#author {
+  margin: 14px 20px 10px 10px;
   font-size: 18px;
 }
+
+#author::after {
+  content: "　著";
+}
+
+
+#bookTitle {
+  margin: 0px 20px 10px 0px;
+  font-size: 18px;
+}
+
+#bookTitle::before {
+  content: "『";
+}
+
+#bookTitle::after {
+  content: "』";
+}
+
+#pages {
+  font-size: 16px;
+  margin: 4px 20px 10px 0px;
+}
+
+#pages::before {
+  content: "P.";
+}
+
+#bookInfo {
+  display:flex;
+  margin: 0;
+  padding: 0;
+}
+
+
 
 #postedDate {
-  font-size: 15px;
+  font-size: 13px;
   list-style: none;
 }
+
+#bookmarkUserCount::before {
+  content: "⭐️";
+}
+
+#bookmarkUserCount {
+  width: 60px;
+}
+
+#comments::before {
+  content: "💬";
+}
+
+#comments {
+  width: 60px;
+}
+
