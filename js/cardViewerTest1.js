@@ -11,6 +11,7 @@ function renderCard(doc){
   let cardStatus = document.createElement('div');
   let bookInfo = document.createElement('div');
   
+  
 
   let title = document.createElement('p');
   let leadSentence = document.createElement('p');
@@ -22,6 +23,7 @@ function renderCard(doc){
   let postedDate = document.createElement('li');
   let bookmarkUserCount = document.createElement('p');
   let comments = document.createElement('p');
+
 
   let time = doc.data().postedDate.toDate();
   const year = time.getFullYear();
@@ -38,6 +40,8 @@ function renderCard(doc){
   postedDate.textContent = output;
   bookmarkUserCount.textContent = doc.data().bookmarkUserCount;
   comments.textContent = doc.data().comments;
+
+  
 
   cardViewer.setAttribute('id','cardViewer');
   cardMainArea.setAttribute('id','cardMainArea');
@@ -56,8 +60,6 @@ function renderCard(doc){
   comments.setAttribute('id','comments');
   
   
-
-
   cardMainArea.appendChild(title);
   cardMainArea.appendChild(leadSentence);
   cardMainArea.appendChild(mainText);
@@ -74,6 +76,7 @@ function renderCard(doc){
   cardStatus.appendChild(bookmarkUserCount);
   cardStatus.appendChild(comments);
   
+  
   mainCenter.appendChild(cardStatus);
 }
 
@@ -86,3 +89,15 @@ db.collection('k-card').get().then((snapshot)=>{
     renderCard(doc);
   });
 });
+
+function renderEdit(){
+  title.textContent = "";
+  leadSentence.textContent = "";
+  mainText.textContent = "";
+  author.textContent = "";
+  bookTitle.textContent = "";
+  pages.textContent = "";
+  postedDate.textContent = "";
+  bookmarkUserCount.textContent = "";
+  comments.textContent = "";
+}
