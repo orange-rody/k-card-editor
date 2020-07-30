@@ -29,7 +29,17 @@ form.addEventListener('submit',(e)=>{
   form.writingDate.value = '';
 });
 
+function renderRevision(doc){
+  const docRef = db.collection('k-card').doc(docId);
+  docRef.get().then((doc)=>{
+    if(doc){
+      console.log(doc.data());
+     }
+   });
+}
+
+
 let searchParam = location.search.substring(1).split('=');
 let docId = searchParam[1]
-console.log(docId);
+renderRevision(docId);
     
