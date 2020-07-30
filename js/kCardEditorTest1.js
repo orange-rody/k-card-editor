@@ -29,4 +29,7 @@ form.addEventListener('submit',(e)=>{
   form.writingDate.value = '';
 });
 
+let searchParam = location.search.substring(1).split('=');
+let docId = searchParam[1]
+console.log(docId);
     

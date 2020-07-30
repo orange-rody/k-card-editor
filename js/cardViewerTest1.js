@@ -62,7 +62,7 @@ function renderCard(doc){
   bookmarkUserCount.setAttribute('id','bookmarkUserCount');
   comments.setAttribute('id','comments');
   revisionButton.setAttribute('id','revisionButton');
-  
+
   let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
   revisionButton.setAttribute('href',editorURL);
   
