@@ -30,10 +30,25 @@ form.addEventListener('submit',(e)=>{
 });
 
 function renderRevision(doc){
-  const docRef = db.collection('k-card').doc(docId);
+  let docRef = db.collection('k-card').doc(docId);
+ 
+  let titleRevision = form.title;
+  let leadSentenceRevision = form.leadSentence;
+  let mainTextRevision = form.mainText;
+  let authorRevision = form.author;
+  let bookTitleRevision = form.bookTitle;
+  let pagesRevision = form.pages;
+
   docRef.get().then((doc)=>{
     if(doc){
       console.log(doc.data());
+      
+      titleRevision.setAttribute('value',doc.data().title);
+      leadSentenceRevision.setAttribute('value',doc.data().leadSentence);
+      mainTextRevision.textContent = doc.data().mainText;
+      authorRevision.setAttribute('value',doc.data().author);
+      bookTitleRevision.setAttribute('value',doc.data().bookTitle);
+      pagesRevision.setAttribute('value',doc.data().pages);
      }
    });
 }
