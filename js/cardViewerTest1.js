@@ -12,6 +12,7 @@ function renderCard(doc){
   let bookInfo = document.createElement('div');
   
   
+  
 
   let title = document.createElement('p');
   let leadSentence = document.createElement('p');
@@ -23,6 +24,7 @@ function renderCard(doc){
   let postedDate = document.createElement('li');
   let bookmarkUserCount = document.createElement('p');
   let comments = document.createElement('p');
+  let revisionButton = document.createElement('a');
 
 
   let time = doc.data().postedDate.toDate();
@@ -40,6 +42,7 @@ function renderCard(doc){
   postedDate.textContent = output;
   bookmarkUserCount.textContent = doc.data().bookmarkUserCount;
   comments.textContent = doc.data().comments;
+  revisionButton.textContent = '編集';
 
   
 
@@ -58,7 +61,12 @@ function renderCard(doc){
   cardStatus.setAttribute('id','cardStatus');
   bookmarkUserCount.setAttribute('id','bookmarkUserCount');
   comments.setAttribute('id','comments');
+  revisionButton.setAttribute('id','revisionButton');
   
+  let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
+  revisionButton.setAttribute('href',editorURL);
+  
+
   
   cardMainArea.appendChild(title);
   cardMainArea.appendChild(leadSentence);
@@ -75,29 +83,34 @@ function renderCard(doc){
 
   cardStatus.appendChild(bookmarkUserCount);
   cardStatus.appendChild(comments);
+  cardStatus.appendChild(revisionButton);
   
   
   mainCenter.appendChild(cardStatus);
+
+  
+
+  
+
+
+  // cardStatus.appendChild(cardId);
+  // revisionButton.addEventListener('click',()=>{
+  //   db.collection('k-card').get().then(()=>{
+  //     cardId.textContent=doc.id;
+  //   });
+  // });
+
 }
+
+
 
 // function renderTimestamp(doc){
 //   let timeStamp = document.getElementById('main').insertAdjacentHTML('beforebegin',)
 // }
+
 
 db.collection('k-card').get().then((snapshot)=>{
   snapshot.docs.forEach((doc)=>{
     renderCard(doc);
   });
 });
-
-function renderEdit(){
-  title.textContent = "";
-  leadSentence.textContent = "";
-  mainText.textContent = "";
-  author.textContent = "";
-  bookTitle.textContent = "";
-  pages.textContent = "";
-  postedDate.textContent = "";
-  bookmarkUserCount.textContent = "";
-  comments.textContent = "";
-}

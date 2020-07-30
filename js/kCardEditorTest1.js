@@ -1,7 +1,7 @@
 //変数formに#k-card-editorのid属性のform要素を代入する。
 const form = document.querySelector("#k-card-editor");
 const db = firebase.firestore();
-const revisionButton = document.querySelector("#revision-button");
+
 
 
 //変数formにaddEventListenerを持たせる
@@ -29,11 +29,4 @@ form.addEventListener('submit',(e)=>{
   form.writingDate.value = '';
 });
 
-revisionButton.addEventListener('click',(e)=>{
-  db.collection("k-card").get().then((snapshot)=>{
-    snapshot.docs.forEach((doc)=>{
-      console.log(doc.id);
-    });
-  })
-})
     
