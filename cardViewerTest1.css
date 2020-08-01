@@ -2,7 +2,7 @@ ul {
   padding: 0;
 }
 body { 
-  font-size: 20px;
+  font-size: 30px;
   background-image: url("../k-card-editor/pawel-czerwinski-OG44d93iNJk-unsplash.jpg");
   background-position: center top;
   background-repeat: repeat;
@@ -17,8 +17,8 @@ body {
 }
 
 #cardViewer {
-  width: 728px;
-  height: 512px;
+  width: 914px;
+  height: 644px;
   margin: 80px auto 0;
   border:1px solid #00ced1;
   background-image: url("./k-card-image\(Edited\).png");
@@ -27,8 +27,8 @@ body {
 }
 
 #cardStatus {
-  width: 728px;
-  height: 20px;
+  width: 910px;
+  height: 80px;
   margin: 0 auto 80px;
   display: flex;
 }
@@ -61,54 +61,55 @@ body {
 }
 
 #cardMainArea {
-  width: 592px;
-  height: 512px;
+  width: 740px;
+  height: 640px;
   float: right;
 }
 
 #cardSideArea {
-  margin: 105px 10px 0px 10px;
-  width: 112px;
-  height: 512px;
+  margin: 135px 5px 0px 0px;
+  width: 175px;
+  height: 640x;
   overflow-wrap: break-word;
 }
 
 
 #title:before {
-  content:'-';
+  content:'- ';
 }
 #title:after {
-  content:'-';
+  content:' -';
 }
 #title {
-  height: 50px;
+  height: 40px;
   line-height: 50px;
-  margin: 0 20px;
+  margin: 15px 20px 0;
   overflow: ellipsis;
+  font-size: 32px;
 }
 
 #leadSentence {
-  height: 48px;
-  width: 572px;
-  margin: 0 10px;
-  font-size: 18px;
-  line-height: 48px;
+  height: 60px;
+  width: 715px;
+  margin: 5px 20px;
+  font-size: 30px;
+  line-height: 60px;
   overflow: hidden;
 }
 
 #mainText {
-  height: 300px;
-  margin: 0px 20px 0px 10px;
-  font-size: 18px;
-  line-height: 38px;
+  height: 280px;
+  margin: 50px 20px 65px 20px;
+  font-size: 30px;
+  line-height: 48px;
   overflow: hidden;
 }
 
 
 
 #author {
-  margin: 14px 20px 10px 10px;
-  font-size: 18px;
+  margin: 0px 20px 10px 20px;
+  font-size: 25px;
 }
 
 #author::after {
@@ -117,8 +118,8 @@ body {
 
 
 #bookTitle {
-  margin: 0px 20px 10px 0px;
-  font-size: 18px;
+  margin: 0px 0px 10px 10px;
+  font-size: 25px;
 }
 
 #bookTitle::before {
@@ -130,8 +131,8 @@ body {
 }
 
 #pages {
-  font-size: 16px;
-  margin: 4px 20px 10px 0px;
+  font-size: 22px;
+  margin: 4px 0px 10px 0px;
 }
 
 #pages::before {
@@ -147,7 +148,8 @@ body {
 
 
 #postedDate {
-  font-size: 13px;
+  margin-left:20px;
+  font-size: 22px;
   list-style: none;
 }
 
@@ -179,7 +181,7 @@ body {
   border-radius: 10px;
   outline: 0;
   border: none;
-  font-size: 15px;
+  font-size: 20px;
   margin-top: 15px;
   margin-left: 40px;
   box-shadow: 0px 3px steelblue;

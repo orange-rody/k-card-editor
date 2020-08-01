@@ -31,7 +31,7 @@ function renderCard(doc){
   const year = time.getFullYear();
   const month = time.getMonth();
   const date = time.getDate();
-  const output = `${year}年${month+1}月${date}日`;
+  const output = `${year}/${month+1}/${date}`;
 
   title.textContent = doc.data().title;
   leadSentence.textContent = doc.data().leadSentence;
