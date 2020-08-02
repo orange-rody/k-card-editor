@@ -1,6 +1,28 @@
 'use strict';
 const db = firebase.firestore();
 
+function renderUser(doc){
+  let mainCenter = document.querySelector('.main-center');
+  let userViewer = document.createElement('div');
+
+  let userName = document.createElement('p');
+  let userProfile = document.createElement('p');
+
+  userName.textContent = doc.data().name;
+  userProfile.textContent = doc.data().profile;
+
+  userViewer.setAttribute('id','userViewer');
+  userName.setAttribute('id','userName');
+  userProfile.setAttribute('id','UserProfile');
+
+  userViewer.appendChild(userName);
+  userViewer.appendChild(userProfile);
+  mainCenter.appendChild(userViewer);
+  console.log(userViewer);
+
+}
+
+
 function renderCard(doc){
 
   let mainCenter = document.querySelector('.main-center');
@@ -11,9 +33,6 @@ function renderCard(doc){
   let cardStatus = document.createElement('div');
   let bookInfo = document.createElement('div');
   
-  
-  
-
   let title = document.createElement('p');
   let leadSentence = document.createElement('p');
   let mainText = document.createElement('p');
@@ -108,6 +127,11 @@ function renderCard(doc){
 //   let timeStamp = document.getElementById('main').insertAdjacentHTML('beforebegin',)
 // }
 
+db.collection('user').get().then((snapshot)=>{
+  snapshot.docs.forEach((doc)=>{
+    renderUser(doc);
+  });
+});
 
 db.collection('k-card').get().then((snapshot)=>{
   snapshot.docs.forEach((doc)=>{

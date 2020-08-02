@@ -2,13 +2,13 @@ ul {
   padding: 0;
 }
 body { 
-  font-size: 30px;
-  background-image: url("../k-card-editor/pawel-czerwinski-OG44d93iNJk-unsplash.jpg");
+  font-size: 25px;
+  background-color: #335;
   background-position: center top;
   background-repeat: repeat;
   background-size: cover;
   background-attachment: fixed;
-  color:#333;
+  color:#000;
 }
 
 #mainCenter {
@@ -16,11 +16,22 @@ body {
   margin: 0 auto;
 }
 
+#userViewer {
+  width: 914px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+#userName:after {
+  content: "のカードボックス"
+}
+
 #cardViewer {
   width: 914px;
   height: 644px;
   margin: 80px auto 0;
   border:1px solid #00ced1;
+  border-radius: 10px;
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
@@ -29,13 +40,12 @@ body {
 #cardStatus {
   width: 910px;
   height: 80px;
-  margin: 0 auto 80px;
+  margin: 5px auto 80px;
   display: flex;
 }
 
 #edittingButton {
   width: 80px;
-  margin-top: 20px;
   margin-left: 50px;
   height: 40px;
   color: #fff;
@@ -85,14 +95,14 @@ body {
   line-height: 50px;
   margin: 15px 20px 0;
   overflow: ellipsis;
-  font-size: 32px;
+  font-size: 30px;
 }
 
 #leadSentence {
   height: 60px;
   width: 715px;
   margin: 5px 20px;
-  font-size: 30px;
+  font-size: 25px;
   line-height: 60px;
   overflow: hidden;
 }
@@ -100,7 +110,7 @@ body {
 #mainText {
   height: 280px;
   margin: 50px 20px 65px 20px;
-  font-size: 30px;
+  font-size: 25px;
   line-height: 48px;
   overflow: hidden;
 }
@@ -154,19 +164,25 @@ body {
 }
 
 #bookmarkUserCount::before {
-  content: "⭐️";
+  content: "⭐ ";
+  
 }
 
 #bookmarkUserCount {
+  margin-top: 15px;
   width: 60px;
+  color: #fff;
 }
 
 #comments::before {
-  content: "💬";
+  content: "💬 ";
 }
 
 #comments {
   width: 60px;
+  margin-top: 15px;
+  margin-left: 20px;
+  color: #fff;
 }
 
 #revisionButton {
@@ -176,7 +192,7 @@ body {
   text-decoration: none;
   width: 80px;
   height: 35px;
-  background-color: deepskyblue;
+  background-color: royalblue;
   color: #fff;
   border-radius: 10px;
   outline: 0;
