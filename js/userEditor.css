@@ -1,0 +1,108 @@
+#userEditor {
+  background-image: url("../stil-vdaJJbls3xE-unsplash.jpg");
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+}
+
+#overlay {
+  margin: 0;
+  background-image: linear-gradient(90deg,rgba(0,0,0,1)20%,rgba(0,0,0,.8)20%);
+  background-size: 2px 2px;
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding:0;
+  z-index: 2;
+}
+
+#form {
+  width: 800px;
+  left: 50%;
+  transform: translate(-40%);
+  position: absolute;
+  z-index: 2;
+  color: #fff;
+  margin-top: 150px;
+}
+
+h1 {
+  font-family: 'Homemade Apple', cursive;
+  font-weight: normal;
+  font-size: 40px;
+  width: 100%;
+  margin: 0 auto;
+}
+h3 {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+#onamae {
+  margin-top: 30px;
+}
+
+#name,#email {
+  width: 80%;
+  height: 2rem;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+#profile {
+  width: 80%;
+  height: 150px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+#submitButton {
+  font-size: 15px;
+  padding: 10px;
+  border: none;
+  background-color: #3366ff;
+  color: #fff;
+  border-radius: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+#submitButton:focus {
+  outline: none;
+}
+
+#submitButton:hover {
+  cursor: pointer;
+  background-color: #3399ff;
+}
+
+#cancelButton {
+  font-size: 15px;
+  margin-left: 30px;
+  padding: 14px;
+  border: none;
+  background-color: #ff6600;
+  color: #fff;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+#cancelButton:hover {
+  background-color: #ff9900;
+}

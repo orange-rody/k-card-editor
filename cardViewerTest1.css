@@ -9,6 +9,34 @@ body {
   background-size: cover;
   background-attachment: fixed;
   color:#000;
+  margin: 0;
+}
+
+.userImage {
+  width: 960px;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.backgroundImage {
+  width: 960px;
+  height: 200px;
+  margin: 0 auto;
+  background-position: center;
+  background-size: cover;
+}
+
+.userIcon {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  border-radius: 100%;
+  background-position: center;
+  background-size: cover;
+  top: 130px;
+  left: 5%;
+  border: 5px solid #335;
 }
 
 #mainCenter {
