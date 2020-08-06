@@ -1,5 +1,5 @@
 #userEditor {
-  background-image: url("../stil-vdaJJbls3xE-unsplash.jpg");
+  background-image: url("../scott-graham-OQMZwNd3ThU-unsplash.jpg");
   background-position: center top;
   background-size: cover;
   background-attachment: fixed;
@@ -7,6 +7,7 @@
   padding: 0;
   margin: 0;
   font-size: 20px;
+  height: 100vh;
 }
 
 .content {
@@ -18,9 +19,8 @@
 
 #overlay {
   margin: 0;
-  background-image: linear-gradient(90deg,rgba(0,0,0,1)20%,rgba(0,0,0,.8)20%);
+  background-image: linear-gradient(90deg,rgba(0,0,0,.7)20%,rgba(0,0,0,.3)20%);
   background-size: 2px 2px;
-  opacity: 0.3;
   position: absolute;
   top: 0;
   left: 0;
@@ -34,10 +34,9 @@
   width: 800px;
   left: 50%;
   transform: translate(-40%);
-  position: absolute;
   z-index: 2;
   color: #fff;
-  margin-top: 150px;
+  position: relative;
 }
 
 h1 {
@@ -46,14 +45,37 @@ h1 {
   font-size: 40px;
   width: 100%;
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 h3 {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
-#onamae {
-  margin-top: 30px;
+#nameText {
+  margin-top: 80px;
+}
+
+#nameText::before {
+  content: "必須";
+  font-size: 12px;
+  padding: 5px;
+  background-color: #ff3311;
+  border-radius: 5px;
+  color: #fff;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+#emailText::before {
+  content: "必須";
+  font-size: 12px;
+  padding: 5px;
+  background-color: #ff3311;
+  border-radius: 5px;
+  color: #fff;
+  vertical-align: middle;
+  margin-right: 5px;
 }
 
 #name,#email {
@@ -63,6 +85,7 @@ h3 {
   border: none;
   border-radius: 5px;
 }
+
 
 #profile {
   width: 80%;
@@ -106,3 +129,14 @@ h3 {
 #cancelButton:hover {
   background-color: #ff9900;
 }
+
+#anounce {
+  position: absolute;
+  top: 200px;
+  background-color: #00bb85;
+  color: #fff;
+  padding: 5px 10px; 
+  border-radius: 20px;
+  opacity: 1;
+}
+
