@@ -2,6 +2,8 @@
 const form = document.querySelector("#k-card-editor");
 const db = firebase.firestore();
 
+
+
 let searchParam = location.search.substring(1).split('=');
 let docId = searchParam[1]
 console.log(docId);

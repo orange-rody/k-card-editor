@@ -7,6 +7,11 @@ let userIconReference = strage.child('Hiroki/IMG_0117.JPG');
 let backgroundImage = document.querySelector('.backgroundImage');
 let userIcon = document.querySelector('.userIcon');
 
+const y = window.scrollY;
+window.addEventListener('scroll',()=>{
+  console.log(y);
+})
+
 backgroundImage.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FPretty%20Lights.jpg?alt=media&token=e528206e-2692-4ddf-b7f9-289d9e2ff299)";
 
 userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
