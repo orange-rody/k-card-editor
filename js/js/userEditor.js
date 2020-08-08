@@ -30,9 +30,7 @@ form.email.required = true;
     //console.logで確認
     anounce.animate([{opacity: '0'},{opacity: '1'}],500);
     setTimeout(
-      function(){anounce.animate([{opacity: '1'},{opacity: '0'}],500)},5000);
-    anounce.remove();
-    
-    
+      function(){anounce.animate([{opacity: '1'},{opacity: '0'}],500);
+                 anounce.remove()},5000);
   });
   

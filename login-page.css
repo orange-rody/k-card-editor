@@ -1,0 +1,188 @@
+#login-page {
+  background-image: url(./joanna-kosinska-1_CMoFsPfso-unsplash.jpg);
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+}
+
+#appTitle {
+  position: absolute;
+  font-size: 50px;
+  top: 100px;
+  left: 500px;
+  display: block;
+  transition: all 2s;
+  opacity: 0;
+  color: #333;
+}
+
+#appTitle.state-show {
+  transform: translate(30px,0px);
+  opacity: 1;
+}
+
+#loginForm {
+  position: absolute;
+  top: 250px;
+  left: 600px;
+  opacity: 0;
+  transition: all 3s;
+}
+
+#loginForm.state-show2 {
+  opacity: 1;
+}
+
+#loginButton,#makeAccountButton {
+  font-family: 'M PLUS 1p', sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  outline: 0;
+  border: none;
+  width: 200px;
+  text-align: center;
+  margin-bottom: 25px;
+  background-color: #0A888C;
+  color: #fff;
+}
+
+#loginButton {
+  margin-top: 50px;
+}
+
+#loginButton:hover {
+  cursor: pointer;
+  background-color:  #0dbec4;
+}
+
+#loginButton:active {
+  cursor: pointer;
+  background-color:  #fff;
+  color: #0A888C
+}
+
+#makeAccountButton:hover {
+  cursor: pointer;
+  background-color:  #0dbec4;
+}
+
+#makeAccountButton:active {
+  cursor: pointer;
+  background-color:  #fff;
+  color: #0A888C;
+}
+
+
+.inputTitle {
+  float: left;
+}
+
+.inputForm {
+  margin-left: 200px;
+  margin-bottom: 30px;
+}
+
+.inputForm input {
+  width: 400px;
+  height: 30px;
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.makeAccountWindow {
+  width: 1000px;
+  height: 600px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background-image: url(./kelly-sikkema-vtKc7BpJ-vU-unsplash.jpg);
+  background-size: cover;
+  border-radius: 10px;
+  display: flex;
+  top: 50px;
+  box-shadow: 5px 5px 50px #402A01;
+  animation: fadeInAnimation 1500ms ease-in-out;
+}
+
+.hideWindow {
+  animation: fadeOutAnimation 1000ms ease-in-out;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    top: 60px;
+  }
+  100% {
+    opacity: 1;
+    top: 50px;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    top: 60px;
+  }
+}
+
+.userRegisterForm {
+  font-size: 22px;
+  font-family: 'M PLUS 1p', sans-serif;
+  width: 450px;
+  color: #fff;
+  top: 100px;
+  left: 400px;
+  position: absolute;
+}
+
+.emailText, .passwordText {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 30px;
+  color: #fff;
+}
+
+#email, #password{
+  width: 400px;
+  height: 30px;
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.emailText::before, .passwordText::before {
+  content: "必須";
+  font-size: 10px;
+  padding: 3px 5px;
+  background-color: #ff3311;
+  border-radius: 5px;
+  color: #fff;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.submitButton {
+  width: 100px;
+  height: 40px;
+  font-family: 'M PLUS 1p', sans-serif;
+  margin: 80px 0 0 93px;
+}
+
+.submitButton:hover {
+  cursor: pointer;
+}
+
+#cancelButton {
+  width: 120px;
+  height: 40px;
+  font-family: 'M PLUS 1p', sans-serif;
+  margin: 0px 0 0 80px;
+}
+
+#cancelButton:hover {
+  cursor: pointer;
+}

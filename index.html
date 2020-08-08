@@ -2,15 +2,23 @@
 <html lang = "ja">
   <head>
     <meta charset = "UTF-8">
-    <title>ログインページ</title>
-    <link rel = "stylesheet" href = "login.css">
+    <title>K-Card-Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@300&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel = "stylesheet" href = "login-page.css">
   </head>
   <body id = "login-page">
-    <h1>Firebase Test</h1>
-    <form>
-      MAIL: <input type = "email" id = "user-mail"><br>
-      PASS: <input type = "password" id = "user-pass"><br>
-      <button id = "my-button" type = "button">setNewValue</button><br>
+    <h1 id = "appTitle">K-Card-Editor</h1>
+    <form id = "loginForm">
+      <dt class = "inputTitle">MAIL</dt>
+      <dd class = "inputForm">
+        <input type = "email" id = "loginEmail" name = "loginEmail" required>
+      </dd>
+      <dt class = "inputTitle">PASSWORD</dt>
+      <dd class = "inputForm">
+        <input type = "password" id = "loginPass" name = "loginPass" required>
+      </dd>
+      <input type = "submit" button id = "loginButton" name = "loginButton" value = "ログインする">
       <button id = "makeAccountButton">アカウントを作成する</button>
     </form>
     
