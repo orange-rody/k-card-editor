@@ -18,6 +18,26 @@ e.preventDefault();
   auth.signInWithEmailAndPassword(email, password).then(cred =>{
     console.log(cred);
     location.href = 'cardViewerTest1.html';
+  }).catch((error)=>{
+    console.log('ログイン失敗:',error);
+    if(error.code === 'auth/user-not-found'){
+      const loginAlert = document.createElement('div');
+      loginAlert.setAttribute('id','loginAlert');
+      loginAlert.innerHTML = `
+        <h3 id = "alertTitle">Caution!</h3>
+        <p id = alertSentence>入力した情報が間違っているか、登録されているアカウントが存在しないようです。<br>メールアドレスとパスワードを確認するか、「登録する」ボタンからアカウントの登録を行ってください。</p>
+        <input type = "button" id = "closeAlertButton" name = "closeAlertButton" value = "閉じる"> 
+      `;
+      document.body.appendChild(loginAlert);
+      console.log(loginAlert);
+      document.querySelector('#closeAlertButton').addEventListener('click',() => {
+        loginAlert.classList.add('hideAlert');
+        console.log(loginAlert);
+        setTimeout(() => {
+          document.body.removeChild(loginAlert);
+        },900);
+      });
+    }
   })
 })
 
@@ -84,5 +104,7 @@ e.preventDefault();
       setTimeout(()=>{
         document.body.removeChild(makeAccountWindow);},900);
       });
+
+
   }
 

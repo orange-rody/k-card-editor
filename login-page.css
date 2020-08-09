@@ -191,3 +191,45 @@ a {
 #cancelButton:hover {
   cursor: pointer;
 }
+
+#loginAlert {
+  width: 600px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background-image: url(./p0217_m.png);
+  background-size: cover;
+  border-radius: 10px;
+  top: 50px;
+  box-shadow: 5px 5px 50px #402A01;
+  animation: fadeInAnimation 1500ms ease-in-out;
+  padding: 20px;
+  transition: 1s all ease-in-out;
+}
+
+#alertTitle {
+  color: #fff;
+  margin: 10px 0;
+}
+
+
+#alertSentence {
+  font-size: 15px;
+  color: #fff;
+  font-family: 'M PLUS 1p', sans-serif;
+}
+
+#closeAlertButton {
+  font-size: 15px;
+  color: url(./p0217_m.png);
+  font-family: 'M PLUS 1p', sans-serif;
+  float: right;
+  border-radius: 10px;
+  padding: 5px 10px;
+  border: none;
+}
+
+.hideAlert {
+  opacity: 0;
+}
