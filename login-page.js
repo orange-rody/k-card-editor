@@ -9,18 +9,16 @@ setTimeout(function(){
   loginForm.classList.add('state-show2');
 },1000);
 
-//signupする
+//loginする
 loginForm.addEventListener('submit',(e)=>{
 e.preventDefault();
 //ユーザーの情報をGETする
-  const email = loginForm['signupEmail'].value;
-  const password = loginForm['signupPass'].value;
-  console.log(email, password);
-
-//sign up the user
-  // auth.createUserWithEmailAndPassword(email,password).then(cred => {
-  //   console.log(cred);
-  // });
+  const email = loginForm['loginEmail'].value;
+  const password = loginForm['loginPass'].value;
+  auth.signInWithEmailAndPassword(email, password).then(cred =>{
+    console.log(cred);
+    location.href = 'cardViewerTest1.html';
+  })
 })
 
 

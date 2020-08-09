@@ -7,6 +7,10 @@
   font-size: 30px;
 }
 
+a {
+  text-decoration: none;
+}
+
 #appTitle {
   position: absolute;
   font-size: 50px;
@@ -50,6 +54,7 @@
 
 #loginButton {
   margin-top: 50px;
+  margin-right: 50px;
 }
 
 #loginButton:hover {

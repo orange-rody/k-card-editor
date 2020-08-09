@@ -1,4 +1,16 @@
 'use strict';
+
+const auth = firebase.auth();
+
+//listen for auth status change
+auth.onAuthStateChanged(user => {
+  if(user){
+    console.log('user logged in: ',user)
+  } else {
+    console.log('user logged out')
+  }
+})
+
 const db = firebase.firestore();
 const strage = firebase.storage().ref();
 let backgroundReference = strage.child('Hiroki/Pretty Lights.jpg');
@@ -7,10 +19,10 @@ let userIconReference = strage.child('Hiroki/IMG_0117.JPG');
 let backgroundImage = document.querySelector('.backgroundImage');
 let userIcon = document.querySelector('.userIcon');
 
-const y = window.scrollY;
-window.addEventListener('scroll',()=>{
-  console.log(y);
-})
+// const y = window.scrollY;
+// window.addEventListener('scroll',()=>{
+//   console.log(y);
+// })
 
 backgroundImage.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FPretty%20Lights.jpg?alt=media&token=e528206e-2692-4ddf-b7f9-289d9e2ff299)";
 
