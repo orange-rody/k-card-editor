@@ -43,9 +43,7 @@ function edittingCard(docId){
           });
           form.title.value = "";
           form.leadSentence.value = "";
-          form.title.value = '';
-          form.leadSentence.value = '';
-          form.mainText.value = '';
+          form.mainText.textContent = '';
           form.author.value = '';
           form.bookTitle.value = '';
           form.pages.value = '';
@@ -63,17 +61,17 @@ function edittingCard(docId){
             author: form.author.value,
             bookTitle: form.bookTitle.value,
             pages: form.pages.value,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            postedDate: firebase.firestore.FieldValue.serverTimestamp()
         });
+        // 提出後、formに入力されている文字列を消去する。
+              form.leadSentence.value = "";
+              form.title.value = '';
+              form.leadSentence.value = '';
+              form.mainText.value = '';
+              form.author.value = '';
+              form.bookTitle.value = '';
+              form.pages.value = '';
       });
-    // 提出後、formに入力されている文字列を消去する。
-    form.title.value = '';
-    form.leadSentence.value = '';
-    form.mainText.value = '';
-    form.author.value = '';
-    form.bookTitle.value = '';
-    form.pages.value = '';
-    form.writingDate.value = '';
   };
 }
 edittingCard(docId);

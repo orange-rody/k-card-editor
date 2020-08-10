@@ -3,6 +3,7 @@ const auth = firebase.auth();
 
 const appTitle = document.getElementById('appTitle');
 const loginForm = document.getElementById('loginForm');
+const loginBUtton = document.getElementById('loginButton');
 console.log(appTitle);
 setTimeout(function(){
   appTitle.classList.add('state-show');
@@ -12,6 +13,8 @@ setTimeout(function(){
 //loginする
 loginForm.addEventListener('submit',(e)=>{
 e.preventDefault();
+loginButton.value = "送信中";
+loginButton.style.backgroundColor = "tomato";
 //ユーザーの情報をGETする
   const email = loginForm['loginEmail'].value;
   const password = loginForm['loginPass'].value;
