@@ -2,8 +2,8 @@
 
 const auth = firebase.auth();
 
-// currentUIDを宣言
-let currentUID = null;
+// currentUidを宣言
+let currentUid = null;
 
 const db = firebase.firestore();
 
@@ -23,15 +23,10 @@ userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/
 //listen for auth status change
 auth.onAuthStateChanged(user => {
   if(user){
-    console.log('user logged in: ',user);
-    currentUID = user.uid;
-    console.log(currentUID);
-    db.collection('user').doc(currentUID).set({
-      name: user.email,
-      profile: "ここにあなたのプロフィールを書いてください。今、興味があるものや、趣味、ちょっとした特技、なんでも結構です。あまり硬くなりすぎず、楽しんで書いてみましょう。",
-      uid: currentUID
-    });
-    db.collection('user').doc(currentUID).get().then((snapshot)=>{
+    console.log('ユーザーのメールアドレス: ',user.mail);
+    currentUid = user.uid;
+    console.log('ユーザーのID：',currentUid);
+    db.collection('user').doc(currentUid).get().then((snapshot)=>{
         renderUser(snapshot);
     });
     function renderUser(doc){
@@ -157,7 +152,7 @@ auth.onAuthStateChanged(user => {
   } else {
     console.log('ログインしていません');
   }
-});
+})
 
 
 // const y = window.scrollY;
