@@ -138,7 +138,9 @@ auth.onAuthStateChanged(user => {
     
     }
     
-    db.collection('k-card').get().then((snapshot)=>{
+    db.collection('k-card').where("uid", "==", currentUid)
+    .get()
+    .then((snapshot)=>{
       snapshot.docs.forEach((doc)=>{
         renderCard(doc);
       });
