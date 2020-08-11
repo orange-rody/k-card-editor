@@ -2,25 +2,54 @@
 <html lang = "ja">
   <head>
     <meta charset = "utf-8">
+    <title>K-Card-Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@300&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel = "stylesheet" href = "login-page.css">
     <link rel='stylesheet' href = "cardViewerTest1.css">
-
+    <script src="https://kit.fontawesome.com/2b69526b77.js" crossorigin="anonymous"></script>
   </head>
-  <body>
-    <div class = "userImage">
-      <div class = "backgroundImage"></div>
-      <div class = "userIcon"></div>
-      <a href = "k-card-editor.html">カード作成画面</a>
-    </div>
-    <div class = "main-center"></div>
-    
-    
-    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
-    <script>
-      FontAwesomeConfig = { searchPseudoElements: true};
-    </script>
+  <body id = "k-card-editer【viewer】">
+    <div id = "wrap">
+      <div id = "main">
+        <header>
+          <div class = "userImage">
+            <div class = "userIcon"></div>
+          </div>
+          <div id = "box-title">
+          </div>
+          <input type = "button" id = "profileEditButton">
+        </header>
+        <div id = "userProfile">
+          <p id = "profileSentence"></p>
+          <p id = "favorite"></p>
+          <p id = "postedCardNumber"></p>
+          <small class = "notice">下にスクロールでカードをチェック!!</small>
+        </div>
+        <div class = "main-center"></div>
+      </div>
+      <aside class = "sidebar">
+        <div class = "sidebar__item sidebar__item__fixed">
+          <div class = "logo">
+            <h3 id = "k-card-editor-logo">K-Card-Editor</h3>
+          </div>
+          <i class = "fas fa-home" id = "homeIcon"></i>
+          <label for = "homeIcon">Home</label>
+          <i class = "fas fa-pen-alt" id = "writeIcon"></i>
+          <label for = "writeIcon">Write</label>
+          <i class = "fas fa-search" id = "searchIcon"></i>
+          <label for = "searchIcon">Search</label>
+          <i class = "fas fa-sign-out-alt" id = "logoutIcon"></i>
+          <label for = "logoutIcon">Logout</label>
+        </div>
+      </aside>
+      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
+      <script>
+        FontAwesomeConfig = { searchPseudoElements: true};
+        </script>
     <!-- Previously loaded Firebase SDKs -->    
     <script>
       // TODO: Replace the following with your app's Firebase project configuration
@@ -34,10 +63,11 @@
         appId: "1:900874596960:web:43b32eeda2e10340210905",
         measurementId: "G-4MPPMBCVF0"
       };
-  
+      
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
-    </script>
+      </script>
     <script src = "js/cardViewerTest1.js"></script>
+    </div>
   </body>
-</html>
+  </html>

@@ -7,15 +7,12 @@ let currentUid = null;
 
 const db = firebase.firestore();
 
-const strage = firebase.storage().ref();
-let backgroundReference = strage.child('Hiroki/Pretty Lights.jpg');
-let userIconReference = strage.child('Hiroki/IMG_0117.JPG');
+// const strage = firebase.storage().ref();
+// let userIconReference = strage.child('Hiroki/IMG_0117.JPG');
 
-let backgroundImage = document.querySelector('.backgroundImage');
 let userIcon = document.querySelector('.userIcon');
 
 //styleプロパティでbackgroundImageに任意の画像を設定する
-backgroundImage.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FPretty%20Lights.jpg?alt=media&token=e528206e-2692-4ddf-b7f9-289d9e2ff299)";
 
 userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
 
@@ -30,23 +27,16 @@ auth.onAuthStateChanged(user => {
         renderUser(snapshot);
     });
     function renderUser(doc){
-      let mainCenter = document.querySelector('.main-center');
-      let userViewer = document.createElement('div');
+      
+      let boxTitle = document.querySelector('#box-title');
+      let profileSentence = document.querySelector('#profileSentence');
+      let favorite = document.querySelector('#favorite');
+      let postedCardNumber = document.querySelector('#postedCardNumber');
     
-      let userName = document.createElement('p');
-      let userProfile = document.createElement('p');
-    
-      userName.textContent = doc.data().name;
-      userProfile.textContent = doc.data().profile;
-    
-      userViewer.setAttribute('id','userViewer');
-      userName.setAttribute('id','userName');
-      userProfile.setAttribute('id','UserProfile');
-    
-      userViewer.appendChild(userName);
-      userViewer.appendChild(userProfile);
-      mainCenter.appendChild(userViewer);
-      console.log(userViewer);
+      boxTitle.textContent = doc.data().name;
+      profileSentence.textContent = doc.data().profile;
+      favorite.textContent = doc.data().favorite;
+      postedCardNumber = doc.data().postedCardNumber;
     }
     function renderCard(doc){
 

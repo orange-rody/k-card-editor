@@ -3,55 +3,64 @@ ul {
 }
 body { 
   font-size: 25px;
-  background-color: #335;
+  background-image: url(./p0468_m.jpeg);
   background-position: center top;
   background-repeat: repeat;
   background-size: cover;
   background-attachment: fixed;
-  color:#000;
+  color:#555;
   margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'M PLUS 1p', sans-serif;
 }
 
-.userImage {
-  width: 960px;
-  height: 300px;
-  margin: 0 auto;
+#wrap {
+  width: 900px;
+  background-image: url(./p0026_m.jpeg);
+}
+
+header {
+  width: 700px;
+  margin: 0px auto;
   position: relative;
 }
 
-.backgroundImage {
-  width: 960px;
-  height: 200px;
-  margin: 0 auto;
-  background-position: center;
-  background-size: cover;
+.userImage {
+  width: 220px;
+  height: 250px;
+  padding: 15px  15px 80px 15px;
+  border-radius: 5px;
+  position: relative;
+  top : 50px;
+  left: -20px;
+  background-image: url(./p0435_m.jpeg);
+  box-shadow: 2px 2px 100px #bbb;
+  transform: rotate(-10deg);
 }
 
 .userIcon {
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  border-radius: 100%;
-  background-position: center;
   background-size: cover;
-  top: 130px;
-  left: 5%;
-  border: 5px solid #335;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
 }
 
-#mainCenter {
+
+#box-title {
   width: 960px;
-  margin: 0 auto;
+  height: 80px;
+  color: #555;
+  z-index: 4;
+  position: relative;
+  left: 300px;
+  top: -200px;
+  font-family: 'M PLUS 1p', sans-serif;
+  font-size: 30px;
 }
 
-#userViewer {
-  width: 914px;
-  margin: 0 auto;
-  color: #fff;
-}
-
-#userName:after {
-  content: "のカードボックス"
+#box-title:after {
+  content: "のカードボックス";
+  font-size: 30px;
 }
 
 #cardViewer {
