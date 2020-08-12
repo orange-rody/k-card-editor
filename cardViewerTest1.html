@@ -2,47 +2,56 @@
 <html lang = "ja">
   <head>
     <meta charset = "utf-8">
+    <meta name = "viewport" content ="width = device-width, initial-scale = 1">
     <title>K-Card-Viewer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@300&family=Montserrat:wght@300&display=swap" rel="stylesheet">
-    <link rel = "stylesheet" href = "login-page.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap" rel="stylesheet">
     <link rel='stylesheet' href = "cardViewerTest1.css">
     <script src="https://kit.fontawesome.com/2b69526b77.js" crossorigin="anonymous"></script>
   </head>
-  <body id = "k-card-editer【viewer】">
-    <div id = "wrap">
+  <body id = "viewer">
+    <div id = "content">
       <div id = "main">
         <header>
-          <div class = "userImage">
-            <div class = "userIcon"></div>
-          </div>
+          <div id = "userImage"></div>
+          <div id = "userIcon"></div>
           <div id = "box-title">
+            <p id = "box-text"></p>
           </div>
-          <input type = "button" id = "profileEditButton">
         </header>
         <div id = "userProfile">
+          <input type = "button" id = "profileEditButton">
           <p id = "profileSentence"></p>
-          <p id = "favorite"></p>
+          <p id = "favorite">好きな本・最近読んだ本<br></p>
           <p id = "postedCardNumber"></p>
-          <small class = "notice">下にスクロールでカードをチェック!!</small>
+          <small id = "notice">下にスクロールでカードをチェック!!</small>
         </div>
         <div class = "main-center"></div>
       </div>
-      <aside class = "sidebar">
+      <aside id = "sidebar">
         <div class = "sidebar__item sidebar__item__fixed">
-          <div class = "logo">
+          <div id = "logo">
             <h3 id = "k-card-editor-logo">K-Card-Editor</h3>
           </div>
-          <i class = "fas fa-home" id = "homeIcon"></i>
-          <label for = "homeIcon">Home</label>
-          <i class = "fas fa-pen-alt" id = "writeIcon"></i>
-          <label for = "writeIcon">Write</label>
-          <i class = "fas fa-search" id = "searchIcon"></i>
-          <label for = "searchIcon">Search</label>
-          <i class = "fas fa-sign-out-alt" id = "logoutIcon"></i>
-          <label for = "logoutIcon">Logout</label>
+          <li>
+            <i class = "fas fa-home" id = "homeIcon"></i>
+            <label for = "homeIcon">Home</label>
+          </li>
+          <li>
+            <i class = "fas fa-pen-alt" id = "writeIcon"></i>
+            <label for = "writeIcon">Write</label>
+          </li>
+          <li>
+            <i class = "fas fa-search" id = "searchIcon"></i>
+            <label for = "searchIcon">Search</label>
+          </li>
+          <li>
+            <i class = "fas fa-sign-out-alt" id = "logoutIcon"></i>
+            <label for = "logoutIcon">Logout</label>
+          </li>
         </div>
       </aside>
+      <aside id = "column"></aside>
       <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
       <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>

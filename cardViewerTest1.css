@@ -1,68 +1,176 @@
-ul {
-  padding: 0;
-}
-body { 
-  font-size: 25px;
-  background-image: url(./p0468_m.jpeg);
-  background-position: center top;
-  background-repeat: repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  color:#555;
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  font-family: 'M PLUS 1p', sans-serif;
+html {
+  width: 100vw;
 }
 
-#wrap {
-  width: 900px;
+body { 
+  width: 100vw;
+  font-size: 25px;
+  color:#555;
+  margin: 0;
+  font-family: 'Noto Serif JP', serif;
+}
+
+#content {
+  width: 100vw;
+  display: flex;
   background-image: url(./p0026_m.jpeg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+#main {
+  flex: 75vw;
+  order: 2;
+}
+#sidebar {
+  flex: 15vw;
+  order: 1;
+  background-image: url(./p0033_m.jpeg);
+  background-position: center top;
+  background-attachment: fixed;
+  color: #fff;
+  display: flex;
+  box-shadow: 1px 1px 2px #2A5E8C;
+}
+#sidebar li {
+  list-style: none;
+  flex-flow: column;
+  margin: 0 0 40px 20px;
+  padding: 5px 20px 5px 20px;
+  border-radius: 40px;
+  color: #c6cccc;
+  width: 130px;
+  transition: all 0.1s ease-in-out;
+}
+
+#sidebar li:hover {
+  background-color: #3f6f98;
+}
+
+#sidebar li:active {
+  color: #fff;
+  text-shadow: 20px 20px 80px #fff;
+}
+
+#sidebar li i {
+  margin-right: 10px;
+}
+
+#k-card-editor-logo {
+  font-family: 'Bilbo Swash Caps', cursive;
+  color: #fff;
+  transform: rotate(-25deg);
+  margin: 50px 0px 80px 20px;
+  border-bottom: dashed 2px #fff;
+}
+
+#column {
+  flex: 10vw;
+  order: 3;
+  background-image: url(./p0004_m.jpeg);
+  box-shadow: -1px -1px 2px #c6cccc;
 }
 
 header {
-  width: 700px;
-  margin: 0px auto;
-  position: relative;
-}
-
-.userImage {
-  width: 220px;
-  height: 250px;
-  padding: 15px  15px 80px 15px;
-  border-radius: 5px;
-  position: relative;
-  top : 50px;
-  left: -20px;
-  background-image: url(./p0435_m.jpeg);
-  box-shadow: 2px 2px 100px #bbb;
-  transform: rotate(-10deg);
-}
-
-.userIcon {
-  background-size: cover;
   width: 100%;
-  height: 100%;
-  border-radius: 5px;
+  margin: 0px;
+  position: relative;
+  display: flex;
 }
 
+#userIcon {
+width: 300px;
+height: 200px;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+}
+
+#userImage {
+  background-image: url(./janko-ferlic-sfL_QOnmy00-unsplash.jpg);
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 #box-title {
-  width: 960px;
-  height: 80px;
-  color: #555;
+  width: calc(100% - 300px - 200px);
+  height: 200px;
+  color: #fff;
   z-index: 4;
   position: relative;
-  left: 300px;
-  top: -200px;
-  font-family: 'M PLUS 1p', sans-serif;
-  font-size: 30px;
+  font-family: 'Noto Serif JP', serif;
+  background-image: url(./retrosupply-jLwVAUtLOAQ-unsplash\ \(1\).jpg);
+  background-size: cover;
+  background-position: center bottom;
 }
 
-#box-title:after {
+#box-text {
+  width: 300px;
+  position: absolute;
+  font-size: 50px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  margin: 0;
+}
+
+#box-text:after {
   content: "のカードボックス";
-  font-size: 30px;
+  font-size: 20px;
 }
 
+#profileSentence {
+  position: absolute;
+  top: 3%;
+  width: 40vw;
+  height: 30vh;
+  padding: 70px;
+  font-size: 20px;
+  border-top-left-radius: 400px 300px;
+  border-top-right-radius: 300px 250px;
+  border-bottom-right-radius: 350px 300px;
+  border-bottom-left-radius: 400px 300px;
+  background-image: url(./joanna-kosinska-1_CMoFsPfso-unsplash.jpg);
+  margin: 0 0 0 20px;
+  background-position: right top;
+  box-shadow: 2px 2px 50px #ccc;
+  transform: rotate(-4deg);
+}
+
+#userProfile {
+  position: relative;
+  height: 800px;
+}
+
+#favorite {
+  position: absolute;
+  top: 25%;
+  right: -10%;
+  width: 30vw;
+  height: 20vh;
+  padding: 60px;
+  font-size: 20px;
+  border-top-left-radius: 400px 300px;
+  border-top-right-radius: 240px 200px;
+  border-bottom-right-radius: 500px 300px;
+  border-bottom-left-radius: 300px 200px;
+  background-image: url(./p0146_m.jpeg);
+  margin-right: 40px;
+  background-position: right top;
+  box-shadow: 1px 1px 50px #aaa;
+  transform: rotate(4deg);
+  color: #fff;
+}
+
+#notice {
+  position: absolute;
+  top: 60%;
+  left: 5%;
+  font-size: 20px;
+}
 #cardViewer {
   width: 914px;
   height: 644px;
@@ -250,3 +358,4 @@ header {
   top: 3px;
   opacity: 1;
 }
+

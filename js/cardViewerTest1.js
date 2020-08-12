@@ -10,12 +10,10 @@ const db = firebase.firestore();
 // const strage = firebase.storage().ref();
 // let userIconReference = strage.child('Hiroki/IMG_0117.JPG');
 
-let userIcon = document.querySelector('.userIcon');
-
+let userIcon = document.querySelector('#userIcon');
 //styleプロパティでbackgroundImageに任意の画像を設定する
 
 userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
-
 
 //listen for auth status change
 auth.onAuthStateChanged(user => {
@@ -28,14 +26,14 @@ auth.onAuthStateChanged(user => {
     });
     function renderUser(doc){
       
-      let boxTitle = document.querySelector('#box-title');
+      let boxText = document.querySelector('#box-text');
       let profileSentence = document.querySelector('#profileSentence');
       let favorite = document.querySelector('#favorite');
       let postedCardNumber = document.querySelector('#postedCardNumber');
     
-      boxTitle.textContent = doc.data().name;
+      boxText.textContent = doc.data().name;
       profileSentence.textContent = doc.data().profile;
-      favorite.textContent = doc.data().favorite;
+      favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
       postedCardNumber = doc.data().postedCardNumber;
     }
     function renderCard(doc){
