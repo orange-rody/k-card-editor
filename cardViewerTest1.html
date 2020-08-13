@@ -16,15 +16,20 @@
           <div id = "userImage"></div>
           <div id = "userIcon"></div>
           <div id = "box-title">
-            <p id = "box-text"></p>
+            <div id = "title-mask">
+              <p id = "box-text"></p>
+            </div>
           </div>
+          <input type = "button" id = "profileEditButton" value = "プロフィールを編集する">
         </header>
         <div id = "userProfile">
-          <input type = "button" id = "profileEditButton">
           <p id = "profileSentence"></p>
-          <p id = "favorite">好きな本・最近読んだ本<br></p>
-          <p id = "postedCardNumber"></p>
-          <small id = "notice">下にスクロールでカードをチェック!!</small>
+          <div id = "favorite">
+            <p>好きな本・最近読んだ本</p>
+            <p id = "favoriteBook"></p>
+          </div>  
+          <p id = "postedCardNumber">7</p>
+          <small id = "notice"><i class="fas fa-arrow-circle-down"></i>下にスクロールでカードをチェック!!</small>
         </div>
         <div class = "main-center"></div>
       </div>
