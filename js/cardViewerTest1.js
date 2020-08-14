@@ -132,6 +132,17 @@ auth.onAuthStateChanged(user => {
       snapshot.docs.forEach((doc)=>{
         renderCard(doc);
       });
+    }).then(()=>{
+      const cardPosition = document.querySelector('#cardViewer').offsetTop;
+      const scrollY = () => {
+        if($(window).scrollTop() >= 100){
+          $('html').animate({scrollTop:cardPosition},600);
+        }else if($(window).scrollTop() <= ){
+          $('html').animate({scrollTop:0},600);
+        }
+      };
+
+      $(window).on('scroll',scrollY);
     });
 
     db.collection("k-card").onSnapshot((snapshot)=>{
@@ -145,8 +156,7 @@ auth.onAuthStateChanged(user => {
 })
 
 
-// const y = window.scrollY;
-// window.addEventListener('scroll',()=>{
-//   console.log(y);
-// })
 
+function scrollToCard(){
+  window.scrollTo
+}

@@ -73,7 +73,7 @@ body {
 }
 
 header {
-  width: 100%;
+  width: 75vw;
   margin: 0px;
   position: relative;
   display: flex;
@@ -96,7 +96,7 @@ background-size: cover;
 }
 
 #box-title {
-  width: calc(100% - 20vw - 20vw);
+  width: 35vw;
   height: 25vh;
   color: #fff;
   z-index: 4;
@@ -204,7 +204,6 @@ background-size: cover;
   font-size: 150px;
   font-family: 'Bilbo Swash Caps', cursive;
   /* border-bottom: dashed 2px #555; */
-  text-shadow: 1px 1px #aaa;
   transform: rotate(-5deg);
   font-weight: bold;
   color: #2A5E8C;
@@ -225,14 +224,15 @@ background-size: cover;
 }
 
 #cardViewer {
-  width: 914px;
-  height: 644px;
-  margin: 80px auto 0;
+  width: 728px;
+  height: 512px;
+  margin-left: 120px;
+  margin-top: 150px;
   border:1px solid #00ced1;
-  border-radius: 10px;
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
+  box-shadow: 2px 2px 5px #ccc;
 }
 
 #cardStatus {
@@ -269,18 +269,16 @@ background-size: cover;
 }
 
 #cardMainArea {
-  width: 740px;
-  height: 640px;
+  width: 592px;
+  height: 512px;
   float: right;
 }
 
 #cardSideArea {
-  margin: 135px 5px 0px 0px;
-  width: 175px;
-  height: 640x;
+  width: 140px;
+  height: 512px;
   overflow-wrap: break-word;
 }
-
 
 #title:before {
   content:'- ';
@@ -289,35 +287,36 @@ background-size: cover;
   content:' -';
 }
 #title {
-  height: 40px;
-  line-height: 50px;
-  margin: 15px 20px 0;
+  height: 38px;
+  margin: 10px 0 0 20px;
   overflow: ellipsis;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 #leadSentence {
-  height: 60px;
-  width: 715px;
-  margin: 5px 20px;
-  font-size: 25px;
-  line-height: 60px;
+  height: 38px;
+  margin: 5px 0 0 20px;
+  font-size: 22px;
   overflow: hidden;
 }
 
 #mainText {
-  height: 280px;
-  margin: 50px 20px 65px 20px;
-  font-size: 25px;
-  line-height: 48px;
+  height: 232px;
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 38px;
+  margin-top: 7%;
+  font-size: 22px;
   overflow: hidden;
+  line-height: 38px;
 }
 
 
 
 #author {
-  margin: 0px 20px 10px 20px;
-  font-size: 25px;
+  margin: 0px 10px 0px 20px;
+  line-height: 38px;
+  font-size: 22px;
 }
 
 #author::after {
@@ -326,8 +325,9 @@ background-size: cover;
 
 
 #bookTitle {
-  margin: 0px 0px 10px 10px;
-  font-size: 25px;
+  margin: 0px 0px 0px 10px;
+  line-height: 35px;
+  font-size: 22px;
 }
 
 #bookTitle::before {
@@ -340,7 +340,8 @@ background-size: cover;
 
 #pages {
   font-size: 22px;
-  margin: 4px 0px 10px 0px;
+  line-height: 35px;
+  margin: 0px 0px 0px 10px;
 }
 
 #pages::before {
@@ -356,7 +357,7 @@ background-size: cover;
 
 
 #postedDate {
-  margin-left:20px;
+  margin: 140px 0 0 15px;
   font-size: 22px;
   list-style: none;
 }
