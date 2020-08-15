@@ -54,7 +54,11 @@ auth.onAuthStateChanged(user => {
       let bookTitle = document.createElement('p');
       let pages = document.createElement('p');
       let postedDate = document.createElement('li');
-      let bookmarkUserCount = document.createElement('p');
+      let bookmarkUserCount = document.createElement('div');
+      let printButton = document.createElement('div');
+      let postedUserIcon = document.createElement('div');
+      let postedUserName = document.createElement('p');
+      
       let comments = document.createElement('p');
       let revisionButton = document.createElement('a');
     
@@ -72,12 +76,17 @@ auth.onAuthStateChanged(user => {
       bookTitle.textContent = doc.data().bookTitle;
       pages.textContent = doc.data().pages;
       postedDate.textContent = output;
-      bookmarkUserCount.textContent = doc.data().bookmarkUserCount;
-      comments.textContent = doc.data().comments;
-      revisionButton.textContent = '編集';
-    
-      
-    
+      bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
+      bookmarkUserCount.insertAdjacentHTML('beforeend',doc.data().bookmarkUserCount);
+      comments.innerHTML = '<i class="fas fa-comment"></i> '
+      comments.insertAdjacentHTML('beforeend',doc.data().comments);
+      revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
+      printButton.innerHTML = '<i class="fas fa-print"></i>'
+      postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
+      let postedUserUid = doc.data().uid;
+      console.log(postedUserUid);
+   
+
       cardViewer.setAttribute('id','cardViewer');
       cardMainArea.setAttribute('id','cardMainArea');
       cardSideArea.setAttribute('id','cardSideArea');
@@ -94,6 +103,9 @@ auth.onAuthStateChanged(user => {
       bookmarkUserCount.setAttribute('id','bookmarkUserCount');
       comments.setAttribute('id','comments');
       revisionButton.setAttribute('id','revisionButton');
+      printButton.setAttribute('id','printButton');
+      postedUserIcon.setAttribute('id','postedUserIcon');
+      postedUserName.setAttribute('id','postedUserName');
     
       let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
       revisionButton.setAttribute('href',editorURL);
@@ -114,6 +126,9 @@ auth.onAuthStateChanged(user => {
       cardStatus.appendChild(bookmarkUserCount);
       cardStatus.appendChild(comments);
       cardStatus.appendChild(revisionButton);
+      cardStatus.appendChild(printButton);
+      cardStatus.appendChild(postedUserIcon);
+      cardStatus.appendChild(postedUserName);
     
       mainCenter.appendChild(cardStatus);
 
@@ -132,17 +147,18 @@ auth.onAuthStateChanged(user => {
       snapshot.docs.forEach((doc)=>{
         renderCard(doc);
       });
-    }).then(()=>{
-      const cardPosition = document.querySelector('#cardViewer').offsetTop;
-      const scrollY = () => {
-        if($(window).scrollTop() >= 100){
-          $('html').animate({scrollTop:cardPosition},600);
-        }else if($(window).scrollTop() <= ){
-          $('html').animate({scrollTop:0},600);
-        }
-      };
+    
+    // }).then(()=>{
+    //   const cardPosition = document.querySelector('#cardViewer').offsetTop;
+    //   const scrollY = () => {
+    //     if($(window).scrollTop() >= 100){
+    //       $('html').animate({scrollTop:cardPosition},600);
+    //     }else if($(window).scrollTop() = -100 ){
+    //       $('html').animate({scrollTop:0},600);
+    //     }
+    //   };
 
-      $(window).on('scroll',scrollY);
+    //   $(window).on('scroll',scrollY);
     });
 
     db.collection("k-card").onSnapshot((snapshot)=>{

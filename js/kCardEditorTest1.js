@@ -1,16 +1,25 @@
 //変数formに#k-card-editorのid属性のform要素を代入する。
 const form = document.querySelector("#k-card-editor");
 const auth = firebase.auth();
+
+//dbはfirebaseのfirestoreのツールのことですよ。と宣言する。
 const db = firebase.firestore();
+//ログインしないと、編集できないようにonAuthStateChangedでログインしている
+// ユーザーかどうか確かめるようにしている
 auth.onAuthStateChanged((user) => {
   if(user){
     let currentUid = user.uid;
+    let userRef = db.collection('user').doc(currentUid);
+    let userName = userRef.get().then((doc) => {
+                            console.log(doc.data().name);
+                          });
+    console.log(typeof userName);
+    userName = userName.toString();
+    console.log(typeof userName);
+  
     let searchParam = location.search.substring(1).split('=');
-    let docId = searchParam[1]
-    console.log(docId);
-    
-    
-    
+    let docId = searchParam[1];
+
     let titleRevision = form.title;
     let leadSentenceRevision = form.leadSentence;
     let mainTextRevision = form.mainText;
@@ -42,7 +51,9 @@ auth.onAuthStateChanged((user) => {
               author: form.author.value,
               bookTitle: form.bookTitle.value,
               pages: form.pages.value,
-              postedDate: firebase.firestore.FieldValue.serverTimestamp()
+              postedDate: firebase.firestore.FieldValue.serverTimestamp(),
+              uid: currentUid,
+              postedUserName: userName,
             });
             form.title.value = "";
             form.leadSentence.value = "";
@@ -66,6 +77,7 @@ auth.onAuthStateChanged((user) => {
             pages: form.pages.value,
             postedDate: firebase.firestore.FieldValue.serverTimestamp(),
             uid: currentUid,
+            postedUserName: userName,
           });
           // 提出後、formに入力されている文字列を消去する。
           form.leadSentence.value = "";

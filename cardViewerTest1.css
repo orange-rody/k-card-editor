@@ -141,6 +141,7 @@ background-size: cover;
   bottom: -30%;
   z-index: 4;
   transition: all 0.2s ease-in-out;
+  font-family: 'Sawarabi Gothic', sans-serif;
 }
 
 #profileEditButton:hover {
@@ -152,6 +153,7 @@ background-size: cover;
   position: relative;
   height: 75vh;
   width: 75vw;
+  margin-bottom: 200px;
 }
 
 #profileSentence {
@@ -224,48 +226,16 @@ background-size: cover;
 }
 
 #cardViewer {
-  width: 728px;
-  height: 512px;
-  margin-left: 120px;
-  margin-top: 150px;
+  /* 京大式カードの幅182mm・高さ128pxを4.5倍したピクセル数 */
+  width: 819px;
+  height: 576px;
+  margin: 50px auto 0;
+  font-size: 25px;
   border:1px solid #00ced1;
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
-  box-shadow: 2px 2px 5px #ccc;
-}
-
-#cardStatus {
-  width: 910px;
-  height: 80px;
-  margin: 5px auto 80px;
-  display: flex;
-}
-
-#edittingButton {
-  width: 80px;
-  margin-left: 50px;
-  height: 40px;
-  color: #fff;
-  background-color: lightseagreen;
-  border-radius: 10px;
-  border: 0px;
-  box-shadow: 0 5px darkcyan;
-}
-
-#edittingButton:hover {
-  opacity: 0.8;
-}
-
-#edittingButton:active {
-  position: relative;
-  box-shadow: none;
-  top: 5px;
-  outline: 0;
-}
-
-#edittingButton:focus {
-  outline: 0;
+  box-shadow: 5px 5px 5px #ccc;
 }
 
 #cardMainArea {
@@ -362,45 +332,92 @@ background-size: cover;
   list-style: none;
 }
 
-#bookmarkUserCount::before {
-  content: "⭐ ";
-  
+i {
+  margin-right: 20px;
 }
 
 #bookmarkUserCount {
   margin-top: 15px;
-  width: 60px;
-  color: #fff;
-}
-
-#comments::before {
-  content: "💬 ";
+  width: 100px;
+  color: #555;
+  font-size: 30px;
+  font-family: 'Sawarabi Gothic', sans-serif;
 }
 
 #comments {
-  width: 60px;
+  width: 100px;
   margin-top: 15px;
   margin-left: 20px;
-  color: #fff;
+  font-size: 30px;
+  color: #555;
+  font-family: 'Sawarabi Gothic', sans-serif;
 }
 
-#revisionButton {
-  padding-top: 5px;
+#cardStatus {
+  /* 幅はカード全体の幅と同じ182mm✖️4.5のピクセル */
+  width: 750px;
+  height: 80px;
+  margin: 5px auto 80px;
+  display: flex;
+  font-size: 25px;
+}
+
+#edittingButton {
+  width: 80px;
+  margin-right: 200px;
+  height: 40px;
+  color: #fff;
+  background-color: lightseagreen;
+  border-radius: 10px;
+  border: 0px;
+  box-shadow: 0 5px darkcyan;
+}
+
+#edittingButton:hover {
+  opacity: 0.8;
+}
+
+#edittingButton:active {
+  position: relative;
+  box-shadow: none;
+  top: 5px;
+  outline: 0;
+}
+
+#edittingButton:focus {
+  outline: 0;
+}
+
+#revisionButton,#printButton{
   text-align: center;
   vertical-align: center;
   text-decoration: none;
   width: 80px;
   height: 35px;
-  background-color: royalblue;
+  background-color: #6c9edf;
   color: #fff;
   border-radius: 10px;
   outline: 0;
   border: none;
   font-size: 20px;
-  margin-top: 15px;
-  margin-left: 40px;
-  box-shadow: 0px 3px steelblue;
-  position: relative;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 50px;
+  box-shadow: 0px 3px #033F8C;
+}
+
+#postedUserIcon {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 100%;
+}
+
+#postedUserName {
+  width: 200px;
+  height: 100px;
+  font-size: 15px;
 }
 
 #revisionButton:hover {
