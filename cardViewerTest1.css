@@ -8,31 +8,44 @@ body {
   color:#555;
   margin: 0;
   font-family: 'Noto Serif JP', serif;
+  background-image: url(./p0004_m.jpeg);
+  background-attachment: fixed;
 }
 
 #content {
-  width: 100vw;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   display: flex;
-  background-image: url(./p0026_m.jpeg);
+  flex-flow: row-reverse;
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }
+
 #main {
-  flex: 75vw;
-  order: 2;
+  display: block;
+  width: 100%;
+  max-width: 1440px;
+  flex: 1 1 auto;
+  background-image: url(./p0026_m.jpeg);
+  box-shadow: -1px -1px 2px #c6cccc;
 }
+
 #sidebar {
-  flex: 15vw;
-  order: 1;
+  flex: 0 0 250px;
+  max-width: 250px;
   background-image: url(./p0033_m.jpeg);
   background-position: center top;
-  background-attachment: fixed;
   color: #fff;
-  display: flex;
   box-shadow: 1px 1px 2px #2A5E8C;
+  top: 0px;
+  position: sticky;
+  z-index: 1;
+  height: 100vh;
 }
+
 #sidebar li {
   list-style: none;
   flex-flow: column;
@@ -61,26 +74,21 @@ body {
   font-family: 'Bilbo Swash Caps', cursive;
   color: #fff;
   transform: rotate(-25deg);
+  width: 170px;
   margin: 50px 0px 80px 20px;
   border-bottom: dashed 2px #fff;
 }
 
-#column {
-  flex: 10vw;
-  order: 3;
-  background-image: url(./p0004_m.jpeg);
-  box-shadow: -1px -1px 2px #c6cccc;
-}
 
 header {
-  width: 75vw;
+  width: 100%;
   margin: 0px;
   position: relative;
   display: flex;
 }
 
 #userIcon {
-width: 20vw;
+width: 25%;
 height: 25vh;
 background-repeat: no-repeat;
 background-position: center center;
@@ -89,20 +97,20 @@ background-size: cover;
 
 #userImage {
   background-image: url(./janko-ferlic-sfL_QOnmy00-unsplash.jpg);
-  width: 20vw;
+  width: 25%;
   height: 25vh;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 #box-title {
-  width: 35vw;
+  background-image: url(./retrosupply-jLwVAUtLOAQ-unsplash.jpg);
+  width: 50%;
   height: 25vh;
   color: #fff;
   z-index: 4;
   position: relative;
   font-family: 'Noto Serif JP', serif;
-  background-image: url(./retrosupply-jLwVAUtLOAQ-unsplash\ \(1\).jpg);
   background-size: cover;
   background-position: center bottom;
 }
@@ -110,14 +118,15 @@ background-size: cover;
 #title-mask {
   width: 100%;
   height: 25vh;
+  position: relative;
   background-color: rgba(0,0,0,0.2);
 }
 
 #box-text {
-  width: 400px;
+  width: 55%;
   position: absolute;
   font-size: 60px;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
   margin: 0;
@@ -126,7 +135,6 @@ background-size: cover;
 #box-text:after {
   content: "のカードボックス";
   font-size: 25px;
-  vertical-align: middle;
 }
 
 #profileEditButton {
@@ -152,15 +160,15 @@ background-size: cover;
 #userProfile {
   position: relative;
   height: 75vh;
-  width: 75vw;
+  width: 100%;
   margin-bottom: 200px;
 }
 
 #profileSentence {
   position: absolute;
   text-shadow: 1px 1px #ccc;
-  top: 2%;
-  width: 40vw;
+  top: 5%;
+  width: 70%;
   height: 20vh;
   padding: 100px;
   font-size: 20px;
@@ -177,10 +185,9 @@ background-size: cover;
 
 #favorite {
   position: absolute;
-  font-size: 10px;
   top: 50%;
-  right: -8%;
-  width: 30vw;
+  right: 0%;
+  width: 40%;
   height: 20vh;
   padding: 60px;
   font-size: 18px;
@@ -235,19 +242,23 @@ background-size: cover;
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
-  box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 10px 10px 10px #ccc;
+  position: relative;
+  border-radius: 10px;
 }
 
 #cardMainArea {
-  width: 592px;
-  height: 512px;
+  width: 666px;
+  height: 576px;
   float: right;
 }
 
 #cardSideArea {
-  width: 140px;
-  height: 512px;
-  overflow-wrap: break-word;
+  position: absolute;
+  font-size: 25px;
+  list-style: none;
+  width: 154px;
+  height: 100%;
 }
 
 #title:before {
@@ -257,47 +268,53 @@ background-size: cover;
   content:' -';
 }
 #title {
-  height: 38px;
-  margin: 10px 0 0 20px;
+  height: 40px;
+  margin: 15px 0 0 20px;
   overflow: ellipsis;
   font-size: 25px;
 }
 
 #leadSentence {
-  height: 38px;
-  margin: 5px 0 0 20px;
-  font-size: 22px;
+  height: 40px;
+  margin: 10px 0 0 20px;
+  font-size: 25px;
   overflow: hidden;
 }
 
 #mainText {
-  height: 232px;
+  height: 263px;
   margin-left: 20px;
   margin-right: 10px;
   margin-bottom: 38px;
-  margin-top: 7%;
-  font-size: 22px;
+  margin-top: 46px;
+  font-size: 25px;
   overflow: hidden;
-  line-height: 38px;
+  line-height: 43px;
 }
 
-
+#bookInfo {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 43px;
+}
 
 #author {
   margin: 0px 10px 0px 20px;
-  line-height: 38px;
-  font-size: 22px;
+  width: 100%;
+  line-height: 43px;
+  font-size: 25px;
 }
 
 #author::after {
   content: "　著";
 }
 
-
 #bookTitle {
-  margin: 0px 0px 0px 10px;
+  margin: 5px 0px 0px 10px;
   line-height: 35px;
-  font-size: 22px;
+  font-size: 25px;
 }
 
 #bookTitle::before {
@@ -309,25 +326,17 @@ background-size: cover;
 }
 
 #pages {
-  font-size: 22px;
+  font-size: 25px;
   line-height: 35px;
-  margin: 0px 0px 0px 10px;
+  margin: 5px 0px 0px 10px;
 }
 
 #pages::before {
   content: "P.";
 }
 
-#bookInfo {
-  display:flex;
-  margin: 0;
-  padding: 0;
-}
-
-
-
 #postedDate {
-  margin: 140px 0 0 15px;
+  margin: 156px 0 0 15px;
   font-size: 22px;
   list-style: none;
 }
@@ -355,11 +364,12 @@ i {
 
 #cardStatus {
   /* 幅はカード全体の幅と同じ182mm✖️4.5のピクセル */
-  width: 750px;
+  width: 780px;
   height: 80px;
-  margin: 5px auto 80px;
+  margin: 5px auto 200px;
   display: flex;
   font-size: 25px;
+  position: relative;
 }
 
 #edittingButton {
@@ -384,7 +394,7 @@ i {
   outline: 0;
 }
 
-#edittingButton:focus {
+#edittingButton:focus ,#printButton:focus {
   outline: 0;
 }
 
@@ -407,24 +417,36 @@ i {
 }
 
 #postedUserIcon {
-  width: 100px;
-  height: 100px;
+  position: absolute;
+  width: 80px;
+  height: 80px;
   background-size: cover;
   background-position: center center;
   border-radius: 100%;
+  right: 0px;
+  top: 10px
 }
 
 #postedUserName {
-  width: 200px;
-  height: 100px;
+  margin-right: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-family: 'Sawarabi Gothic', sans-serif;
+  position: absolute;
+  right: 70px;
+  top: 10px;
+}
+#postedUserName::before {
+  content: "by ";
   font-size: 15px;
+  vertical-align: center;
 }
 
-#revisionButton:hover {
+#revisionButton:hover ,#printButton:hover {
   background-color: lightskyblue;
 }
 
-#revisionButton:active {
+#revisionButton:active, #printButton:active {
   box-shadow: none;
   top: 3px;
   opacity: 1;

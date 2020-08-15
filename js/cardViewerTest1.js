@@ -82,9 +82,8 @@ auth.onAuthStateChanged(user => {
       comments.insertAdjacentHTML('beforeend',doc.data().comments);
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
+      postedUserName.textContent = doc.data().postedUserName;
       postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
-      let postedUserUid = doc.data().uid;
-      console.log(postedUserUid);
    
 
       cardViewer.setAttribute('id','cardViewer');
@@ -104,8 +103,8 @@ auth.onAuthStateChanged(user => {
       comments.setAttribute('id','comments');
       revisionButton.setAttribute('id','revisionButton');
       printButton.setAttribute('id','printButton');
-      postedUserIcon.setAttribute('id','postedUserIcon');
       postedUserName.setAttribute('id','postedUserName');
+      postedUserIcon.setAttribute('id','postedUserIcon');
     
       let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
       revisionButton.setAttribute('href',editorURL);
@@ -127,17 +126,10 @@ auth.onAuthStateChanged(user => {
       cardStatus.appendChild(comments);
       cardStatus.appendChild(revisionButton);
       cardStatus.appendChild(printButton);
-      cardStatus.appendChild(postedUserIcon);
       cardStatus.appendChild(postedUserName);
+      cardStatus.appendChild(postedUserIcon);
     
       mainCenter.appendChild(cardStatus);
-
-      // cardStatus.appendChild(cardId);
-      // revisionButton.addEventListener('click',()=>{
-      //   db.collection('k-card').get().then(()=>{
-      //     cardId.textContent=doc.id;
-      //   });
-      // });
     
     }
     

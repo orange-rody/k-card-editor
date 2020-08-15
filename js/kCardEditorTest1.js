@@ -9,12 +9,12 @@ const db = firebase.firestore();
 auth.onAuthStateChanged((user) => {
   if(user){
     let currentUid = user.uid;
+    // firestoreのコレクション「user」から「currentUid」を持つドキュメントを
+    // 取り出し、そのドキュメントから「name」フィールドの値を取り出し、変数
+    // userNameに代入しようとしました。
     let userRef = db.collection('user').doc(currentUid);
     let userName = userRef.get().then((doc) => {
-                            console.log(doc.data().name);
-                          });
-    console.log(typeof userName);
-    userName = userName.toString();
+                    userName = doc.data().name.toString()});
     console.log(typeof userName);
   
     let searchParam = location.search.substring(1).split('=');
@@ -53,7 +53,10 @@ auth.onAuthStateChanged((user) => {
               pages: form.pages.value,
               postedDate: firebase.firestore.FieldValue.serverTimestamp(),
               uid: currentUid,
-              postedUserName: userName,
+              // 15~17行目で定義した変数「userName」を「k-card」コレクションに
+              // setしたところ、toString()の効果により、文字列が保存される(と思いますがどうでしょう)？
+              // 多分そうした理由でうまくいったんだと思う。
+              postedUserName: userName.toString(),
             });
             form.title.value = "";
             form.leadSentence.value = "";
@@ -77,7 +80,7 @@ auth.onAuthStateChanged((user) => {
             pages: form.pages.value,
             postedDate: firebase.firestore.FieldValue.serverTimestamp(),
             uid: currentUid,
-            postedUserName: userName,
+            postedUserName: userName.toString(),
           });
           // 提出後、formに入力されている文字列を消去する。
           form.leadSentence.value = "";
