@@ -132,26 +132,36 @@ auth.onAuthStateChanged(user => {
       mainCenter.appendChild(cardStatus);
     
     }
-    
+  
     db.collection('k-card').where("uid", "==", currentUid)
     .get()
     .then((snapshot)=>{
       snapshot.docs.forEach((doc)=>{
         renderCard(doc);
-      });
-    
-    // }).then(()=>{
-    //   const cardPosition = document.querySelector('#cardViewer').offsetTop;
-    //   const scrollY = () => {
-    //     if($(window).scrollTop() >= 100){
-    //       $('html').animate({scrollTop:cardPosition},600);
-    //     }else if($(window).scrollTop() = -100 ){
+      })
+    }).then(()=>{
+        const cardPosition = document.querySelector('#cardViewer').offsetTop;
+
+        const scrollY = () => {
+        if($(window).scrollTop() >= 100){
+           $('html').animate({scrollTop:cardPosition-80},600);
+         }
+        };
+        $(window).on('scroll',scrollY).then(() => {
+          scrollTop
+        });
+        const scrollTop = () => {
+          if($(window).scrollTop() < cardPosition){
+            $('html').animate({scrollTop:0},600);
+           };
+         };
+       });
+        //  else if($(window).scrollTop() = -100 ){
     //       $('html').animate({scrollTop:0},600);
     //     }
     //   };
 
     //   $(window).on('scroll',scrollY);
-    });
 
     db.collection("k-card").onSnapshot((snapshot)=>{
       snapshot.docs.forEach((doc)=>{
@@ -161,10 +171,4 @@ auth.onAuthStateChanged(user => {
   } else {
     console.log('ログインしていません');
   }
-})
-
-
-
-function scrollToCard(){
-  window.scrollTo
-}
+});

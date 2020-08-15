@@ -161,7 +161,6 @@ background-size: cover;
   position: relative;
   height: 75vh;
   width: 100%;
-  margin-bottom: 200px;
 }
 
 #profileSentence {
@@ -236,7 +235,7 @@ background-size: cover;
   /* 京大式カードの幅182mm・高さ128pxを4.5倍したピクセル数 */
   width: 819px;
   height: 576px;
-  margin: 50px auto 0;
+  margin: 200px auto 0;
   font-size: 25px;
   border:1px solid #00ced1;
   background-image: url("./k-card-image\(Edited\).png");
