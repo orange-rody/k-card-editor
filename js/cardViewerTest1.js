@@ -21,20 +21,46 @@ auth.onAuthStateChanged(user => {
     console.log('ユーザーのメールアドレス: ',user.mail);
     currentUid = user.uid;
     console.log('ユーザーのID：',currentUid);
-    db.collection('user').doc(currentUid).get().then((snapshot)=>{
-        renderUser(snapshot);
+
+    db.collection('k-card').where("uid", "==", currentUid)
+    .get()
+    .then((snapshot)=>{
+      function sizetoNumber(){
+        // sizeプロパティで要素の数を取得 ※クライアント側でダウンロードしてカウントするため、 100程度のコレクションでしか使えない。
+        let size = snapshot.size;
+        size = size.toString();
+        size = parseInt(size);
+        let postedCardNumber = document.querySelector('#postedCardNumber');
+        postedCardNumber.textContent = size;
+        return postedCardNumber;
+      }
+      sizetoNumber();
+      snapshot.docs.forEach((doc)=>{
+        function sizetoNumber(){
+          // sizeプロパティで要素の数を取得 ※クライアント側でダウンロードしてカウントするため、 100程度のコレクションでしか使えない。
+          let size = snapshot.size;
+          size = size.toString();
+          size = parseInt(size);
+          let postedCardNumber = document.querySelector('#postedCardNumber');
+          postedCardNumber.textContent = size;
+          return postedCardNumber;
+        }
+        renderCard(doc);
+      });
     });
+
+      db.collection('user').doc(currentUid).get().then((snapshot)=>{
+          renderUser(snapshot);
+      });
+
     function renderUser(doc){
       
       let boxText = document.querySelector('#box-text');
       let profileSentence = document.querySelector('#profileSentence');
       let favorite = document.querySelector('#favorite');
-      let postedCardNumber = document.querySelector('#postedCardNumber');
-    
       boxText.textContent = doc.data().name;
       profileSentence.textContent = doc.data().profile;
       favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
-      postedCardNumber = doc.data().postedCardNumber;
     }
     function renderCard(doc){
 
@@ -160,40 +186,61 @@ auth.onAuthStateChanged(user => {
 
       //mainCenterにカルーセル「戻る」ボタンであるcarouselCotrolPrevを追加
       mainCenter.appendChild(carouselControlPrev);
-      //mainCenterにカルーセう「進める」ボタンであるcarouselControlNextを追加
+      //mainCenterにカルーセル「進める」ボタンであるcarouselControlNextを追加
       mainCenter.appendChild(carouselControlNext);
+
+      //カードコンテナ1枚あたりの高さを設定(vh)
+      const cardContainerHeight = 100;
+
+      //現在表示されているカードコンテナが何枚目か(0から数え始める)
+      let currentCardContainer = 0;
+
+      //カードコンテナの全枚数
+      let numCardContainers = postedCardNumber;
+
+      //index番目(0から始まる)のカードコンテナを表示する関数
+      const showCardContainer = (index) => {
+        //1番目のカードコンテナでは上矢印を非表示にする
+        if(index === 0){
+          $('#carouselControlPrev').hide();
+        }else {
+          $('#carouselControlNext').show();
+        }
+        if(index === numCardContainers - 1){
+          $('#carouselControlPrev').show();
+        }else {
+          $('#carouselControlNext').hide();
+        }
+        // 実行中のアニメーションがあればキャンセルした後、
+        // topを変化させるアニメーションを開始
+        $('#main-center')
+        .stop()
+        .animate(
+          {
+            top:`${cardContainerHeight * index}vh`
+          },600
+        );
+      }
+
+        //上矢印がクリックされたら、一つ前のカードコンテナを表示
+        $('#carouselControlPrev').on('click',(e)=>{
+          e.preventDefault();
+          currentCardContainer -= 1;
+          showCardContainer(currentCardContainer);
+        })
+
+        //下矢印がクリックされたら、一つ後のカードコンテナを表示
+        $('#carouselControlNext').on('click',(e)=>{
+          e.preventDefault();
+          currentCardContainer += 1;
+          showCardContainer(currentCardContainer);
+        })
+
+        showCardContainer(currentCardContainer);
+
     }
-  
-    db.collection('k-card').where("uid", "==", currentUid)
-    .get()
-    .then((snapshot)=>{
-      snapshot.docs.forEach((doc)=>{
-        renderCard(doc);
-      })
-    })
-    // .then(()=>{
-    //     const cardPosition = document.querySelector('#cardViewer').offsetTop;
-
-    //     const scrollY = () => {
-    //     if($(window).scrollTop() >= 100){
-    //        $('html').animate({scrollTop:cardPosition-80},600);
-    //      }
-    //     };
-    //     $(window).on('scroll',scrollY).then(() => {
-    //       scrollTop
-    //     });
-    //     const scrollTop = () => {
-    //       if($(window).scrollTop() < cardPosition){
-    //         $('html').animate({scrollTop:0},600);
-    //        };
-    //      };
-    //    });
-        //  else if($(window).scrollTop() = -100 ){
-    //       $('html').animate({scrollTop:0},600);
-    //     }
-    //   };
-
-    //   $(window).on('scroll',scrollY);
+      
+    
 
     db.collection("k-card").onSnapshot((snapshot)=>{
       snapshot.docs.forEach((doc)=>{

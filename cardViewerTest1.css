@@ -250,7 +250,13 @@ background-size: cover;
   width: 50px;
   height: 80px;
   font-size: 40px;
-  color: #6c9edf;
+  color: #2A5E8C;
+  opacity: 0.1;
+  transition: .5s all ease-in-out;
+}
+
+.carouselControl:hover {
+  opacity: 0.8;
 }
 
 #carouselControlPrev {
