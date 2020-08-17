@@ -13,26 +13,28 @@
   <body id = "viewer">
     <div id = "content">
       <div id = "main">
-        <header>
-          <div id = "userImage"></div>
-          <div id = "userIcon"></div>
-          <div id = "box-title">
-            <div id = "title-mask">
-              <p id = "box-text"></p>
+        <div id = "usersInfo">
+          <header>
+            <div id = "userImage"></div>
+            <div id = "userIcon"></div>
+            <div id = "box-title">
+              <div id = "title-mask">
+                <p id = "box-text"></p>
+              </div>
             </div>
+            <input type = "button" id = "profileEditButton" value = "プロフィールを編集する">
+          </header>
+          <div id = "userProfile">
+            <p id = "profileSentence"></p>
+            <div id = "favorite">
+              <p>好きな本・最近読んだ本</p>
+              <p id = "favoriteBook"></p>
+            </div>  
+            <p id = "postedCardNumber">4</p>
+            <small id = "notice"><i class="fas fa-arrow-circle-down"></i>下にスクロールでカードをチェック!!</small>
           </div>
-          <input type = "button" id = "profileEditButton" value = "プロフィールを編集する">
-        </header>
-        <div id = "userProfile">
-          <p id = "profileSentence"></p>
-          <div id = "favorite">
-            <p>好きな本・最近読んだ本</p>
-            <p id = "favoriteBook"></p>
-          </div>  
-          <p id = "postedCardNumber">4</p>
-          <small id = "notice"><i class="fas fa-arrow-circle-down"></i>下にスクロールでカードをチェック!!</small>
         </div>
-        <div class = "main-center"></div>
+        <div id = "main-center"></div>
       </div>
       <aside id = "sidebar">
         <div id = "logo">
@@ -55,7 +57,6 @@
           <label for = "logoutIcon">Logout</label>
         </li>
       </aside>
-      <aside id = "column"></aside>
       
       <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>

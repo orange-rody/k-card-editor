@@ -38,8 +38,15 @@ auth.onAuthStateChanged(user => {
     }
     function renderCard(doc){
 
-      let mainCenter = document.querySelector('.main-center');
-      
+      let mainCenter = document.querySelector('#main-center');
+
+      //カードを「戻る」ボタンを作るための要素を追加
+      let carouselControlPrev = document.createElement('a');
+      //カードを「進める」ボタンを作るための要素を追加
+      let carouselControlNext = document.createElement('a');
+
+      let cardContainer = document.createElement('div');
+      let cardWrap = document.createElement('div');
       let cardViewer = document.createElement('div');
       let cardMainArea = document.createElement('div');
       let cardSideArea = document.createElement('aside');
@@ -84,8 +91,15 @@ auth.onAuthStateChanged(user => {
       printButton.innerHTML = '<i class="fas fa-print"></i>'
       postedUserName.textContent = doc.data().postedUserName;
       postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
-   
+      
+      //カルーセル「戻る」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
+      carouselControlPrev.innerHTML = '<i class="far fa-caret-square-up"></i>';
+      //カルーセル「進める」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
+      carouselControlNext.innerHTML = '<i class="far fa-caret-square-down"></i>';
 
+   
+      cardContainer.setAttribute('id','cardContainer');
+      cardWrap.setAttribute('id','cardWrap');
       cardViewer.setAttribute('id','cardViewer');
       cardMainArea.setAttribute('id','cardMainArea');
       cardSideArea.setAttribute('id','cardSideArea');
@@ -106,6 +120,17 @@ auth.onAuthStateChanged(user => {
       postedUserName.setAttribute('id','postedUserName');
       postedUserIcon.setAttribute('id','postedUserIcon');
     
+      //カルーセル「戻る」ボタンにid = carouselControlPrev を追加
+      carouselControlPrev.setAttribute('id','carouselControlPrev');
+      //カルーセル「進める」ボタンにid = carouselControlNext を追加
+      carouselControlNext.setAttribute('id','carouselControlNext');
+
+      //カルーセル「戻る」ボタンにclass = carousel を追加
+      carouselControlPrev.setAttribute('class','carouselControl');
+      //カルーセル「進める」ボタンにclass = carousel を追加
+      carouselControlNext.setAttribute('class','carouselControl');
+
+
       let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
       revisionButton.setAttribute('href',editorURL);
       
@@ -120,7 +145,7 @@ auth.onAuthStateChanged(user => {
       cardSideArea.appendChild(postedDate);
       cardViewer.appendChild(cardMainArea);
       cardViewer.appendChild(cardSideArea);
-      mainCenter.appendChild(cardViewer);
+      cardWrap.appendChild(cardViewer);
     
       cardStatus.appendChild(bookmarkUserCount);
       cardStatus.appendChild(comments);
@@ -128,9 +153,15 @@ auth.onAuthStateChanged(user => {
       cardStatus.appendChild(printButton);
       cardStatus.appendChild(postedUserName);
       cardStatus.appendChild(postedUserIcon);
-    
-      mainCenter.appendChild(cardStatus);
-    
+      cardWrap.appendChild(cardStatus);
+      cardContainer.appendChild(cardWrap);
+
+      mainCenter.appendChild(cardContainer);
+
+      //mainCenterにカルーセル「戻る」ボタンであるcarouselCotrolPrevを追加
+      mainCenter.appendChild(carouselControlPrev);
+      //mainCenterにカルーセう「進める」ボタンであるcarouselControlNextを追加
+      mainCenter.appendChild(carouselControlNext);
     }
   
     db.collection('k-card').where("uid", "==", currentUid)
@@ -139,23 +170,24 @@ auth.onAuthStateChanged(user => {
       snapshot.docs.forEach((doc)=>{
         renderCard(doc);
       })
-    }).then(()=>{
-        const cardPosition = document.querySelector('#cardViewer').offsetTop;
+    })
+    // .then(()=>{
+    //     const cardPosition = document.querySelector('#cardViewer').offsetTop;
 
-        const scrollY = () => {
-        if($(window).scrollTop() >= 100){
-           $('html').animate({scrollTop:cardPosition-80},600);
-         }
-        };
-        $(window).on('scroll',scrollY).then(() => {
-          scrollTop
-        });
-        const scrollTop = () => {
-          if($(window).scrollTop() < cardPosition){
-            $('html').animate({scrollTop:0},600);
-           };
-         };
-       });
+    //     const scrollY = () => {
+    //     if($(window).scrollTop() >= 100){
+    //        $('html').animate({scrollTop:cardPosition-80},600);
+    //      }
+    //     };
+    //     $(window).on('scroll',scrollY).then(() => {
+    //       scrollTop
+    //     });
+    //     const scrollTop = () => {
+    //       if($(window).scrollTop() < cardPosition){
+    //         $('html').animate({scrollTop:0},600);
+    //        };
+    //      };
+    //    });
         //  else if($(window).scrollTop() = -100 ){
     //       $('html').animate({scrollTop:0},600);
     //     }
