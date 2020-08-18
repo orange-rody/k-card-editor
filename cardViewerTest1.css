@@ -246,7 +246,7 @@ background-size: cover;
   font-weight: bold;
 }
 
-.carouselControl {
+/* .carouselControl {
   width: 50px;
   height: 80px;
   font-size: 40px;
@@ -263,13 +263,19 @@ background-size: cover;
   position: absolute;
   right: 5%;
   top:5%;
-}
+} */
 
-#carouselControlNext {
+/* #carouselControlNext {
   position: absolute;
   right: 5%;
   bottom: 10%;
-}
+} */
+
+/* #cardSlides {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+} */
 
 #cardContainer {
   position: relative;
