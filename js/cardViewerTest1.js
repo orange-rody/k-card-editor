@@ -2,7 +2,7 @@
 
 const auth = firebase.auth();
 
-// currentUidを宣言
+// currentUidを宣言する。
 let currentUid = null;
 
 const db = firebase.firestore();
@@ -15,61 +15,93 @@ let userIcon = document.querySelector('#userIcon');
 
 userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
 
+let mainCenter = document.querySelector('#main-center');
+
+let cardSlides = document.createElement('div');
+cardSlides.setAttribute('id','cardSlides');
+
 //listen for auth status change
 auth.onAuthStateChanged(user => {
   if(user){
-    console.log('ユーザーのメールアドレス: ',user.mail);
+    // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
     console.log('ユーザーのID：',currentUid);
 
+    // ログインしたユーザーのid(currentUid)のフィールドを持つドキュメントを抽出する。
     db.collection('k-card').where("uid", "==", currentUid)
     .get()
     .then((snapshot)=>{
       function sizetoNumber(){
-        // sizeプロパティで要素の数を取得 ※クライアント側でダウンロードしてカウントするため、 100程度のコレクションでしか使えない。
+        
+        // sizeプロパティで要素の数を取得 ※クライアント側でダウンロードしてカウント
+        // するため、 100程度のコレクションでしか使えない。
         let size = snapshot.size;
+        // sizeをオブジェクトから文字列へと変換する。
         size = size.toString();
         size = parseInt(size);
         console.log(size);
+        // 戻り値としてsizeを戻す
         return size;
       }
+
+
+        // (エラー!!) where()メソッドの後にサブコレクションを参照するコードを続けて書くと、
+        //            「snapshot.collection is not a function」というエラーが発生してしまう。
+
+        // snapshot.collection('bookmarkUser')
+        // .get.then((doc)=>{
+        //   console.log(doc);
+        // })
+
+      const cardList = [];
+
+      snapshot.forEach((doc)=>{
+        cardList.push(doc.id);
+      });
+
+      console.log(cardList);
 
       // postedCardNumberにuid === currentUidの要素数を代入する。
       let postedCardNumber = document.querySelector('#postedCardNumber');
       postedCardNumber.textContent = sizetoNumber();
 
+      // cardSlidesのheightをcalc(100vh * sizetoNumber)で設定する。
+      cardSlides.style.height = `calc(100vh * ${sizetoNumber()})`;
       
-      // let cardSlides = document.createElement('div');
-      // cardSlides.setAttribute('id','cardSlides');
-      // cardSlides.style.height = `calc(100vh * ${sizetoNumber()})`;
-      
-
+      // 関数renderCardで、登録されているカードの閲覧画面を描写する
       snapshot.docs.forEach((doc)=>{
         renderCard(doc);
       });
     });
 
+      // 関数renderUserで、登録されているユーザーのプロフィール画面を描写する
       db.collection('user').doc(currentUid).get().then((snapshot)=>{
           renderUser(snapshot);
       });
 
+    // 関数renderUserを宣言する
     function renderUser(doc){
       
       let boxText = document.querySelector('#box-text');
       let profileSentence = document.querySelector('#profileSentence');
       let favorite = document.querySelector('#favorite');
+
+      // ○○のカードボックスの箇所にユーザー名を入れる
       boxText.textContent = doc.data().name;
+
+      // firestoreに保存しているプロフィール文をtextContentで代入する。
       profileSentence.textContent = doc.data().profile;
+
+      // firestoreに保存しているfavoriteをtextContentで代入する。
       favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
     }
   
-
+    // 関数renderCardを宣言する
     function renderCard(doc){
       //カードを「戻る」ボタンを作るための要素を追加
       // let carouselControlPrev = document.createElement('a');
       //カードを「進める」ボタンを作るための要素を追加
       // let carouselControlNext = document.createElement('a');
-      let mainCenter = document.querySelector('#main-center');
 
       let cardContainer = document.createElement('div');
       let cardWrap = document.createElement('div');
@@ -110,7 +142,8 @@ auth.onAuthStateChanged(user => {
       pages.textContent = doc.data().pages;
       postedDate.textContent = output;
       bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
-      bookmarkUserCount.insertAdjacentHTML('beforeend',doc.data().bookmarkUserCount);
+
+      bookmarkUserCount.insertAdjacentHTML('beforeend',4);
       comments.innerHTML = '<i class="fas fa-comment"></i> '
       comments.insertAdjacentHTML('beforeend',doc.data().comments);
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
@@ -179,7 +212,8 @@ auth.onAuthStateChanged(user => {
       cardStatus.appendChild(postedUserIcon);
       cardWrap.appendChild(cardStatus);
       cardContainer.appendChild(cardWrap);
-      mainCenter.appendChild(cardContainer);
+      cardSlides.appendChild(cardContainer);
+      mainCenter.appendChild(cardSlides);
 
       //mainCenterにカルーセル「戻る」ボタンであるcarouselCotrolPrevを追加
       // mainCenter.appendChild(carouselControlPrev);
@@ -195,7 +229,7 @@ auth.onAuthStateChanged(user => {
     let currentCardContainer = 100;
 
      //カードコンテナの全枚数
-     let numCardContainers = sizetoNumber();
+    //  let numCardContainers = sizetoNumber();
 
      //index番目(0から始まる)のカードコンテナを表示する関数
      const showCardContainer = (index) => {

@@ -58,16 +58,21 @@ body {
   margin: 0 0 40px 20px;
   padding: 5px 20px 5px 20px;
   border-radius: 40px;
-  color: #c6cccc;
+ 
   width: 130px;
   transition: all 0.1s ease-in-out;
+}
+
+#sidebar li a {
+  text-decoration: none;
+  color: #c6cccc;
 }
 
 #sidebar li:hover {
   background-color: #3f6f98;
 }
 
-#sidebar li:active {
+#sidebar li a:active {
   color: #fff;
   text-shadow: 20px 20px 80px #fff;
 }
