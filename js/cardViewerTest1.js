@@ -16,8 +16,11 @@ userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/
 
 let mainCenter = document.querySelector('#main-center');
 
+// 表示するk-cardの一覧を格納する変数cardSlidesを宣言。定義する。
 let cardSlides = document.createElement('div');
 cardSlides.setAttribute('id','cardSlides');
+
+let postedCardNumber = document.getElementById('postedCardNumber');
 
 //listen for auth status change
 auth.onAuthStateChanged(user => {
@@ -25,208 +28,205 @@ auth.onAuthStateChanged(user => {
     // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
     console.log('ユーザーのID：',currentUid);
-
-    // currentUidのフィールドを持つドキュメントIDの配列を作る関数を定義する。
-    function makeCardIdList(){
-      // 空のcardIdListを宣言する。
-      const cardIdList = [];
-      // where()メソッドで、currentUidのフィールドを持つドキュメントを抽出。
-      db.collection('k-card').where('uid', '==', currentUid)
+    // where()メソッドで、currentUidのフィールドを持つドキュメントを抽出。
+    db.collection('k-card').where('uid', '==', currentUid)
       .get()
-      // 取得したsnapshot
-      .then((snapshot) => {
-        // .getしたsnapshotをtypeofすると、データ形式がobjectであることが判明した。
-        console.log(typeof snapshot);
-        snapshot.forEach((card) => {
-          let cardId = card.id;
-          cardId = cardId.toString();
-          cardIdList.push(cardId);
-          }
-        );
-        console.log(cardIdList);
-        return cardIdList;
-      })
-    }
-    const cardIdList = makeCardIdList();
-    console.log(typeof cardIdList);
-
-
-    // 抽出したカードIDリスト（cardIdList）の長さを取得する。
-    function showCardListSize(){
-      db.collection('k-card').where('uid', '==', currentUid)
-      .get()
-      .then((snapshot) => {
-          let size = snapshot.size;
-          size = size.toString();
-          size = parseInt(size);
-          console.log(size);
-          return size;
-      });
-    }
-    
-    // postedCardNumberにuid === currentIdListのlength(要素数)を代入する。
-    console.log(showCardListSize());
-
-    console.log(postedCardNumber);
-
-      // cardSlidesのheightをcalc(100vh * sizetoNumber)で設定する。
-      cardSlides.style.height = `calc(100vh * ${sizeToNumber(snapshot)})`;
-      console.log(cardSlides.style.height);
+      // ドキュメントの集合体(documents)を取得した後にthen()の中身の処理を実行する。
+      // then以降の処理は、documentsを取得するまで実行されることはないので、処理されるタイミングが
+      // 他のコードと比べて遅くなってしまう。
+      // そのため、documentsの取得後に行う処理は、軒並みthenの()の中に記述した方が良い。
+      .then((documents) => {
       
+        // .getしたdocumentsをtypeofすると、データ形式がobjectであることが確認できる。
+        console.log(typeof documents);
+        // makeCardList()で、ドキュメントの集合体からドキュメントIDの値のみ抽出して、配列を作る。
+        const cardIdList = makeCardIdList(documents);
+        console.log(cardIdList);
+        // 配列cardIdListの各要素(カードのドキュメントID)において、カード画面を描写するようにする。
+        cardIdList.forEach((cardId) => {
+          console.log(cardId);
+          // 関数renderCardで、登録されているカードの閲覧画面を描写する
+          renderCard(cardId);
+        });
+ 
+        // showCardIdListSize()で、ドキュメントの集合体からサイズ(要素数)を抽出する。
+        const cardIdListSize = showCardIdListSize(documents);
+        console.log(cardIdListSize);
 
-        // (エラー!!) where()メソッドの後にサブコレクションを参照するコードを続けて書くと、
-        //            「snapshot.collection is not a function」というエラーが発生してしまう。
-        // db.collection('k-card').where('uid', '==', currentUid)
-        // .get()
-        // .then((snapshot) => {
-        //    snapshot.collection('bookmarkUser')
-        //    .get
-        //    .then((doc)=>{
-        //      console.log(doc);
-        //     });
-        //   });
-  
+        // postedCardNumberにcardIdListSizeを代入する。
+        postedCardNumber.textContent = cardIdListSize;
 
-    console.log(cardIdList);
-    cardIdList.forEach((cardId) => {
-      console.log(cardId);
+         // cardSlidesのheightをcalc(100vh * sizetoNumber)で設定する。
+        cardSlides.style.height = `calc(100vh * ${cardIdListSize})`;
+        console.log(cardSlides.style.height);
     });
-    // 関数renderCardで、登録されているカードの閲覧画面を描写する
-    cardIdList.forEach((cardId)=>{
-      db.collection('k-card').doc(cardId)
-      .get()
-      .then((snapshot) =>{
-        console.log(snapshot);
-        renderCard(snapshot);
+
+
+    // currentIdのフィールドを持つ複数のドキュメントの集合体から、ドキュメントIDの値のみ
+    // 抽出して、配列にするためのfunction makeCardListを宣言する。
+    function makeCardIdList(documents){
+      // まず空の配列cardIdListを宣言する。
+      const cardIdList = [];
+      // ドキュメントの集合体を構成するそれぞれのドキュメントにforEachをかける。
+      documents.forEach((doc) => {
+        // ドキュメントのIDを格納する変数cardIdを定義する。
+        let cardId = doc.id;
+        // doc.id = cardIdはオブジェクト型なので、文字列に型変換する。
+        cardId = cardId.toString();
+        cardIdList.push(cardId);
       });
-    });
+      console.log(cardIdList);
+      return cardIdList;
+    }
 
+
+    // 抽出したカードIDリスト(cardIdList)のサイズ(要素数)を取得する。
+    function showCardIdListSize(documents){
+          let cardIdListSize = documents.size;
+          cardIdListSize = cardIdListSize.toString();
+          cardIdListSize = parseInt(cardIdListSize);
+          console.log(cardIdListSize);
+          return cardIdListSize;
+    }
+   
   // 関数renderCardを宣言する
   function renderCard(doc){
+    db.collection('k-card').doc(doc).get()
+      .then((doc) => {
+        //カードを「戻る」ボタンを作るための要素を追加
+        // let carouselControlPrev = document.createElement('a');
+        //カードを「進める」ボタンを作るための要素を追加
+        // let carouselControlNext = document.createElement('a');
+
+        let cardContainer = document.createElement('div');
+        let cardWrap = document.createElement('div');
+        let cardViewer = document.createElement('div');
+        let cardMainArea = document.createElement('div');
+        let cardSideArea = document.createElement('aside');
+        let cardStatus = document.createElement('div');
+        let bookInfo = document.createElement('div');
   
-  //カードを「戻る」ボタンを作るための要素を追加
-  // let carouselControlPrev = document.createElement('a');
-  //カードを「進める」ボタンを作るための要素を追加
-  // let carouselControlNext = document.createElement('a');
+        let title = document.createElement('p');
+        let leadSentence = document.createElement('p');
+        let mainText = document.createElement('p');
+        let information = document.createElement('div');
+        let author = document.createElement('p');
+        let bookTitle = document.createElement('p');
+        let pages = document.createElement('p');
+        let postedDate = document.createElement('li');
+        
+        let printButton = document.createElement('div');
+        let postedUserIcon = document.createElement('div');
+        let postedUserName = document.createElement('p');
 
-  let cardContainer = document.createElement('div');
-  let cardWrap = document.createElement('div');
-  let cardViewer = document.createElement('div');
-  let cardMainArea = document.createElement('div');
-  let cardSideArea = document.createElement('aside');
-  let cardStatus = document.createElement('div');
-  let bookInfo = document.createElement('div');
+        let comments = document.createElement('p');
+        let revisionButton = document.createElement('a');
+
+        let time = doc.data().postedDate.toDate();
+        const year = time.getFullYear();
+        const month = time.getMonth();
+        const date = time.getDate();
+        const output = `${year}/${month+1}/${date}`;
+
+        title.textContent = doc.data().title;
+        leadSentence.textContent = doc.data().leadSentence;
+        mainText.textContent = doc.data().mainText;
+        author.textContent = doc.data().author;
+        bookTitle.textContent = doc.data().bookTitle;
+        pages.textContent = doc.data().pages;
+        postedDate.textContent = output;
+      
+        comments.innerHTML = '<i class="fas fa-comment"></i> '
+        comments.insertAdjacentHTML('beforeend',doc.data().comments);
+        revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
+        printButton.innerHTML = '<i class="fas fa-print"></i>'
+        postedUserName.textContent = doc.data().postedUserName;
+        postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
+        
+        //カルーセル「戻る」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
+        // carouselControlPrev.innerHTML = '<i class="far fa-caret-square-up"></i>';
+        //カルーセル「進める」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
+        // carouselControlNext.innerHTML = '<i class="far fa-caret-square-down"></i>';
+
+        cardContainer.setAttribute('id','cardContainer');
+        cardWrap.setAttribute('id','cardWrap');
+        cardViewer.setAttribute('id','cardViewer');
+        cardMainArea.setAttribute('id','cardMainArea');
+        cardSideArea.setAttribute('id','cardSideArea');
+        title.setAttribute('id','title');
+        leadSentence.setAttribute('id','leadSentence');
+        mainText.setAttribute('id','mainText');
+        author.setAttribute('id','author');
+        bookTitle.setAttribute('id','bookTitle');
+        pages.setAttribute('id','pages');
+        postedDate.setAttribute('id','postedDate');
+        information.setAttribute('id','information');
+        bookInfo.setAttribute('id','bookInfo');
+        cardStatus.setAttribute('id','cardStatus');
   
-  let title = document.createElement('p');
-  let leadSentence = document.createElement('p');
-  let mainText = document.createElement('p');
-  let information = document.createElement('div');
-  let author = document.createElement('p');
-  let bookTitle = document.createElement('p');
-  let pages = document.createElement('p');
-  let postedDate = document.createElement('li');
-  let bookmarkUserCount = document.createElement('div');
-  let printButton = document.createElement('div');
-  let postedUserIcon = document.createElement('div');
-  let postedUserName = document.createElement('p');
+        comments.setAttribute('id','comments');
+        revisionButton.setAttribute('id','revisionButton');
+        printButton.setAttribute('id','printButton');
+        postedUserName.setAttribute('id','postedUserName');
+        postedUserIcon.setAttribute('id','postedUserIcon');
 
-  let comments = document.createElement('p');
-  let revisionButton = document.createElement('a');
+        //カルーセル「戻る」ボタンにid = carouselControlPrev を追加
+        // carouselControlPrev.setAttribute('id','carouselControlPrev');
+        //カルーセル「進める」ボタンにid = carouselControlNext を追加
+        // carouselControlNext.setAttribute('id','carouselControlNext');
 
-  let time = doc.data().postedDate.toDate();
-  const year = time.getFullYear();
-  const month = time.getMonth();
-  const date = time.getDate();
-  const output = `${year}/${month+1}/${date}`;
+        //カルーセル「戻る」ボタンにclass = carousel を追加
+        // carouselControlPrev.setAttribute('class','carouselControl');
+        //カルーセル「進める」ボタンにclass = carousel を追加
+        // carouselControlNext.setAttribute('class','carouselControl');
 
-  title.textContent = doc.data().title;
-  leadSentence.textContent = doc.data().leadSentence;
-  mainText.textContent = doc.data().mainText;
-  author.textContent = doc.data().author;
-  bookTitle.textContent = doc.data().bookTitle;
-  pages.textContent = doc.data().pages;
-  postedDate.textContent = output;
-  bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
+        let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
+        revisionButton.setAttribute('href',editorURL);
+        
+        cardMainArea.appendChild(title);
+        cardMainArea.appendChild(leadSentence);
+        cardMainArea.appendChild(mainText);
+        information.appendChild(author);
+        bookInfo.appendChild(bookTitle);
+        bookInfo.appendChild(pages);
+        information.appendChild(bookInfo);
+        cardMainArea.appendChild(information);
+        cardSideArea.appendChild(postedDate);
+        cardViewer.appendChild(cardMainArea);
+        cardViewer.appendChild(cardSideArea);
+        cardWrap.appendChild(cardViewer);
 
-  bookmarkUserCount.insertAdjacentHTML('beforeend',4);
-  comments.innerHTML = '<i class="fas fa-comment"></i> '
-  comments.insertAdjacentHTML('beforeend',doc.data().comments);
-  revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
-  printButton.innerHTML = '<i class="fas fa-print"></i>'
-  postedUserName.textContent = doc.data().postedUserName;
-  postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
+        cardStatus.appendChild(comments);
+        cardStatus.appendChild(revisionButton);
+        cardStatus.appendChild(printButton);
+        cardStatus.appendChild(postedUserName);
+        cardStatus.appendChild(postedUserIcon);
+        cardWrap.appendChild(cardStatus);
+        cardContainer.appendChild(cardWrap);
+        cardSlides.appendChild(cardContainer);
+        mainCenter.appendChild(cardSlides);
+        //mainCenterにカルーセル「戻る」ボタンであるcarouselCotrolPrevを追加
+        // mainCenter.appendChild(carouselControlPrev);
+        //mainCenterにカルーセル「進める」ボタンであるcarouselControlNextを追加
+        // mainCenter.appendChild(carouselControlNext);
+    })
+    db.collection('k-card').doc(doc).collection('bookmarkUser').get()
+        .then((bookmarkUsers) =>{
+          let bookmarkUserNum = bookmarkUsers.size;
+          bookmarkUserNum = bookmarkUserNum.toString();
+          bookmarkUserNum = parseInt(bookmarkUserNum);
+          console.log(bookmarkUserNum);
+          let bookmarkUserCount = document.createElement('div');
+          bookmarkUserCount.setAttribute('id','bookmarkUserCount');
+          let cardStatus = document.getElementById('cardStatus');
+          cardStatus.appendChild(bookmarkUserCount);
+          bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
+          bookmarkUserCount.insertAdjacentHTML('beforeend',bookmarkUserNum);
+        });
+  }
   
-  //カルーセル「戻る」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
-  // carouselControlPrev.innerHTML = '<i class="far fa-caret-square-up"></i>';
-  //カルーセル「進める」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
-  // carouselControlNext.innerHTML = '<i class="far fa-caret-square-down"></i>';
-
-  cardContainer.setAttribute('id','cardContainer');
-  cardWrap.setAttribute('id','cardWrap');
-  cardViewer.setAttribute('id','cardViewer');
-  cardMainArea.setAttribute('id','cardMainArea');
-  cardSideArea.setAttribute('id','cardSideArea');
-  title.setAttribute('id','title');
-  leadSentence.setAttribute('id','leadSentence');
-  mainText.setAttribute('id','mainText');
-  author.setAttribute('id','author');
-  bookTitle.setAttribute('id','bookTitle');
-  pages.setAttribute('id','pages');
-  postedDate.setAttribute('id','postedDate');
-  information.setAttribute('id','information');
-  bookInfo.setAttribute('id','bookInfo');
-  cardStatus.setAttribute('id','cardStatus');
-  bookmarkUserCount.setAttribute('id','bookmarkUserCount');
-  comments.setAttribute('id','comments');
-  revisionButton.setAttribute('id','revisionButton');
-  printButton.setAttribute('id','printButton');
-  postedUserName.setAttribute('id','postedUserName');
-  postedUserIcon.setAttribute('id','postedUserIcon');
-
-  //カルーセル「戻る」ボタンにid = carouselControlPrev を追加
-  // carouselControlPrev.setAttribute('id','carouselControlPrev');
-  //カルーセル「進める」ボタンにid = carouselControlNext を追加
-  // carouselControlNext.setAttribute('id','carouselControlNext');
-
-  //カルーセル「戻る」ボタンにclass = carousel を追加
-  // carouselControlPrev.setAttribute('class','carouselControl');
-  //カルーセル「進める」ボタンにclass = carousel を追加
-  // carouselControlNext.setAttribute('class','carouselControl');
-
-  let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
-  revisionButton.setAttribute('href',editorURL);
   
-  cardMainArea.appendChild(title);
-  cardMainArea.appendChild(leadSentence);
-  cardMainArea.appendChild(mainText);
-  information.appendChild(author);
-  bookInfo.appendChild(bookTitle);
-  bookInfo.appendChild(pages);
-  information.appendChild(bookInfo);
-  cardMainArea.appendChild(information);
-  cardSideArea.appendChild(postedDate);
-  cardViewer.appendChild(cardMainArea);
-  cardViewer.appendChild(cardSideArea);
-  cardWrap.appendChild(cardViewer);
 
-  cardStatus.appendChild(bookmarkUserCount);
-  cardStatus.appendChild(comments);
-  cardStatus.appendChild(revisionButton);
-  cardStatus.appendChild(printButton);
-  cardStatus.appendChild(postedUserName);
-  cardStatus.appendChild(postedUserIcon);
-  cardWrap.appendChild(cardStatus);
-  cardContainer.appendChild(cardWrap);
-  cardSlides.appendChild(cardContainer);
-  mainCenter.appendChild(cardSlides);
-
-  //mainCenterにカルーセル「戻る」ボタンであるcarouselCotrolPrevを追加
-  // mainCenter.appendChild(carouselControlPrev);
-  //mainCenterにカルーセル「進める」ボタンであるcarouselControlNextを追加
-  // mainCenter.appendChild(carouselControlNext);
-
-}
-  
  //カードコンテナ1枚あたりの高さを設定(vh)
  const cardContainerHeight = 100;
 
@@ -307,3 +307,18 @@ function renderUser(doc){
     console.log('ログインしていません');
   }
 });
+
+        // **覚書**
+        // (エラー！！)
+        // where()メソッドの後にサブコレクションを参照するコードを続けて書くと、
+        // 「snapshot.collection is not a function」というエラーが発生してしまう。
+        // db.collection('k-card').where('uid', '==', currentUid)
+        // .get()
+        // .then((snapshot) => {
+        //    snapshot.collection('bookmarkUser')
+        //    .get
+        //    .then((doc)=>{
+        //      console.log(doc);
+        //     });
+        //   });
+  
