@@ -282,19 +282,19 @@ background-size: cover;
   padding: 0;
 } */
 
-#cardContainer {
+.cardContainer {
   position: relative;
   height: 100vh;
 }
 
-#cardWrap {
+.cardWrap {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
 }
 
-#cardViewer {
+.cardViewer {
   /* 京大式カードの幅182mm・高さ128pxを4.5倍したピクセル数 */
   width: 819px;
   height: 576px;
@@ -309,13 +309,13 @@ background-size: cover;
   border-radius: 10px;
 }
 
-#cardMainArea {
+.cardMainArea {
   width: 666px;
   height: 576px;
   float: right;
 }
 
-#cardSideArea {
+.cardSideArea {
   position: absolute;
   font-size: 25px;
   list-style: none;
@@ -323,27 +323,27 @@ background-size: cover;
   height: 100%;
 }
 
-#title:before {
+.title:before {
   content:'- ';
 }
-#title:after {
+.title:after {
   content:' -';
 }
-#title {
+.title {
   height: 40px;
   margin: 15px 0 0 20px;
   overflow: ellipsis;
   font-size: 25px;
 }
 
-#leadSentence {
+.leadSentence {
   height: 40px;
   margin: 10px 0 0 20px;
   font-size: 25px;
   overflow: hidden;
 }
 
-#mainText {
+.mainText {
   height: 263px;
   margin-left: 20px;
   margin-right: 10px;
@@ -354,7 +354,7 @@ background-size: cover;
   line-height: 43px;
 }
 
-#bookInfo {
+.bookInfo {
   display: flex;
   margin: 0;
   padding: 0;
@@ -362,7 +362,7 @@ background-size: cover;
   height: 43px;
 }
 
-#author {
+.author {
   margin: 0px 10px 0px 20px;
   width: 100%;
   line-height: 43px;
@@ -373,31 +373,31 @@ background-size: cover;
   content: "　著";
 }
 
-#bookTitle {
+.bookTitle {
   margin: 5px 0px 0px 10px;
   line-height: 35px;
   font-size: 25px;
 }
 
-#bookTitle::before {
+.bookTitle::before {
   content: "『";
 }
 
-#bookTitle::after {
+.bookTitle::after {
   content: "』";
 }
 
-#pages {
+.pages {
   font-size: 25px;
   line-height: 35px;
   margin: 5px 0px 0px 10px;
 }
 
-#pages::before {
+.pages::before {
   content: "P.";
 }
 
-#postedDate {
+.postedDate {
   margin: 156px 0 0 15px;
   font-size: 22px;
   list-style: none;
@@ -407,7 +407,7 @@ i {
   margin-right: 20px;
 }
 
-#bookmarkUserCount {
+.bookmarkUserCount {
   margin-top: 15px;
   width: 100px;
   color: #555;
@@ -415,7 +415,7 @@ i {
   font-family: 'Sawarabi Gothic', sans-serif;
 }
 
-#comments {
+.comments {
   width: 100px;
   margin-top: 15px;
   margin-left: 20px;
@@ -424,7 +424,7 @@ i {
   font-family: 'Sawarabi Gothic', sans-serif;
 }
 
-#cardStatus {
+.cardStatus {
   /* 幅はカード全体の幅と同じ182mm✖️4.5のピクセル */
   width: 780px;
   height: 80px;
@@ -460,7 +460,7 @@ i {
   outline: 0;
 }
 
-#revisionButton,#printButton{
+.revisionButton, .printButton{
   text-align: center;
   vertical-align: center;
   text-decoration: none;
@@ -478,7 +478,7 @@ i {
   box-shadow: 0px 3px #033F8C;
 }
 
-#postedUserIcon {
+.postedUserIcon {
   position: absolute;
   width: 80px;
   height: 80px;
@@ -489,7 +489,7 @@ i {
   top: 10px
 }
 
-#postedUserName {
+.postedUserName {
   margin-right: 20px;
   height: 20px;
   font-size: 20px;

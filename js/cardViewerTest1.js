@@ -1,11 +1,10 @@
 'use strict';
 
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 // currentUidを宣言する。
 let currentUid = null;
-
-const db = firebase.firestore();
 
 // const strage = firebase.storage().ref();
 // let userIconReference = strage.child('Hiroki/IMG_0117.JPG');
@@ -16,9 +15,10 @@ userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/
 
 let mainCenter = document.querySelector('#main-center');
 
-// 表示するk-cardの一覧を格納する変数cardSlidesを宣言。定義する。
+// 表示するk-cardの一覧を格納する変数cardSlidesを宣言し、定義する。
 let cardSlides = document.createElement('div');
 cardSlides.setAttribute('id','cardSlides');
+mainCenter.appendChild(cardSlides);
 
 let postedCardNumber = document.getElementById('postedCardNumber');
 
@@ -56,9 +56,9 @@ auth.onAuthStateChanged(user => {
         // postedCardNumberにcardIdListSizeを代入する。
         postedCardNumber.textContent = cardIdListSize;
 
-         // cardSlidesのheightをcalc(100vh * sizetoNumber)で設定する。
-        cardSlides.style.height = `calc(100vh * ${cardIdListSize})`;
-        console.log(cardSlides.style.height);
+        //  // cardSlidesのheightをcalc(100vh * sizetoNumber)で設定する。
+        // cardSlides.style.height = `calc(100vh * ${cardIdListSize})`;
+        // console.log(cardSlides.style.height);
     });
 
 
@@ -75,7 +75,6 @@ auth.onAuthStateChanged(user => {
         cardId = cardId.toString();
         cardIdList.push(cardId);
       });
-      console.log(cardIdList);
       return cardIdList;
     }
 
@@ -95,6 +94,7 @@ auth.onAuthStateChanged(user => {
       .then((doc) => {
         //カードを「戻る」ボタンを作るための要素を追加
         // let carouselControlPrev = document.createElement('a');
+
         //カードを「進める」ボタンを作るための要素を追加
         // let carouselControlNext = document.createElement('a');
 
@@ -103,8 +103,8 @@ auth.onAuthStateChanged(user => {
         let cardViewer = document.createElement('div');
         let cardMainArea = document.createElement('div');
         let cardSideArea = document.createElement('aside');
-        let cardStatus = document.createElement('div');
         let bookInfo = document.createElement('div');
+        let cardStatus = document.createElement('div');
   
         let title = document.createElement('p');
         let leadSentence = document.createElement('p');
@@ -115,12 +115,17 @@ auth.onAuthStateChanged(user => {
         let pages = document.createElement('p');
         let postedDate = document.createElement('li');
         
-        let printButton = document.createElement('div');
-        let postedUserIcon = document.createElement('div');
-        let postedUserName = document.createElement('p');
-
         let comments = document.createElement('p');
+        let bookmarkUserCount = document.createElement('div');
         let revisionButton = document.createElement('a');
+        let printButton = document.createElement('div');
+        let postedUserName = document.createElement('p');
+        let postedUserIcon = document.createElement('div');        
+        // let printButton = document.createElement('div');
+        // let postedUserIcon = document.createElement('div');
+        // let postedUserName = document.createElement('p');
+        // let comments = document.createElement('p');
+        // let revisionButton = document.createElement('a');
 
         let time = doc.data().postedDate.toDate();
         const year = time.getFullYear();
@@ -135,40 +140,58 @@ auth.onAuthStateChanged(user => {
         bookTitle.textContent = doc.data().bookTitle;
         pages.textContent = doc.data().pages;
         postedDate.textContent = output;
-      
+
         comments.innerHTML = '<i class="fas fa-comment"></i> '
         comments.insertAdjacentHTML('beforeend',doc.data().comments);
+        bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
+        bookmarkUsers = bookmarkUsersCount();
         revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
         printButton.innerHTML = '<i class="fas fa-print"></i>'
         postedUserName.textContent = doc.data().postedUserName;
         postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
+      
+        // comments.innerHTML = '<i class="fas fa-comment"></i> '
+        // comments.insertAdjacentHTML('beforeend',doc.data().comments);
+        // revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
+        // printButton.innerHTML = '<i class="fas fa-print"></i>'
+        // postedUserName.textContent = doc.data().postedUserName;
+        // postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
         
         //カルーセル「戻る」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
         // carouselControlPrev.innerHTML = '<i class="far fa-caret-square-up"></i>';
         //カルーセル「進める」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
         // carouselControlNext.innerHTML = '<i class="far fa-caret-square-down"></i>';
 
-        cardContainer.setAttribute('id','cardContainer');
-        cardWrap.setAttribute('id','cardWrap');
-        cardViewer.setAttribute('id','cardViewer');
-        cardMainArea.setAttribute('id','cardMainArea');
-        cardSideArea.setAttribute('id','cardSideArea');
-        title.setAttribute('id','title');
-        leadSentence.setAttribute('id','leadSentence');
-        mainText.setAttribute('id','mainText');
-        author.setAttribute('id','author');
-        bookTitle.setAttribute('id','bookTitle');
-        pages.setAttribute('id','pages');
-        postedDate.setAttribute('id','postedDate');
-        information.setAttribute('id','information');
-        bookInfo.setAttribute('id','bookInfo');
-        cardStatus.setAttribute('id','cardStatus');
+        cardContainer.setAttribute('class','cardContainer');
+        cardContainer.setAttribute('id',`${doc.id}`);
+        cardWrap.setAttribute('class','cardWrap');
+        cardViewer.setAttribute('class','cardViewer');
+        cardStatus.setAttribute('class','cardStatus');
+        cardMainArea.setAttribute('class','cardMainArea');
+        cardSideArea.setAttribute('class','cardSideArea');
+        title.setAttribute('class','title');
+        leadSentence.setAttribute('class','leadSentence');
+        mainText.setAttribute('class','mainText');
+        author.setAttribute('class','author');
+        bookTitle.setAttribute('class','bookTitle');
+        pages.setAttribute('class','pages');
+        postedDate.setAttribute('class','postedDate');
+        information.setAttribute('class','information');
+        bookInfo.setAttribute('class','bookInfo');
+
+        comments.setAttribute('class','comments');
+        bookmarkUserCount.setAttribute('class','bookmarkUserCount$');
+        revisionButton.setAttribute('class','revisionButton');
+        printButton.setAttribute('class','printButton');
+        postedUserName.setAttribute('class','postedUserName');
+        postedUserIcon.setAttribute('class','postedUserIcon');
+        cardStatus.setAttribute('class','cardStatus');
   
-        comments.setAttribute('id','comments');
-        revisionButton.setAttribute('id','revisionButton');
-        printButton.setAttribute('id','printButton');
-        postedUserName.setAttribute('id','postedUserName');
-        postedUserIcon.setAttribute('id','postedUserIcon');
+        // comments.setAttribute('id','comments');
+        // revisionButton.setAttribute('id','revisionButton');
+        // printButton.setAttribute('id','printButton');
+        // postedUserName.setAttribute('id','postedUserName');
+        // postedUserIcon.setAttribute('id','postedUserIcon');
 
         //カルーセル「戻る」ボタンにid = carouselControlPrev を追加
         // carouselControlPrev.setAttribute('id','carouselControlPrev');
@@ -180,9 +203,9 @@ auth.onAuthStateChanged(user => {
         //カルーセル「進める」ボタンにclass = carousel を追加
         // carouselControlNext.setAttribute('class','carouselControl');
 
-        let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
-        revisionButton.setAttribute('href',editorURL);
-        
+        // let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
+        // revisionButton.setAttribute('href',editorURL);
+
         cardMainArea.appendChild(title);
         cardMainArea.appendChild(leadSentence);
         cardMainArea.appendChild(mainText);
@@ -195,35 +218,46 @@ auth.onAuthStateChanged(user => {
         cardViewer.appendChild(cardMainArea);
         cardViewer.appendChild(cardSideArea);
         cardWrap.appendChild(cardViewer);
+        cardWrap.appendChild(cardStatus);
+        cardContainer.appendChild(cardWrap);
+        cardSlides.appendChild(cardContainer);
+        mainCenter.appendChild(cardSlides);
 
         cardStatus.appendChild(comments);
         cardStatus.appendChild(revisionButton);
         cardStatus.appendChild(printButton);
         cardStatus.appendChild(postedUserName);
         cardStatus.appendChild(postedUserIcon);
-        cardWrap.appendChild(cardStatus);
         cardContainer.appendChild(cardWrap);
         cardSlides.appendChild(cardContainer);
         mainCenter.appendChild(cardSlides);
+
+        let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
+        revisionButton.setAttribute('href',editorURL);
+
         //mainCenterにカルーセル「戻る」ボタンであるcarouselCotrolPrevを追加
         // mainCenter.appendChild(carouselControlPrev);
         //mainCenterにカルーセル「進める」ボタンであるcarouselControlNextを追加
         // mainCenter.appendChild(carouselControlNext);
-    })
-    db.collection('k-card').doc(doc).collection('bookmarkUser').get()
-        .then((bookmarkUsers) =>{
-          let bookmarkUserNum = bookmarkUsers.size;
-          bookmarkUserNum = bookmarkUserNum.toString();
-          bookmarkUserNum = parseInt(bookmarkUserNum);
-          console.log(bookmarkUserNum);
-          let bookmarkUserCount = document.createElement('div');
-          bookmarkUserCount.setAttribute('id','bookmarkUserCount');
-          let cardStatus = document.getElementById('cardStatus');
-          cardStatus.appendChild(bookmarkUserCount);
-          bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
-          bookmarkUserCount.insertAdjacentHTML('beforeend',bookmarkUserNum);
-        });
+    });
   }
+  
+  function getBookmarkUsers(doc){
+    const bookmarkUsers = [];
+    db.collection('k-card').doc(doc).collection('bookmarkUser').get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          let bookmarkUser = doc.data().uid;
+          bookmarkUser = String(bookmarkUser);
+          bookmarkUsers.push(bookmarkUser);
+      });
+    });
+    return bookmarkUsers;
+  }
+
+   
+     
+  
   
   
 
@@ -300,7 +334,7 @@ function renderUser(doc){
 
   // firestoreに保存しているfavoriteをtextContentで代入する。
   favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
-    }
+ }
   
     
   } else {
