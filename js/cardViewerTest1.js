@@ -88,51 +88,73 @@ auth.onAuthStateChanged(user => {
           return cardIdListSize;
     }
    
-  // 関数renderCardを宣言する
-  function renderCard(doc){
-    db.collection('k-card').doc(doc).get()
-      .then((doc) => {
-        //カードを「戻る」ボタンを作るための要素を追加
-        // let carouselControlPrev = document.createElement('a');
+    // 関数renderCardを宣言する
+    function renderCard(doc){
+      //db.collection('k-card').doc(doc).get()でFirestoreから情報を読み取ってくる前に、
+      //<div>や<p>などの外枠の箱を作る。
 
-        //カードを「進める」ボタンを作るための要素を追加
-        // let carouselControlNext = document.createElement('a');
+      //cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
+      let cardContainer = document.createElement('div');
+      //cardWrapは cardViewer + cardStatus。
+      let cardWrap = document.createElement('div');
+      let cardViewer = document.createElement('div');
+      let cardMainArea = document.createElement('div');
+      let cardSideArea = document.createElement('aside');
+      let bookInfo = document.createElement('div');
+      let cardStatus = document.createElement('div');
+      let title = document.createElement('p');
+      let leadSentence = document.createElement('p');
+      let mainText = document.createElement('p');
+      let information = document.createElement('div');
+      let author = document.createElement('p');
+      let bookTitle = document.createElement('p');
+      let pages = document.createElement('p');
+      let postedDate = document.createElement('li');
+      let revisionButton = document.createElement('a');
+      let printButton = document.createElement('div');
+      let postedUserName = document.createElement('p');
+      let postedUserIcon = document.createElement('div');   
+      let bookmarkUserCount = document.createElement('div');     
+      let comments = document.createElement('p');
 
-        let cardContainer = document.createElement('div');
-        let cardWrap = document.createElement('div');
-        let cardViewer = document.createElement('div');
-        let cardMainArea = document.createElement('div');
-        let cardSideArea = document.createElement('aside');
-        let bookInfo = document.createElement('div');
-        let cardStatus = document.createElement('div');
-  
-        let title = document.createElement('p');
-        let leadSentence = document.createElement('p');
-        let mainText = document.createElement('p');
-        let information = document.createElement('div');
-        let author = document.createElement('p');
-        let bookTitle = document.createElement('p');
-        let pages = document.createElement('p');
-        let postedDate = document.createElement('li');
+      bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
+      comments.innerHTML = '<i class="fas fa-comment"></i> '   
+      revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
+      printButton.innerHTML = '<i class="fas fa-print"></i>'
+
+      const bookmarkUsers = [];
+      db.collection('k-card').doc(doc).collection('bookmarkUser')
+        .get()
+        .then((bookmarkUserDocs)=>{
+          bookmarkUserDocs.forEach((bookmarkUserDoc) =>{
+            let bookmarkUser = bookmarkUserDoc.data().uid;
+            bookmarkUser = bookmarkUser.toString();
+            bookmarkUsers.push(bookmarkUser);
+          })
+        }).then(()=>{
+          console.log(typeof bookmarkUsers);
+          console.log(bookmarkUsers);
+          let bookmarkUsersSize = bookmarkUsers.length;
+          console.log(bookmarkUsersSize);
+          console.log(typeof bookmarkUsersSize);
+        });
         
-        let comments = document.createElement('p');
-        let bookmarkUserCount = document.createElement('div');
-        let revisionButton = document.createElement('a');
-        let printButton = document.createElement('div');
-        let postedUserName = document.createElement('p');
-        let postedUserIcon = document.createElement('div');        
-        // let printButton = document.createElement('div');
-        // let postedUserIcon = document.createElement('div');
-        // let postedUserName = document.createElement('p');
-        // let comments = document.createElement('p');
-        // let revisionButton = document.createElement('a');
+      
+    
 
+
+      db.collection('k-card').doc(doc).get()
+        .then((doc) => {
+
+        //Firestoreに保存されているpostedDateフィールドの値を、postedDateとして
+        //登録できる数値に変換する。
         let time = doc.data().postedDate.toDate();
         const year = time.getFullYear();
         const month = time.getMonth();
         const date = time.getDate();
         const output = `${year}/${month+1}/${date}`;
 
+        //先に作っておいた箱の中にFirestoreに保存している値を代入する。
         title.textContent = doc.data().title;
         leadSentence.textContent = doc.data().leadSentence;
         mainText.textContent = doc.data().mainText;
@@ -140,33 +162,16 @@ auth.onAuthStateChanged(user => {
         bookTitle.textContent = doc.data().bookTitle;
         pages.textContent = doc.data().pages;
         postedDate.textContent = output;
-
-        comments.innerHTML = '<i class="fas fa-comment"></i> '
         comments.insertAdjacentHTML('beforeend',doc.data().comments);
-        bookmarkUserCount.innerHTML = '<i class="fas fa-heart"></i> ';
-        bookmarkUsers = bookmarkUsersCount();
-        revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
-        printButton.innerHTML = '<i class="fas fa-print"></i>'
         postedUserName.textContent = doc.data().postedUserName;
         postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
-      
-        // comments.innerHTML = '<i class="fas fa-comment"></i> '
-        // comments.insertAdjacentHTML('beforeend',doc.data().comments);
-        // revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
-        // printButton.innerHTML = '<i class="fas fa-print"></i>'
-        // postedUserName.textContent = doc.data().postedUserName;
-        // postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
         
-        //カルーセル「戻る」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
-        // carouselControlPrev.innerHTML = '<i class="far fa-caret-square-up"></i>';
-        //カルーセル「進める」ボタン要素を作るために、fontawesomeのアイコンをhtmlに追加
-        // carouselControlNext.innerHTML = '<i class="far fa-caret-square-down"></i>';
-
+        //それぞれの要素にsetAttributeでclass名を設定する。
         cardContainer.setAttribute('class','cardContainer');
+        //cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
         cardContainer.setAttribute('id',`${doc.id}`);
         cardWrap.setAttribute('class','cardWrap');
         cardViewer.setAttribute('class','cardViewer');
-        cardStatus.setAttribute('class','cardStatus');
         cardMainArea.setAttribute('class','cardMainArea');
         cardSideArea.setAttribute('class','cardSideArea');
         title.setAttribute('class','title');
@@ -178,34 +183,15 @@ auth.onAuthStateChanged(user => {
         postedDate.setAttribute('class','postedDate');
         information.setAttribute('class','information');
         bookInfo.setAttribute('class','bookInfo');
-
-        comments.setAttribute('class','comments');
         bookmarkUserCount.setAttribute('class','bookmarkUserCount$');
+        comments.setAttribute('class','comments');
         revisionButton.setAttribute('class','revisionButton');
         printButton.setAttribute('class','printButton');
         postedUserName.setAttribute('class','postedUserName');
         postedUserIcon.setAttribute('class','postedUserIcon');
         cardStatus.setAttribute('class','cardStatus');
-  
-        // comments.setAttribute('id','comments');
-        // revisionButton.setAttribute('id','revisionButton');
-        // printButton.setAttribute('id','printButton');
-        // postedUserName.setAttribute('id','postedUserName');
-        // postedUserIcon.setAttribute('id','postedUserIcon');
 
-        //カルーセル「戻る」ボタンにid = carouselControlPrev を追加
-        // carouselControlPrev.setAttribute('id','carouselControlPrev');
-        //カルーセル「進める」ボタンにid = carouselControlNext を追加
-        // carouselControlNext.setAttribute('id','carouselControlNext');
-
-        //カルーセル「戻る」ボタンにclass = carousel を追加
-        // carouselControlPrev.setAttribute('class','carouselControl');
-        //カルーセル「進める」ボタンにclass = carousel を追加
-        // carouselControlNext.setAttribute('class','carouselControl');
-
-        // let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
-        // revisionButton.setAttribute('href',editorURL);
-
+        //appendChildでそれぞれの要素の内部構造を作っていく。
         cardMainArea.appendChild(title);
         cardMainArea.appendChild(leadSentence);
         cardMainArea.appendChild(mainText);
@@ -222,7 +208,6 @@ auth.onAuthStateChanged(user => {
         cardContainer.appendChild(cardWrap);
         cardSlides.appendChild(cardContainer);
         mainCenter.appendChild(cardSlides);
-
         cardStatus.appendChild(comments);
         cardStatus.appendChild(revisionButton);
         cardStatus.appendChild(printButton);
@@ -230,30 +215,15 @@ auth.onAuthStateChanged(user => {
         cardStatus.appendChild(postedUserIcon);
         cardContainer.appendChild(cardWrap);
         cardSlides.appendChild(cardContainer);
-        mainCenter.appendChild(cardSlides);
 
         let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
         revisionButton.setAttribute('href',editorURL);
-
-        //mainCenterにカルーセル「戻る」ボタンであるcarouselCotrolPrevを追加
-        // mainCenter.appendChild(carouselControlPrev);
-        //mainCenterにカルーセル「進める」ボタンであるcarouselControlNextを追加
-        // mainCenter.appendChild(carouselControlNext);
-    });
-  }
-  
-  function getBookmarkUsers(doc){
-    const bookmarkUsers = [];
-    db.collection('k-card').doc(doc).collection('bookmarkUser').get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          let bookmarkUser = doc.data().uid;
-          bookmarkUser = String(bookmarkUser);
-          bookmarkUsers.push(bookmarkUser);
       });
-    });
-    return bookmarkUsers;
-  }
+    }
+  
+    
+      
+    
 
    
      
