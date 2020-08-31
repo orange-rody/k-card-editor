@@ -122,21 +122,37 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
+      //bookmarkUsersという配列を宣言する。
       const bookmarkUsers = [];
       db.collection('k-card').doc(doc).collection('bookmarkUser')
-        .get()
+        .where('cardId','==',doc).get()
+        //サブコレクション(bookmarkUser)から、get()メソッドで取ってきた
+        //スナップショット(bookmarkUserDocs)は複数のドキュメントが集まったもの。
+        //なので、forEachをかけて、それぞれのドキュメントからuidフィールドの
+        //値をひっぱりだす。
         .then((bookmarkUserDocs)=>{
           bookmarkUserDocs.forEach((bookmarkUserDoc) =>{
             let bookmarkUser = bookmarkUserDoc.data().uid;
+            //bookmarkUserは初期状態ではobjectなので、文字列に変換する。
             bookmarkUser = bookmarkUser.toString();
+            //配列bookmarkUsersにbookmarkUserの文字列をpushする。
             bookmarkUsers.push(bookmarkUser);
           })
         }).then(()=>{
-          console.log(typeof bookmarkUsers);
+          //bookmarkUsersがちゃんと作られたか確認。
+          //[注意]forEachでrenderCardファンクションを呼び出しているため、複数のbookmarkUsersが
+          //表示されてしまうがエラーではない。
           console.log(bookmarkUsers);
+          //bookmarkUsers.lengthで配列の要素数をカウントする。
           let bookmarkUsersSize = bookmarkUsers.length;
+          //bookmarkUsersSizeは数値型となっているため、insertAdjacentHTMLで挿入できるよう、
+          //文字型に変換する。
+          bookmarkUsersSize = String(bookmarkUsersSize);
           console.log(bookmarkUsersSize);
           console.log(typeof bookmarkUsersSize);
+          //insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
+          bookmarkUserCount.insertAdjacentHTML('beforeend',bookmarkUsersSize);
+          bookmarkUserCount.setAttribute('class','bookmarkUserCount');
         });
         
       
@@ -183,7 +199,7 @@ auth.onAuthStateChanged(user => {
         postedDate.setAttribute('class','postedDate');
         information.setAttribute('class','information');
         bookInfo.setAttribute('class','bookInfo');
-        bookmarkUserCount.setAttribute('class','bookmarkUserCount$');
+       
         comments.setAttribute('class','comments');
         revisionButton.setAttribute('class','revisionButton');
         printButton.setAttribute('class','printButton');
@@ -209,6 +225,7 @@ auth.onAuthStateChanged(user => {
         cardSlides.appendChild(cardContainer);
         mainCenter.appendChild(cardSlides);
         cardStatus.appendChild(comments);
+        cardStatus.appendChild(bookmarkUserCount);
         cardStatus.appendChild(revisionButton);
         cardStatus.appendChild(printButton);
         cardStatus.appendChild(postedUserName);
