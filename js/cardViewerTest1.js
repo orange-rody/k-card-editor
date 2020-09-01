@@ -155,6 +155,24 @@ auth.onAuthStateChanged(user => {
           bookmarkUserCount.setAttribute('class','bookmarkUserCount');
         });
         
+      //コメントしてくれたユーザー一覧を示す配列(commentUsers)を宣言する。
+      const commentUsers = [];
+      db.collection('k-card').doc(doc).collection('comments')
+        .where('cardId','==',doc)
+        .get()
+        .then((commentUserDocs)=>{
+          commentUserDocs.forEach((commentUserDocs)=>{
+            let commentUser = commentUserDocs.data().uid;
+            commentUser = String(commentUser);
+            commentUsers.push(commentUser);
+          })
+        }).then(()=>{
+          console.log(commentUsers);
+          let commentUsersSize = commentUsers.length;
+          commentUsersSize = String(commentUsersSize);
+          comments.insertAdjacentHTML('beforeend',commentUsersSize);
+          comments.setAttribute('class','comments');
+        })
       
     
 
@@ -178,7 +196,6 @@ auth.onAuthStateChanged(user => {
         bookTitle.textContent = doc.data().bookTitle;
         pages.textContent = doc.data().pages;
         postedDate.textContent = output;
-        comments.insertAdjacentHTML('beforeend',doc.data().comments);
         postedUserName.textContent = doc.data().postedUserName;
         postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
         
@@ -200,7 +217,7 @@ auth.onAuthStateChanged(user => {
         information.setAttribute('class','information');
         bookInfo.setAttribute('class','bookInfo');
        
-        comments.setAttribute('class','comments');
+
         revisionButton.setAttribute('class','revisionButton');
         printButton.setAttribute('class','printButton');
         postedUserName.setAttribute('class','postedUserName');
