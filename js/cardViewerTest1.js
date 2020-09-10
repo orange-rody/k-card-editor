@@ -6,11 +6,11 @@ const db = firebase.firestore();
 // currentUidを宣言する。
 let currentUid = null;
 
-const strage = firebase.storage();
+const storage = firebase.storage();
 
 let userIcon = document.querySelector('#userIcon');
 // styleプロパティでbackgroundImageに任意の画像を設定する
-userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
+
 
 let mainCenter = document.querySelector('#main-center');
 
@@ -52,6 +52,9 @@ auth.onAuthStateChanged(user => {
         // showCardIdListSize()で、ドキュメントの集合体からサイズ(要素数)を抽出する。
         const cardIdListSize = showCardIdListSize(documents);
         console.log(cardIdListSize);
+
+        const storageRef = storage.ref(`${currentUid}/userIcon`);
+        
 
         // postedCardNumberにcardIdListSizeを代入する。
         postedCardNumber.textContent = cardIdListSize;
@@ -176,8 +179,24 @@ auth.onAuthStateChanged(user => {
         .then((bookmarkCard)=>{
           if(bookmarkCard.exists){
             bookmarkUserCount.style.color = '#555';
+            db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).delete();
           }else {
             bookmarkUserCount.style.color = '#FF474E';
+            db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).set({
+              bookmarkCardId: doc,
+              uid: currentUid,
+            });
+          }
+        });
+        db.collection('k-card').doc(doc).collection('bookmarkUser').doc(currentUid).get()
+        .then((bookmarkUser)=>{
+          if(bookmarkUser.exists){
+            db.collection('k-card').doc(doc).collection('bookmarkUser').doc(currentUid).delete();
+          }else {
+            db.collection('k-card').doc(doc).collection('bookmarkUser').doc(currentUid).set({
+              bookmarkCard: doc,
+              uid: currentUid,
+            });
           }
         })
       });
