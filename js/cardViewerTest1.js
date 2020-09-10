@@ -36,7 +36,6 @@ auth.onAuthStateChanged(user => {
       // 他のコードと比べて遅くなってしまう。
       // そのため、documentsの取得後に行う処理は、軒並みthenの()の中に記述した方が良い。
       .then((documents) => {
-      
         // .getしたdocumentsをtypeofすると、データ形式がobjectであることが確認できる。
         console.log(typeof documents);
         // makeCardList()で、ドキュメントの集合体からドキュメントIDの値のみ抽出して、配列を作る。
@@ -75,7 +74,9 @@ auth.onAuthStateChanged(user => {
         cardId = cardId.toString();
         cardIdList.push(cardId);
       });
+      console.log(cardIdList);
       return cardIdList;
+    
     }
 
 
@@ -124,8 +125,9 @@ auth.onAuthStateChanged(user => {
 
       //bookmarkUsersという配列を宣言する。
       const bookmarkUsers = [];
+      
       db.collection('k-card').doc(doc).collection('bookmarkUser')
-        .where('cardId','==',doc).get()
+        .get()
         //サブコレクション(bookmarkUser)から、get()メソッドで取ってきた
         //スナップショット(bookmarkUserDocs)は複数のドキュメントが集まったもの。
         //なので、forEachをかけて、それぞれのドキュメントからuidフィールドの
@@ -137,7 +139,7 @@ auth.onAuthStateChanged(user => {
             bookmarkUser = bookmarkUser.toString();
             //配列bookmarkUsersにbookmarkUserの文字列をpushする。
             bookmarkUsers.push(bookmarkUser);
-          })
+          });
         }).then(()=>{
           //bookmarkUsersがちゃんと作られたか確認。
           //[注意]forEachでrenderCardファンクションを呼び出しているため、複数のbookmarkUsersが
@@ -152,30 +154,40 @@ auth.onAuthStateChanged(user => {
           console.log(typeof bookmarkUsersSize);
           //insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
           bookmarkUserCount.insertAdjacentHTML('beforeend',bookmarkUsersSize);
-          bookmarkUserCount.setAttribute('class','bookmarkUserCount');
+          bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
         });
-        
+      
+      db.collection('k-card').doc(doc).collection('bookmarkUser').where('uid','==',currentUid).get()
+      .then((bookmarkUser)=>{
+        console.log(currentUid);
+        if(bookmarkUser.exists){
+          console.log(bookmarkUser.data().uid);
+        } else {
+          console.log('ドキュメントが見つかりません！');
+        }
+      })
+    
+
+
       //コメントしてくれたユーザー一覧を示す配列(commentUsers)を宣言する。
       const commentUsers = [];
       db.collection('k-card').doc(doc).collection('comments')
-        .where('cardId','==',doc)
         .get()
         .then((commentUserDocs)=>{
-          commentUserDocs.forEach((commentUserDocs)=>{
-            let commentUser = commentUserDocs.data().uid;
-            commentUser = String(commentUser);
-            commentUsers.push(commentUser);
+          if(commentUserDocs.exists){
+            commentUserDocs.forEach((commentUserDoc)=>{
+              let commentUser = commentUserDoc.data().commentUid;
+              commentUser = String(commentUser);
+              commentUsers.push(commentUser);
           })
-        }).then(()=>{
+        }
+      }).then(()=>{
           console.log(commentUsers);
           let commentUsersSize = commentUsers.length;
           commentUsersSize = String(commentUsersSize);
           comments.insertAdjacentHTML('beforeend',commentUsersSize);
           comments.setAttribute('class','comments');
-        })
-      
-    
-
+        });
 
       db.collection('k-card').doc(doc).get()
         .then((doc) => {
@@ -254,6 +266,8 @@ auth.onAuthStateChanged(user => {
         revisionButton.setAttribute('href',editorURL);
       });
     }
+  
+    
   
     
       
