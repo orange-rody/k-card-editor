@@ -6,11 +6,10 @@ const db = firebase.firestore();
 // currentUidを宣言する。
 let currentUid = null;
 
-// const strage = firebase.storage().ref();
-// let userIconReference = strage.child('Hiroki/IMG_0117.JPG');
+const strage = firebase.storage();
 
 let userIcon = document.querySelector('#userIcon');
-//styleプロパティでbackgroundImageに任意の画像を設定する
+// styleプロパティでbackgroundImageに任意の画像を設定する
 userIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
 
 let mainCenter = document.querySelector('#main-center');
@@ -27,8 +26,10 @@ auth.onAuthStateChanged(user => {
   if(user){
     // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
+
     console.log('ユーザーのID：',currentUid);
     // where()メソッドで、currentUidのフィールドを持つドキュメントを抽出。
+
     db.collection('k-card').where('uid', '==', currentUid)
       .get()
       // ドキュメントの集合体(documents)を取得した後にthen()の中身の処理を実行する。
@@ -157,15 +158,29 @@ auth.onAuthStateChanged(user => {
           bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
         });
       
-      db.collection('k-card').doc(doc).collection('bookmarkUser').where('uid','==',currentUid).get()
-      .then((bookmarkUser)=>{
-        console.log(currentUid);
-        if(bookmarkUser.exists){
-          console.log(bookmarkUser.data().uid);
-        } else {
-          console.log('ドキュメントが見つかりません！');
+
+      console.log(currentUid);
+      
+      db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).get()
+      .then((bookmarkCard)=>{
+        if(bookmarkCard.exists){
+          console.log(bookmarkCard.data().bookmarkCardId);
+          bookmarkUserCount.style.color = '#FF474E';
+        }else {
+        console.log('ブックマークしたカードは存在しません');  
         }
-      })
+      });
+
+      bookmarkUserCount.addEventListener('click',(e)=>{
+        db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).get()
+        .then((bookmarkCard)=>{
+          if(bookmarkCard.exists){
+            bookmarkUserCount.style.color = '#555';
+          }else {
+            bookmarkUserCount.style.color = '#FF474E';
+          }
+        })
+      });
     
 
 
@@ -209,7 +224,7 @@ auth.onAuthStateChanged(user => {
         pages.textContent = doc.data().pages;
         postedDate.textContent = output;
         postedUserName.textContent = doc.data().postedUserName;
-        postedUserIcon.style.backgroundImage = "url(https://firebasestorage.googleapis.com/v0/b/k-card-editor.appspot.com/o/Hiroki%2FIMG_0117.JPG?alt=media&token=4925a255-05d4-4c01-b3c4-d36073e8149b)";
+        // postedUserIcon.style.backgroundImage
         
         //それぞれの要素にsetAttributeでclass名を設定する。
         cardContainer.setAttribute('class','cardContainer');
