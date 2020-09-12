@@ -53,7 +53,15 @@ auth.onAuthStateChanged(user => {
         const cardIdListSize = showCardIdListSize(documents);
         console.log(cardIdListSize);
 
-        const storageRef = storage.ref(`${currentUid}/userIcon`);
+        const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
+        storageRef.getDownloadURL()
+        .then((url)=>{
+          console.log('url:', url);
+          userIcon.style.backgroundImage=`url(${url})`;
+        })
+        .catch((error)=>{
+          console.error('ダウンロードエラー:',error);
+        });
         
 
         // postedCardNumberにcardIdListSizeを代入する。
@@ -217,13 +225,10 @@ auth.onAuthStateChanged(user => {
           bookmarkUsersSize = String(bookmarkUsersSize);
           console.log(bookmarkUsersSize);
           console.log(typeof bookmarkUsersSize);
-          //insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
-          bookmarkUserCount.innerHTML = `<i class="fas fa-heart"></i>${bookmarkUsersSize}`;
+          //innerHTMLを必ず使うこと。insertAdjacentHTMLだと、前からあるテキストに更にテキストを挿入してしまう事になる。
+          bookmarkUserCount.innerHTML = `<i class="fas fa-heart"></i> ${bookmarkUsersSize}`;
           bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
       });
-
-
-
 
       //コメントしてくれたユーザー一覧を示す配列(commentUsers)を宣言する。
       const commentUsers = [];
@@ -245,6 +250,16 @@ auth.onAuthStateChanged(user => {
           comments.setAttribute('class','comments');
         });
 
+      const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
+      storageRef.getDownloadURL()
+      .then((url)=>{
+        console.log('url:', url);
+        postedUserIcon.style.backgroundImage=`url(${url})`;
+      })
+      .catch((error)=>{
+        console.error('ダウンロードエラー:',error);
+      });
+
       db.collection('k-card').doc(doc).get()
         .then((doc) => {
 
@@ -265,7 +280,6 @@ auth.onAuthStateChanged(user => {
         pages.textContent = doc.data().pages;
         postedDate.textContent = output;
         postedUserName.textContent = doc.data().postedUserName;
-        // postedUserIcon.style.backgroundImage
         
         //それぞれの要素にsetAttributeでclass名を設定する。
         cardContainer.setAttribute('class','cardContainer');
