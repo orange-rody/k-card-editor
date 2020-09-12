@@ -130,7 +130,8 @@ auth.onAuthStateChanged(user => {
       //bookmarkUsersという配列を宣言する。
       const bookmarkUsers = [];
       
-      db.collection('k-card').doc(doc).collection('bookmarkUser')
+      function renderBookmarkUserCount(){
+        db.collection('k-card').doc(doc).collection('bookmarkUser')
         .get()
         //サブコレクション(bookmarkUser)から、get()メソッドで取ってきた
         //スナップショット(bookmarkUserDocs)は複数のドキュメントが集まったもの。
@@ -160,7 +161,7 @@ auth.onAuthStateChanged(user => {
           bookmarkUserCount.insertAdjacentHTML('beforeend',bookmarkUsersSize);
           bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
         });
-      
+      }
 
       console.log(currentUid);
       
@@ -188,6 +189,7 @@ auth.onAuthStateChanged(user => {
             });
           }
         });
+
         db.collection('k-card').doc(doc).collection('bookmarkUser').doc(currentUid).get()
         .then((bookmarkUser)=>{
           if(bookmarkUser.exists){
@@ -198,9 +200,11 @@ auth.onAuthStateChanged(user => {
               uid: currentUid,
             });
           }
-        })
+        });
       });
     
+      renderBookmarkUserCount();
+     
 
 
       //コメントしてくれたユーザー一覧を示す配列(commentUsers)を宣言する。
