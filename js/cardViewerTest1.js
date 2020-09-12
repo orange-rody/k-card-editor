@@ -205,6 +205,24 @@ auth.onAuthStateChanged(user => {
     
       renderBookmarkUserCount();
      
+      db.collection("k-card").doc(doc).collection('bookmarkUser').onSnapshot(function(querySnapshot) {
+        let bookmarkUsers = [];
+        querySnapshot.forEach(function(doc) {
+            bookmarkUsers.push(doc.id);
+        });
+        console.log(`ブックマークしたユーザーは${bookmarkUsers}です`);
+        let bookmarkUsersSize = bookmarkUsers.length;
+          //bookmarkUsersSizeは数値型となっているため、insertAdjacentHTMLで挿入できるよう、
+          //文字型に変換する。
+          bookmarkUsersSize = String(bookmarkUsersSize);
+          console.log(bookmarkUsersSize);
+          console.log(typeof bookmarkUsersSize);
+          //insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
+          bookmarkUserCount.innerHTML = `<i class="fas fa-heart"></i>${bookmarkUsersSize}`;
+          bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
+      });
+
+
 
 
       //コメントしてくれたユーザー一覧を示す配列(commentUsers)を宣言する。
