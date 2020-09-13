@@ -2,23 +2,18 @@
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 // currentUidを宣言する。
 let currentUid = null;
-
-const storage = firebase.storage();
-
-let userIcon = document.querySelector('#userIcon');
-// styleプロパティでbackgroundImageに任意の画像を設定する
-
-
 let mainCenter = document.querySelector('#main-center');
-
 // 表示するk-cardの一覧を格納する変数cardSlidesを宣言し、定義する。
 let cardSlides = document.createElement('div');
 cardSlides.setAttribute('id','cardSlides');
 mainCenter.appendChild(cardSlides);
 
+let userIcon = document.querySelector('#userIcon');
+// styleプロパティでbackgroundImageに任意の画像を設定する
 let postedCardNumber = document.getElementById('postedCardNumber');
 
 //listen for auth status change
@@ -26,10 +21,18 @@ auth.onAuthStateChanged(user => {
   if(user){
     // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
-
     console.log('ユーザーのID：',currentUid);
-    // where()メソッドで、currentUidのフィールドを持つドキュメントを抽出。
+    const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
+    storageRef.getDownloadURL()
+    .then((url)=>{
+      console.log('url:', url);
+      userIcon.style.backgroundImage=`url(${url})`;
+    })
+    .catch((error)=>{
+      console.error('ダウンロードエラー:',error);
+    });
 
+    // where()メソッドで、currentUidのフィールドを持つドキュメントを抽出。
     db.collection('k-card').where('uid', '==', currentUid)
       .get()
       // ドキュメントの集合体(documents)を取得した後にthen()の中身の処理を実行する。
@@ -49,21 +52,8 @@ auth.onAuthStateChanged(user => {
           renderCard(cardId);
         });
  
-        // showCardIdListSize()で、ドキュメントの集合体からサイズ(要素数)を抽出する。
-        const cardIdListSize = showCardIdListSize(documents);
+        const cardIdListSize = cardIdList.length;
         console.log(cardIdListSize);
-
-        const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
-        storageRef.getDownloadURL()
-        .then((url)=>{
-          console.log('url:', url);
-          userIcon.style.backgroundImage=`url(${url})`;
-        })
-        .catch((error)=>{
-          console.error('ダウンロードエラー:',error);
-        });
-        
-
         // postedCardNumberにcardIdListSizeを代入する。
         postedCardNumber.textContent = cardIdListSize;
 
@@ -71,7 +61,6 @@ auth.onAuthStateChanged(user => {
         // cardSlides.style.height = `calc(100vh * ${cardIdListSize})`;
         // console.log(cardSlides.style.height);
     });
-
 
     // currentIdのフィールドを持つ複数のドキュメントの集合体から、ドキュメントIDの値のみ
     // 抽出して、配列にするためのfunction makeCardListを宣言する。
@@ -86,29 +75,16 @@ auth.onAuthStateChanged(user => {
         cardId = cardId.toString();
         cardIdList.push(cardId);
       });
-      console.log(cardIdList);
       return cardIdList;
-    
-    }
-
-
-    // 抽出したカードIDリスト(cardIdList)のサイズ(要素数)を取得する。
-    function showCardIdListSize(documents){
-          let cardIdListSize = documents.size;
-          cardIdListSize = cardIdListSize.toString();
-          cardIdListSize = parseInt(cardIdListSize);
-          console.log(cardIdListSize);
-          return cardIdListSize;
     }
    
     // 関数renderCardを宣言する
     function renderCard(doc){
       //db.collection('k-card').doc(doc).get()でFirestoreから情報を読み取ってくる前に、
       //<div>や<p>などの外枠の箱を作る。
-
       //cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
-      let cardContainer = document.createElement('div');
       //cardWrapは cardViewer + cardStatus。
+      let cardContainer = document.createElement('div');
       let cardWrap = document.createElement('div');
       let cardViewer = document.createElement('div');
       let cardMainArea = document.createElement('div');
@@ -135,44 +111,44 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      //bookmarkUsersという配列を宣言する。
-      const bookmarkUsers = [];
-      
+      // const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
+      storageRef.getDownloadURL()
+      .then((url)=>{
+        console.log('url:', url);
+        postedUserIcon.style.backgroundImage=`url(${url})`;
+      })
+      .catch((error)=>{
+        console.error('ダウンロードエラー:',error);
+      });
+
       function renderBookmarkUserCount(){
-        db.collection('k-card').doc(doc).collection('bookmarkUser')
-        .get()
-        //サブコレクション(bookmarkUser)から、get()メソッドで取ってきた
-        //スナップショット(bookmarkUserDocs)は複数のドキュメントが集まったもの。
+        //サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきた
+        //スナップショット(querySnapshot)は複数のドキュメントが集まったもの。
         //なので、forEachをかけて、それぞれのドキュメントからuidフィールドの
         //値をひっぱりだす。
-        .then((bookmarkUserDocs)=>{
-          bookmarkUserDocs.forEach((bookmarkUserDoc) =>{
-            let bookmarkUser = bookmarkUserDoc.data().uid;
-            //bookmarkUserは初期状態ではobjectなので、文字列に変換する。
-            bookmarkUser = bookmarkUser.toString();
-            //配列bookmarkUsersにbookmarkUserの文字列をpushする。
-            bookmarkUsers.push(bookmarkUser);
+        db.collection('k-card').doc(doc).collection('bookmarkUser')
+        .onSnapshot(function(querySnapshot){
+          //bookmarkUsersはonSnapshotが走るたびに初期化しないといけないので、
+          //bookmarkUsersの配列はfunction renderBookmarkUserCountの中で宣言する。
+          //なぜ初期化するのか=>初期化しないと、bookmarkボタンを押すたびに、
+          //元あった配列に重複する要素がどんどんpushされてしまうため。
+          let bookmarkUsers = [];
+          querySnapshot.forEach(function(doc){
+            bookmarkUsers.push(doc.id);
           });
-        }).then(()=>{
-          //bookmarkUsersがちゃんと作られたか確認。
-          //[注意]forEachでrenderCardファンクションを呼び出しているため、複数のbookmarkUsersが
-          //表示されてしまうがエラーではない。
-          console.log(bookmarkUsers);
+          console.log(bookmarkUsers)
           //bookmarkUsers.lengthで配列の要素数をカウントする。
           let bookmarkUsersSize = bookmarkUsers.length;
-          //bookmarkUsersSizeは数値型となっているため、insertAdjacentHTMLで挿入できるよう、
-          //文字型に変換する。
-          bookmarkUsersSize = String(bookmarkUsersSize);
-          console.log(bookmarkUsersSize);
+          //bookmarkUsersSizeは数値型となっている。
           console.log(typeof bookmarkUsersSize);
+          console.log(bookmarkUsersSize);
           //insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
-          bookmarkUserCount.insertAdjacentHTML('beforeend',bookmarkUsersSize);
+          bookmarkUserCount.innerHTML=`<i class="fas fa-heart"></i> ${bookmarkUsersSize}`;
           bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
         });
       }
+      renderBookmarkUserCount();
 
-      console.log(currentUid);
-      
       db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).get()
       .then((bookmarkCard)=>{
         if(bookmarkCard.exists){
@@ -183,6 +159,8 @@ auth.onAuthStateChanged(user => {
         }
       });
 
+      //ブックマークボタンを押したら、userのコレクションからbookmarkCardのドキュメントを、
+      //k-cardのコレクションからbookmarkUserのドキュメントをそれぞれ削除する。
       bookmarkUserCount.addEventListener('click',(e)=>{
         db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).get()
         .then((bookmarkCard)=>{
@@ -210,25 +188,6 @@ auth.onAuthStateChanged(user => {
           }
         });
       });
-    
-      renderBookmarkUserCount();
-     
-      db.collection("k-card").doc(doc).collection('bookmarkUser').onSnapshot(function(querySnapshot) {
-        let bookmarkUsers = [];
-        querySnapshot.forEach(function(doc) {
-            bookmarkUsers.push(doc.id);
-        });
-        console.log(`ブックマークしたユーザーは${bookmarkUsers}です`);
-        let bookmarkUsersSize = bookmarkUsers.length;
-          //bookmarkUsersSizeは数値型となっているため、insertAdjacentHTMLで挿入できるよう、
-          //文字型に変換する。
-          bookmarkUsersSize = String(bookmarkUsersSize);
-          console.log(bookmarkUsersSize);
-          console.log(typeof bookmarkUsersSize);
-          //innerHTMLを必ず使うこと。insertAdjacentHTMLだと、前からあるテキストに更にテキストを挿入してしまう事になる。
-          bookmarkUserCount.innerHTML = `<i class="fas fa-heart"></i> ${bookmarkUsersSize}`;
-          bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
-      });
 
       //コメントしてくれたユーザー一覧を示す配列(commentUsers)を宣言する。
       const commentUsers = [];
@@ -250,15 +209,7 @@ auth.onAuthStateChanged(user => {
           comments.setAttribute('class','comments');
         });
 
-      const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
-      storageRef.getDownloadURL()
-      .then((url)=>{
-        console.log('url:', url);
-        postedUserIcon.style.backgroundImage=`url(${url})`;
-      })
-      .catch((error)=>{
-        console.error('ダウンロードエラー:',error);
-      });
+
 
       db.collection('k-card').doc(doc).get()
         .then((doc) => {
