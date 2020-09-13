@@ -115,26 +115,7 @@ a {
   animation: fadeOutAnimation 1000ms ease-in-out;
 }
 
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-    top: 60px;
-  }
-  100% {
-    opacity: 1;
-    top: 50px;
-  }
-}
 
-@keyframes fadeOutAnimation {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    top: 60px;
-  }
-}
 
 .userRegisterForm {
   font-size: 20px;

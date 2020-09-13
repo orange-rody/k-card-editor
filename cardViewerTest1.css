@@ -161,7 +161,6 @@ background-size: cover;
 #profileEditButton {
   position: absolute;
   width: 200px;
-  height: 50px;
   border-radius: 60px;
   border: none;
   background-color: #6082c6;
@@ -170,7 +169,11 @@ background-size: cover;
   bottom: -30%;
   z-index: 4;
   transition: all 0.2s ease-in-out;
+  font-size: 15px;
+  padding: 10px;
+  text-align: center;
   font-family: 'Sawarabi Gothic', sans-serif;
+  text-decoration: none;
 }
 
 #profileEditButton:hover {
@@ -281,6 +284,21 @@ background-size: cover;
   margin: 0;
   padding: 0;
 } */
+
+.profileEditWindow {
+  width: 1000px;
+  height: 600px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  background-image: url(./kelly-sikkema-vtKc7BpJ-vU-unsplash.jpg);
+  background-size: cover;
+  border-radius: 10px;
+  display: flex;
+  top: 50px;
+  box-shadow: 5px 5px 50px #402A01;
+  animation: fadeInAnimation 1500ms ease-in-out;
+}
 
 .cardContainer {
   position: relative;

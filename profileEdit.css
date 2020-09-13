@@ -1,0 +1,169 @@
+html {
+  font-size: 20px;
+  color: #555;
+}
+
+#profileEdit {
+  margin: 0;
+  background-image: url(./p0146_m.jpeg);
+  font-family: 'Noto Serif JP', serif;
+}
+
+h1 {
+  margin: 0;
+  padding-top: 30px;
+  font-family: 'Bilbo Swash Caps', cursive;
+  font-size: 2rem;
+}
+h3{
+  margin: 10px;
+  font-size: 1rem;
+}
+
+.cover {
+  background-image: url(./p0026_m.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top;
+  width: 100vw;
+  max-width: 1440px;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.content {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.flex {
+  width: 960px;
+  display: flex;
+}
+
+.image {
+  width: 40%;
+  height: 100%;
+}
+
+.text {
+  width: 50%;
+}
+
+.zone-text {
+  font-size: 13px;
+  margin: 0;
+  font-family: 'Sawarabi Gothic', sans-serif;
+  margin-top: 20px;
+}
+
+.userIcon-zone {
+  width: 70%;
+  height: 25vh;
+  background-color: #888;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 6rem;
+  text-align: center;
+  line-height: 25vh;
+  }
+
+  
+.userImage-zone {
+  width: 70%;
+  height: 25vh;
+  background-color: #888;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 6rem;
+  text-align: center;
+  line-height: 25vh;
+  }
+
+  #nameTitle, #profileTitle, #favouriteTitle {
+    margin-bottom: 5px;
+  }
+
+  #name {
+    width: 30vw;
+    height: 35px;
+    margin-bottom: 10px;
+    border: 1px solid #888;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1rem;
+    color: #555;
+    border-radius: 5px;
+    padding: 0 5px;
+  }
+
+  #profileText {
+    width: 30vw;
+    height: 120px;
+    margin-bottom: 10px;
+    border: 1px solid #888;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.8rem;
+    color: #555;
+    border-radius: 5px;
+    padding: 0 5px;
+  }
+
+  #favouriteBook {
+    width: 30vw;
+    height: 120px;
+    margin-bottom: 10px;
+    border: 1px solid #888;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.8rem;
+    color: #555;
+    border-radius: 5px;
+    padding: 0 5px;
+  }
+
+  .buttons {
+    width: 960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #submitButton {
+    width: 100px;
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    background-color: #5a7de6;
+    color: #fff;
+    border-radius: 20px;
+    transition: all 0.2s ease-in-out;
+    font-family: 'Sawarabi Gothic', sans-serif;
+    margin-right: 20px;
+  }
+  
+  #submitButton:focus {
+    outline: none;
+  }
+  
+  #submitButton:hover {
+    cursor: pointer;
+    background-color: #63aef9;
+  }
+  
+  #cancelButton {
+    font-size: 15px;
+    margin-left: 30px;
+    padding: 14px;
+    border: none;
+    background-color: #fc8930;
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    font-family: 'Sawarabi Gothic', sans-serif;
+    margin-right: 20px;
+  }
+  
+  #cancelButton:hover {
+    background-color: #ffbf51;
+  }
