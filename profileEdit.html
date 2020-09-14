@@ -15,17 +15,14 @@
       <div class = "content">
         <form id = "form" name = "form">
           <h1>Let's Edit Your Profile!</h1>
-          <h3>あなたのプロフィールを編集しましょう!</h3>
           <div class = "flex">
             <div class = "image">
               <!--ユーザーアイコンの画像を登録するゾーン-->
-              <p class = "zone-text">画像ファイルをドロップしてください。</p>
               <div class = "userIcon-zone">
                 <i class="fas fa-user"></i>
               </div>
               <input id="upload-userIcon" type="file" accept="image/jpeg,image/png,image/gif">
               <!--ユーザーイメージの画像を登録するゾーン-->
-              <p class = "zone-text">画像ファイルをドロップしてください。</p>
               <div class = "userImage-zone">
                   <i class="fas fa-image"></i>
               </div>
@@ -37,10 +34,10 @@
                 <input type = "text" id = "name" name = "name">
               <!--ユーザーの自己紹介文を登録するゾーン-->
               <p id = "profileTitle">自己紹介</p>
-                <textarea id = "profileText" name = "profileText"></textarea>
+                <textarea id = "profile" name = "profile"></textarea>
               <!--ユーザーの好きな本・最近読んだ本を登録するゾーン--> 
-              <p id = "favouriteTitle">好きな本・最近読んだ本</p>
-                <textarea id = "favouriteBook" name = "favouriteBook"></textarea> 
+              <p id = "favoriteTitle">好きな本・最近読んだ本</p>
+                <textarea id = "favorite" name = "favorite"></textarea> 
               </div>
             </div>
           <div class = "buttons">
@@ -71,7 +68,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
       </script>
-      <script src = "js/userEditor.js"></script>
+      <script src = "js/profileEdit.js"></script>
     </body>
   </html>
   </body>
