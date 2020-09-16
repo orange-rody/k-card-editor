@@ -8,24 +8,26 @@ const profile = document.getElementById('profile');
 const favorite = document.getElementById('favorite');
 const form = document.getElementById('form');
 
-const userIconZone = document.querySelector('userIcon-zone');
-const userImageZone = document.querySelector('userImage-zone');
+const userIconZone = document.querySelector('.userIcon-zone');
+const userImageZone = document.querySelector('.userImage-zone');
 
 
 auth.onAuthStateChanged((user) => {
   if(user){
     let currentUid = user.uid;
-    storage.ref(`${currentUid}/userIcon.jpg`)
-    .getDownloadURL()
-    .then((url)=>{
-      userIconZone.style.backgroundImage = `url(${url})`;
-    });
+    // storage.ref(`${currentUid}/userIcon`)
+    // .getDownloadURL()
+    // .then((url)=>{
+    //   userIconZone.style.backgroundImage = `url(${url})`;
+    // });
 
-    storage.ref(`${currentUid}/userImage.jpg`)
-    .getDownloadURL()
-    .then((url)=>{
-      userImageZone.style.backgroundImage = `url(${url})`;
-    })
+    // storage.ref(`${currentUid}/userImage`)
+    // .getDownloadURL()
+    // .then((url)=>{
+    //   userImageZone.style.backgroundImage = `url(${url})`;
+    // })
+
+
 
     db.collection('user').doc(currentUid).get()
     .then((user)=>{
@@ -35,22 +37,22 @@ auth.onAuthStateChanged((user) => {
     });
     form.addEventListener('submit',(e)=>{
       e.preventDefault();
-      const userIcons = document.getElementById('upload-userIcon').files[0];
-      const userImages = document.getElementById('upload-userImage').files[0];
-      if(userIcons.length === 0){
+      const userIconFiles = document.getElementById('upload-userIcon').files;
+      const userImageFiles = document.getElementById('upload-userImage').files;
+      if(userIconFiles.length===0){
         //ファイルが選択されていないなら何もしない
         return;
       } 
-      else if(userImages === 0){
+      else if(userImageFiles.length===0){
         return;
       }
-      const userIconFile = userIcons[0]; //表示画像ファイル
-      const userImageFile = userImages[0];
-
-      storage.ref(`${currentUid}/userIcon`)
+      const userIconFile = userIconFiles[0];
+      const userImageFile = userImageFiles[0];
+     
+      storage.ref(`userIcon/${currentUid}`)
              .put(userIconFile); 
              //画像ファイルをStorageの指定の場所にアップロード。
-      storage.ref(`${currentUid}/userImage`)
+      storage.ref(`userImage/${currentUid}`)
              .put(userImageFile);
 
       db.collection('user').doc(currentUid).set({

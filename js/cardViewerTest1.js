@@ -13,6 +13,7 @@ cardSlides.setAttribute('id','cardSlides');
 mainCenter.appendChild(cardSlides);
 
 let userIcon = document.querySelector('#userIcon');
+let userImage = document.querySelector('#userImage');
 // styleプロパティでbackgroundImageに任意の画像を設定する
 let postedCardNumber = document.getElementById('postedCardNumber');
 
@@ -22,11 +23,21 @@ auth.onAuthStateChanged(user => {
     // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
     console.log('ユーザーのID：',currentUid);
-    const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
-    storageRef.getDownloadURL()
+    const userIconRef = storage.ref(`userIcon/${currentUid}`);
+    userIconRef.getDownloadURL()
     .then((url)=>{
       console.log('url:', url);
-      userIcon.style.backgroundImage=`url(${url})`;
+      userIcon.style.backgroundImage = `url(${url})`;
+    })
+    .catch((error)=>{
+      console.error('ダウンロードエラー:',error);
+    });
+
+    const userImageRef = storage.ref(`userImage/${currentUid}`);
+    userImageRef.getDownloadURL()
+    .then((url)=>{
+      console.log('url:', url);
+      userImage.style.backgroundImage = `url(${url})`;
     })
     .catch((error)=>{
       console.error('ダウンロードエラー:',error);
@@ -111,8 +122,8 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      // const storageRef = storage.ref(`${currentUid}/userIcon.jpg`);
-      storageRef.getDownloadURL()
+      const userIconRef = storage.ref(`${currentUid}/userIcon`);
+      userIconRef.getDownloadURL()
       .then((url)=>{
         console.log('url:', url);
         postedUserIcon.style.backgroundImage=`url(${url})`;
@@ -120,6 +131,7 @@ auth.onAuthStateChanged(user => {
       .catch((error)=>{
         console.error('ダウンロードエラー:',error);
       });
+
 
       function renderBookmarkUserCount(){
         //サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきた
