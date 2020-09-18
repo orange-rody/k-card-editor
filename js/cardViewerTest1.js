@@ -23,7 +23,7 @@ auth.onAuthStateChanged(user => {
     // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
     console.log('ユーザーのID：',currentUid);
-    const userIconRef = storage.ref(`userIcon/${currentUid}`);
+    const userIconRef = storage.ref(`${currentUid}/userIcon.jpg`);
     userIconRef.getDownloadURL()
     .then((url)=>{
       console.log('url:', url);
@@ -33,7 +33,7 @@ auth.onAuthStateChanged(user => {
       console.error('ダウンロードエラー:',error);
     });
 
-    const userImageRef = storage.ref(`userImage/${currentUid}`);
+    const userImageRef = storage.ref(`${currentUid}/userImage.jpg`);
     userImageRef.getDownloadURL()
     .then((url)=>{
       console.log('url:', url);

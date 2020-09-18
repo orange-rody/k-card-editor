@@ -49,19 +49,28 @@ auth.onAuthStateChanged((user) => {
       const userIconFile = userIconFiles[0];
       const userImageFile = userImageFiles[0];
      
-      storage.ref(`userIcon/${currentUid}`)
-             .put(userIconFile); 
+      storage.ref().child(`${currentUid}/userIcon.jpg`)
+             .put(userIconFile)
+             .then(()=>{
+               console.log(userIconFile);
+             })
+             //storageへの登録は一番時間がかかる処理なので、それが完了してから
+             //cardViewerTest1.htmlに戻るようにする。※出ないと、画像登録できないままになってしまう。
+             .then(()=>{
+              location.href = 'cardViewerTest1.html';
+            })
+
+             
+
              //画像ファイルをStorageの指定の場所にアップロード。
-      storage.ref(`userImage/${currentUid}`)
+      storage.ref().child(`${currentUid}/userImage.jpg`)
              .put(userImageFile);
 
       db.collection('user').doc(currentUid).set({
         name: form.name.value,
         profile: form.profile.value,
         favorite: form.favorite.value,
-      }).then(()=>{
-        location.href = 'cardViewerTest1.html';
-      })
-    })
+      });
+    });
   }
 });

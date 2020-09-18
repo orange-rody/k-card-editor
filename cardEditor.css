@@ -1,18 +1,21 @@
 #k-card-editor {
   margin: 0;
   padding: 0;
-  font-size: 15px;
+  font-size: 25px;
 }
 
 .content {
-  width: 914px;
-  height: 644px;
-  margin: 80px auto; 
-  border: 1px solid olive;
-  border-radius: 10px;
-  background-image: url('./k-card-image\(Edited\).png');
-  background-position: top center;
+  width: 819px;
+  height: 576px;
+  margin: 0 auto;
+  font-size: 25px;
+  border: 1px solid #00ced1;
+  background-image: url("./k-card-image\(Edited\).png");
+  background-position: center top;
   background-size: cover;
+  box-shadow: 10px 10px 10px #ccc;
+  position: relative;
+  border-radius: 10px;
 }
 
 p,h1,h2,h3,h4,h5 {
@@ -24,15 +27,19 @@ th, td{
   margin: 0;
   padding: 0;
 }
-
+tr {
+  width: 666px;
+}
 .main {
-  width: 740px;
-  height: 640px;
+  width: 666px;
+  height: 576px;
   float: right;
 }
 
 .side-bar {
-  width: 136px;
+  position: absolute;
+  width: 154px;
+  height: 100%;
 }
 
 .blank {
@@ -40,28 +47,42 @@ th, td{
   height: 360px;
 }
 
-thead tr th .title{
-  margin: 15px 20px 0;
-  height: 40px;
-  width: 700px;
+.title{
   border: 1px dotted #ddd;
-  font-family: sans-serif;
-  font-size: 30px;
+  font-family: 'Noto Serif JP', serif;
+  height: 40px;
+  font-size: 25px;
   overflow: ellipsis;
   white-space: nowrap;
   caret-color: slategray;
-  float: left;
   background-color: transparent;
+  width: 646px;
+  padding: 0;
 }
 
-thead tr .leadSentence {
-  font-size: 25px;
-  width: 700px;
+.text {
+  width: 646px;
   height: 40px;
-  margin: 5px 20px;
+  font-size: 25px;
+  margin: 15px 0 0 20px;
+}
+
+.text {
+  width: 646px;
+  height: 40px;
+  font-size: 25px;
+  margin: 10px 0 0 20px;
+}
+
+thead tr th .leadSentence {
+  width: 646px;
+  font-size: 25px;
+  padding: 0;
+  height: 40px;
   line-height: 60px;
   overflow: hidden;
   border: 1px dotted #ddd;
+  font-family: 'Noto Serif JP', serif;
   background-color: transparent;
 }
 
