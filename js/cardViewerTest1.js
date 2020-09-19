@@ -122,7 +122,7 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      const userIconRef = storage.ref(`${currentUid}/userIcon`);
+      const userIconRef = storage.ref(`${currentUid}/userIcon.jpg`);
       userIconRef.getDownloadURL()
       .then((url)=>{
         console.log('url:', url);
