@@ -23,25 +23,36 @@ auth.onAuthStateChanged(user => {
     // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
     console.log('ユーザーのID：',currentUid);
-    const userIconRef = storage.ref(`${currentUid}/userIcon.jpg`);
-    userIconRef.getDownloadURL()
-    .then((url)=>{
-      console.log('url:', url);
-      userIcon.style.backgroundImage = `url(${url})`;
-    })
-    .catch((error)=>{
-      console.error('ダウンロードエラー:',error);
-    });
 
-    const userImageRef = storage.ref(`${currentUid}/userImage.jpg`);
-    userImageRef.getDownloadURL()
-    .then((url)=>{
-      console.log('url:', url);
-      userImage.style.backgroundImage = `url(${url})`;
-    })
-    .catch((error)=>{
-      console.error('ダウンロードエラー:',error);
-    });
+    //userIconを読み込む。 ${cuttrntUid}/userIcon.jpgが存在した場合→onResolve、存在しなかった場合→onReject
+    //参考 https://stackoverflow.com/questions/43567626/how-to-check-if-a-file-exists-in-firebase-storage-from-your-android-application
+
+    storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
+
+    function onResolveIcon(url) { 
+      console.log('url:',url);
+      userIcon.style.backgroundImage = `url('${url}')`;
+    } 
+    function onRejectIcon(){
+      storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
+        console.log('url:',url);
+        userIcon.style.backgroundImage = `url('${url}')`;
+      });
+    }
+
+    storage.ref(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolveImage,onRejectImage);
+
+    function onResolveImage(url){
+      console.log('url:',url);
+      userIcon.style.backgroundImage = `url('${url}')`;
+    }
+    function onRejectImage(){
+      storage.ref(`${currentUid}/userImage.png`).getDownloadURL().then((url)=>{
+        console.log('url:',url);
+        userImage.style.backgroundImage = `url('${url}')`;
+      });
+    }
+
 
     // where()メソッドで、currentUidのフィールドを持つドキュメントを抽出。
     db.collection('k-card').where('uid', '==', currentUid)
@@ -122,17 +133,20 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      const userIconRef = storage.ref(`${currentUid}/userIcon.jpg`);
-      userIconRef.getDownloadURL()
-      .then((url)=>{
-        console.log('url:', url);
-        postedUserIcon.style.backgroundImage=`url(${url})`;
-      })
-      .catch((error)=>{
-        console.error('ダウンロードエラー:',error);
-      });
+      storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon,onRejectIcon);
 
+      function onResolveIcon(url){
+        console.log(`url:${url}`);
+        postedUserIcon.style.backgroundImage = `url(${url})`;
+      }
 
+      function onRejectIcon(){
+        storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
+          console.log(`url:${url}`);
+          postedUserIcon.style.backgroundImage = `url(${url})`;
+        });
+      }
+        
       function renderBookmarkUserCount(){
         //サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきた
         //スナップショット(querySnapshot)は複数のドキュメントが集まったもの。
