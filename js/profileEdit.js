@@ -29,6 +29,7 @@ auth.onAuthStateChanged((user) => {
 
     function putUserIcon(){
       const userIconFiles = document.getElementById('upload-userIcon').files;
+      //配列userIconFilesの先頭のファイルのみ受け取るようにする。
       const userIconFile = userIconFiles[0];
       //userIconファイルのファイル名を取得する 例：dog.jpg  dog.png
       const userIconFileName = userIconFile.name;
@@ -36,7 +37,7 @@ auth.onAuthStateChanged((user) => {
       const userIconFileType = userIconFileName.split('.').pop();
       console.log(userIconFileType);
       //userIconFileType === jpg か、userIconFileType === pngで場合分け
-      if(userIconFileType === 'jpg'){
+      if(userIconFileType === 'jpg' || userIconFileType === 'JPG'){
         storage.ref().child(`${currentUid}/userIcon.png`).delete();
         //Storageに「userIcon.jpg」の名称で画像データを保存。
         storage.ref().child(`${currentUid}/userIcon.jpg`)
@@ -50,7 +51,7 @@ auth.onAuthStateChanged((user) => {
                .then(()=>{
                   console.log('アイコン画像の登録処理が完了しました');
               });
-      }else{
+      }else if(userIconFileType === 'png' || userIconFileType === 'PNG'){
         storage.ref().child(`${currentUid}/userIcon.jpg`).delete();
         //Storageに「userIcon.png」の名称で画像データを保存。
         storage.ref().child(`${currentUid}/userIcon.png`)
@@ -58,11 +59,14 @@ auth.onAuthStateChanged((user) => {
                .then(()=>{
                   console.log('アイコン画像の登録処理が完了しました');
               });
+      }else{
+        console.log('ユーザーアイコン画像としては登録できないファイルです');
       }  
     }
 
     function putUserImage(){  
       const userImageFiles = document.getElementById('upload-userImage').files;
+       //配列userImageFilesの先頭のファイルのみ受け取るようにする。
       const userImageFile = userImageFiles[0];
       //userImageファイルのファイル名を取得する 例：dog.jpg  dog.png
       const userImageFileName = userImageFile.name;
@@ -70,7 +74,7 @@ auth.onAuthStateChanged((user) => {
       const userImageFileType = userImageFileName.split('.').pop();
       console.log(userImageFileType);
       //userImageFileType === jpg か、userImageFileType === pngで場合分け
-      if(userImageFileType === 'jpg'){
+      if(userImageFileType === 'jpg' || userImageFileType === 'JPG'){
         storage.ref().child(`${currentUid}/userImage.png`).delete();
         //Storageに「userIcon.jpg」の名称で画像データを保存。
         storage.ref().child(`${currentUid}/userImage.jpg`)
@@ -80,7 +84,7 @@ auth.onAuthStateChanged((user) => {
                .then(()=>{
                 console.log('イメージ画像の登録処理が完了しました');
             });
-      }else{
+      }else if(userImageFileType === 'png' || userImageFileType === 'PNG'){
         storage.ref().child(`${currentUid}/userImage.jpg`).delete();
         //Storageに「userIcon.png」の名称で画像データを保存。
         storage.ref().child(`${currentUid}/userImage.png`)
@@ -88,6 +92,8 @@ auth.onAuthStateChanged((user) => {
                .then(()=>{
                   console.log('イメージ画像の登録処理が完了しました');
               });
+      }else{
+        console.log('ユーザーのイメージ画像としては登録できないファイルです');
       }
     }              
 
@@ -116,24 +122,28 @@ auth.onAuthStateChanged((user) => {
     displayUserIconZone();
 
     //Firebase StorageにuserImageファイルがあったら、'userImage-zone'に表示する
-    let userImageZone = document.getElementById('userImage-zone');
-    storage.ref().child(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolveImage, onRejectImage);
-    function onResolveImage(url) { 
-      console.log('url:',url);   
-      faImage.classList.add('faImageOpa');
-      userImageZone.style.backgroundImage = `url('${url}')`;
-    } 
-    function onRejectImage(){
-      storage.ref().child(`${currentUid}/userImage.png`).getDownloadURL().then(onResolveImageAppend,onRejectImageAppend);
+    function displayUserImageZone(){
+      let userImageZone = document.getElementById('userImage-zone');
+      storage.ref().child(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolveImage, onRejectImage);
+      function onResolveImage(url) { 
+        console.log('url:',url);   
+        faImage.classList.add('faImageOpa');
+        userImageZone.style.backgroundImage = `url('${url}')`;
+      } 
+      function onRejectImage(){
+        storage.ref().child(`${currentUid}/userImage.png`).getDownloadURL().then(onResolveImageAppend,onRejectImageAppend);
+      }
+      function onResolveImageAppend(url){
+        console.log('url:',url);
+        faImage.classList.add('faImageOpa');
+        userImageZone.style.backgroundImage = `url('${url})`;
+      }
+      function onRejectImageAppend(){
+        console.log(error);
+      }
     }
-    function onResolveImageAppend(url){
-      console.log('url:',url);
-      faImage.classList.add('faImageOpa');
-      userImageZone.style.backgroundImage = `url('${url})`;
-    }
-    function onRejectImageAppend(){
-      console.log(error);
-    }
+    
+    displayUserImageZone(); 
 
     //ユーザーアカウントを削除する
     const deleteUserIcon = document.getElementById('delete-userIcon');
@@ -220,7 +230,7 @@ deleteUserImage.addEventListener('click',(event)=>{
         userIconReader.readAsDataURL(userIconFile);
     });
 
-
+    //ファイルを選択をクリックした後の処理
     let uploadUserImage = document.getElementById('upload-userImage');
     //ファイル選択ダイアログが変化したら
     uploadUserImage.addEventListener('change',(event)=>{
@@ -236,7 +246,7 @@ deleteUserImage.addEventListener('click',(event)=>{
       userImageReader.addEventListener('load',()=>{
         //結果をuserIconZoneに出力する
         userImageZone.style.backgroundImage = `url('${userImageReader.result}')`;
-        faUser.classList.add('faUserOpa');
+        faImage.classList.add('faImageOpa');
       });
         //URL形式として読み込む
         userImageReader.readAsDataURL(userImageFile);
