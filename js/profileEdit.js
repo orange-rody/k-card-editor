@@ -92,24 +92,28 @@ auth.onAuthStateChanged((user) => {
     }              
 
     //Firebase StorageにuserIconファイルがあったら、'userIcon-zone'に表示する
-    let userIconZone = document.getElementById('userIcon-zone');
-    storage.ref().child(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
-    function onResolveIcon(url) { 
-      console.log('url:',url);   
-      faUser.classList.add('faUserOpa');
-      userIconZone.style.backgroundImage = `url('${url}')`;
-    } 
-    function onRejectIcon(){
-      storage.ref().child(`${currentUid}/userIcon.png`).getDownloadURL().then(onResolveIconAppend,onRejectIconAppend);
+    function displayUserIconZone(){
+      let userIconZone = document.getElementById('userIcon-zone');
+      storage.ref().child(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
+      function onResolveIcon(url) { 
+        console.log('url:',url);   
+        faUser.classList.add('faUserOpa');
+        userIconZone.style.backgroundImage = `url('${url}')`;
+      } 
+      function onRejectIcon(){
+        storage.ref().child(`${currentUid}/userIcon.png`).getDownloadURL().then(onResolveIconAppend,onRejectIconAppend);
+      }
+      function onResolveIconAppend(url){
+        console.log('url:',url);
+        faUser.classList.add('faUserOpa');
+        userIconZone.style.backgroundImage = `url('${url}')`;
+      }
+      function onRejectIconAppend(){
+        console.log(error);
+      }
     }
-    function onResolveIconAppend(url){
-      console.log('url:',url);
-      faUser.classList.add('faUserOpa');
-      userIconZone.style.backgroundImage = `url('${url})`;
-    }
-    function onRejectIconAppend(){
-      console.log(error);
-    }
+
+    displayUserIconZone();
 
     //Firebase StorageにuserImageファイルがあったら、'userImage-zone'に表示する
     let userImageZone = document.getElementById('userImage-zone');
@@ -131,7 +135,70 @@ auth.onAuthStateChanged((user) => {
       console.log(error);
     }
 
+    //ユーザーアカウントを削除する
+    const deleteUserIcon = document.getElementById('delete-userIcon');
+    deleteUserIcon.addEventListener('click',(event)=>{
+      const isYes = confirm('ユーザーアイコンの画像を削除します。よろしいですか？');
+      if(isYes === true){
+        const isTrue = confirm('ページを再読み込みしますがよろしいですか？※入力途中の文章は消去されてしまいます。')
+        if(isTrue === true){
+          storage.ref().child(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolve,onReject);
+          function onResolve(){
+            storage.ref().child(`${currentUid}/userIcon.jpg`).delete().then(()=>{
+              location.reload();
+            });
+            alert('登録されているユーザーアイコンの画像を削除しました。');
+          }
+          function onReject(){
+            storage.ref().child(`${currentUid}/userIcon.png`).getDownloadURL().then(onResolveAppend,onRejectAppend);
+            function onResolveAppend(){
+              storage.ref().child(`${currentUid}/userIcon.png`).delete().then(()=>{
+                location.reload();
+              });
+              alert('登録されているユーザーアイコンの画像を削除しました。');
+            }
+            function onRejectAppend(){
+              alert('登録されているユーザーアイコンの画像はありませんでした。');
+              location.reload();
+            }
+          }
+        }
+      }
+    });
 
+//ユーザーイメージ画像を削除する
+const deleteUserImage = document.getElementById('delete-userImage');
+deleteUserImage.addEventListener('click',(event)=>{
+  const isYes = confirm('ユーザーのイメージ画像を削除します。よろしいですか？');
+  if(isYes === true){
+    const isTrue = confirm('ページを再読み込みしますがよろしいですか？※入力途中の文章は消去されてしまいます。')
+    if(isTrue === true){
+      storage.ref().child(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolve,onReject);
+      function onResolve(){
+        storage.ref().child(`${currentUid}/userImage.jpg`).delete().then(()=>{
+          location.reload();
+        });
+        alert('登録されているユーザーのイメージ画像を削除しました。');
+      }
+      function onReject(){
+        storage.ref().child(`${currentUid}/userImage.png`).getDownloadURL().then(onResolveAppend,onRejectAppend);
+        function onResolveAppend(){
+          storage.ref().child(`${currentUid}/userImage.png`).delete().then(()=>{
+            location.reload();
+          });
+          alert('登録されているユーザーのイメージ画像を削除しました。');
+        }
+        function onRejectAppend(){
+          alert('登録されているユーザーのイメージ画像はありませんでした。');
+          location.reload();
+        }
+      }
+    }
+  }
+});
+
+
+    //ファイルを選択をクリックした後の処理
     let uploadUserIcon = document.getElementById('upload-userIcon');
     //ファイル選択ダイアログが変化したら
     uploadUserIcon.addEventListener('change',(event)=>{
@@ -146,8 +213,8 @@ auth.onAuthStateChanged((user) => {
 
       userIconReader.addEventListener('load',()=>{
         //結果をuserIconZoneに出力する
-        userIconZone.innerHTML = '';
         userIconZone.style.backgroundImage = `url('${userIconReader.result}')`;
+        faUser.classList.add('faUserOpa');
       });
         //URL形式として読み込む
         userIconReader.readAsDataURL(userIconFile);
@@ -168,8 +235,8 @@ auth.onAuthStateChanged((user) => {
 
       userImageReader.addEventListener('load',()=>{
         //結果をuserIconZoneに出力する
-        userImageZone.innerHTML = '';
         userImageZone.style.backgroundImage = `url('${userImageReader.result}')`;
+        faUser.classList.add('faUserOpa');
       });
         //URL形式として読み込む
         userImageReader.readAsDataURL(userImageFile);
@@ -194,7 +261,7 @@ auth.onAuthStateChanged((user) => {
         setTimeout(function(){
           console.log('ユーザーアイコン登録の処理が完了しました');
           location.href = 'cardViewerTest1.html';
-          },1000
+          },5000
         );
       } 
       else if(userImageFiles.length===0){
@@ -202,7 +269,7 @@ auth.onAuthStateChanged((user) => {
         setTimeout(function(){
           console.log('ユーザーイメージ登録の処理が完了しました');
           location.href = 'cardViewerTest1.html';
-          },1000
+          },5000
         );
       }
        putUserIcon();
@@ -210,7 +277,7 @@ auth.onAuthStateChanged((user) => {
        setTimeout(function(){
          console.log('全ての処理が完了しました');
          location.href = 'cardViewerTest1.html';
-       },3000);
+       },5000);
     });
     }
   });

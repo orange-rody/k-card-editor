@@ -59,7 +59,7 @@ h3{
   margin-top: 10px;
 }
 
-#userIcon-zone {
+.userIcon-zone {
   position: relative;
   width: 70%;
   height: 25vh;
@@ -87,6 +87,16 @@ h3{
   color: tomato;
 }
 
+.userImage-zone {
+  position: relative;
+  width: 70%;
+  height: 25vh;
+  background-color: #888;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 10px;
+  }
 
 #userImage-zone {
   position: relative;
