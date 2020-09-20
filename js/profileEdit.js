@@ -11,8 +11,8 @@ const form = document.getElementById('form');
 const userIconZone = document.querySelector('#userIcon-zone');
 const userImageZone = document.querySelector('#userImage-zone');
 
-const faUser = document.querySelector('.fas fa-user');
-const faImage = document.querySelector('.fas fa-image');
+const faUser = document.getElementById('faUser');
+const faImage = document.getElementById('faImage');
 
 
 auth.onAuthStateChanged((user) => {
@@ -91,11 +91,12 @@ auth.onAuthStateChanged((user) => {
       }
     }              
 
-    //Firebase StorageにuserIconファイルがあったら、'userIcon-zone'に保存する
+    //Firebase StorageにuserIconファイルがあったら、'userIcon-zone'に表示する
     let userIconZone = document.getElementById('userIcon-zone');
     storage.ref().child(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
     function onResolveIcon(url) { 
       console.log('url:',url);   
+      faUser.classList.add('faUserOpa');
       userIconZone.style.backgroundImage = `url('${url}')`;
     } 
     function onRejectIcon(){
@@ -103,18 +104,19 @@ auth.onAuthStateChanged((user) => {
     }
     function onResolveIconAppend(url){
       console.log('url:',url);
-    
+      faUser.classList.add('faUserOpa');
       userIconZone.style.backgroundImage = `url('${url})`;
     }
     function onRejectIconAppend(){
       console.log(error);
     }
 
-    //Firebase StorageにuserImageファイルがあったら、'userIcon-zone'に保存する
+    //Firebase StorageにuserImageファイルがあったら、'userImage-zone'に表示する
     let userImageZone = document.getElementById('userImage-zone');
     storage.ref().child(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolveImage, onRejectImage);
     function onResolveImage(url) { 
       console.log('url:',url);   
+      faImage.classList.add('faImageOpa');
       userImageZone.style.backgroundImage = `url('${url}')`;
     } 
     function onRejectImage(){
@@ -122,7 +124,7 @@ auth.onAuthStateChanged((user) => {
     }
     function onResolveImageAppend(url){
       console.log('url:',url);
-
+      faImage.classList.add('faImageOpa');
       userImageZone.style.backgroundImage = `url('${url})`;
     }
     function onRejectImageAppend(){
