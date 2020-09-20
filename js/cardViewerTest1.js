@@ -145,11 +145,17 @@ auth.onAuthStateChanged(user => {
       }
 
       function onRejectIcon(){
-        storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
-          console.log(`url:${url}`);
-          postedUserIcon.style.backgroundImage = `url(${url})`;
-        });
+        storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then(onResolveAppend,onRejectAppend);
+        function onResolveAppend(){
+            console.log(`url:${url}`);
+            postedUserIcon.style.backgroundImage = `url(${url})`;
+        }
+        function onRejectAppend(){
+          postedUserIcon.innerHTML = '<i class="fas fa-user"></i>';
+          postedUserIcon.style.backgroundColor = '#888';
+        }
       }
+      
         
       function renderBookmarkUserCount(){
         //サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきた

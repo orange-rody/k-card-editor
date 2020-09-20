@@ -236,6 +236,11 @@ background-color: #888;
   color: #fff;
 }
 
+#favorite p {
+  margin: 0 0 10px;
+  padding: 0;
+}
+
 #postedCardNumber {
   position: absolute;
   margin: 0;
@@ -514,7 +519,11 @@ i {
   background-position: center center;
   border-radius: 100%;
   right: 0px;
-  top: 10px
+  top: 10px;
+  line-height: 5rem;
+  text-align: center;
+  font-size: 3rem; 
+  color: #fff;
 }
 
 .postedUserName {

@@ -264,7 +264,7 @@ deleteUserImage.addEventListener('click',(event)=>{
       const userImageFiles = document.getElementById('upload-userImage').files;
       
       if(userIconFiles.length===0 && userImageFiles.length===0){
-        setTimeout(function(){location.href='cardViewerTest1.html'},500);
+        setTimeout(function(){location.href='cardViewerTest1.html'},2000);
       }
       else if(userIconFiles.length===0){
         putUserImage();
