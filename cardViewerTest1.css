@@ -446,6 +446,7 @@ i {
   color: #555;
   font-size: 30px;
   font-family: 'Sawarabi Gothic', sans-serif;
+  cursor: pointer;
 }
 
 .comments {
@@ -455,6 +456,17 @@ i {
   font-size: 30px;
   color: #555;
   font-family: 'Sawarabi Gothic', sans-serif;
+  cursor: pointer;
+}
+
+.bookmarkUserCount:active, .comments:active {
+  font-size: 32px;
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+.bookmarkUserCount:hover, .comments:hover {
+  opacity: 0.8;
 }
 
 .cardStatus {
@@ -509,8 +521,20 @@ i {
   margin-left: 20px;
   margin-right: 50px;
   box-shadow: 0px 3px #033F8C;
+  cursor: pointer;
+  transition: 0.1s all;
 }
 
+.revisionButton:active, .printButton:active {
+  transform: translateY(3px);
+  box-shadow: none;
+  border: none;
+  outline: 0;
+}
+
+.revisionButton:hover, .printButton:hover {
+  opacity: 0.8;
+}
 .postedUserIcon {
   position: absolute;
   width: 80px;

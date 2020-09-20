@@ -2,61 +2,74 @@
 <html lang = "ja">
   <head>
     <meta charset = "UTF-8">
-    <title>京大式カードEditor</title>
+    <title>K-Card-Editor | Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap" rel="stylesheet">
     <link rel = "stylesheet" href = "cardEditor.css">
   </head>
   <!-- 複数のページを作成することを考慮してbodyタグにIDをつける -->
   <body id = "edittingPage">
-    <!-- contentクラスでカードのサイズを規程する -->
-    <form id="k-card-editor" name='k-card-editor'>
-    <div class = "content">
-        <!-- カードのレイアウトをside-barとmainに２分割する -->
-        <div class = "main">
-          <table>
-            <thead>
-              <tr>
-                <!-- カードの1段目の箇所にtitleと連番が入力できるようにする -->
-                <th class = "text"><input type = "text" placeholder = "タイトル" class = "title" name="title">                 
-                </th>
-              </tr>  
-              <tr>
-                <!-- カードの2段目の箇所にカードのリード文が入力できるようにする -->
-                <th class = "text"><input type = "text" placeholder = "リード文" class = "leadSentence" name = "leadSentence" ></th>
-              </tr>      
-            </thead>
-            <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
-            <tbody>
-              <tr>
-                <td>
-                  <textarea  class = "main-text" placeholder = "引用文・気付き" name = "mainText"></textarea>
-                </td>                
-              </tr> 
-            </tbody>
-            <tfoot>
-              <tr>
-                <td><input type = "text" placeholder = "著者" class = "author" name = "author"></td>
-              </tr>
-              <tr>
-                <td class = "book"><input type = "text" placeholder = "書名" class = "book-title" name = "bookTitle">
-                P.<input type = "text" class = "pages" name="pages"></td>
-              </tr>
-              <tr class = "blank-column"></tr>
-            </tfoot> 
-          </table>
-        </div>
-        <aside class = "side-bar">
-          <div class = "blank"></div>
-        </aside> 
+    <div id = "content">
+      <div id = "main">
+        <!-- contentクラスでカードのサイズを規程する -->
+        <form id="cardContainer" name='k-card-editor'>
+          <div class = "cardWrap">
+            <!-- カードのレイアウトをside-barとmainに２分割する -->
+            <div class = "card-main">
+              <table>
+                <thead>
+                  <tr>
+                    <!-- カードの1段目の箇所にtitleと連番が入力できるようにする -->
+                    <th class = "text"><input type = "text" placeholder = "タイトル" class = "title" name="title">                 
+                    </th>
+                  </tr>  
+                  <tr>
+                    <!-- カードの2段目の箇所にカードのリード文が入力できるようにする -->
+                    <th class = "text"><input type = "text" placeholder = "リード文" class = "leadSentence" name = "leadSentence" ></th>
+                  </tr>      
+                </thead>
+                <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
+                <tbody>
+                  <tr>
+                    <td>
+                      <textarea  class = "main-text" placeholder = "引用文・気付き" name = "mainText"></textarea>
+                    </td>                
+                  </tr> 
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td><input type = "text" placeholder = "著者" class = "author" name = "author"></td>
+                  </tr>
+                  <tr>
+                    <td class = "book"><input type = "text" placeholder = "書名" class = "book-title" name = "bookTitle">
+                      P.<input type = "text" class = "pages" name="pages"></td>
+                    </tr>
+                    <tr class = "blank-column"></tr>
+                  </tfoot> 
+                </table>
+              </div>
+              <aside class = "side-bar">
+                <div class = "blank"></div>
+              </aside> 
+            </div>
+            <div id = buttonSpace>
+              <ul id = "buttonList">
+                <input type = "submit" value = "送信" id = "submit-button">
+              </ul>
+            </div>
+          </div>
+        </form>
+        <aside id = "sidebar">
+          <div id = "logo">
+            <h3 id = "k-card-editor-logo">K-Card-Editor</h3>
+          </div>
+        </aside>
       </div>
-      <div>
-        <input type = "submit" value = "送信" id = "submit-button">
-      </div>
-    </form>
+    </div>
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
-
+        
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
-
+        
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
@@ -73,12 +86,12 @@
         appId: "1:900874596960:web:43b32eeda2e10340210905",
         measurementId: "G-4MPPMBCVF0"
       };
-  
+          
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
     </script>
     <script src = "js/kCardEditorTest1.js"></script>
   </body>
 </html>
-    
+  
   
