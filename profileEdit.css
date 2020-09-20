@@ -59,7 +59,7 @@ h3{
   margin-top: 10px;
 }
 
-.userIcon-zone {
+#userIcon-zone {
   width: 70%;
   height: 25vh;
   background-color: #888;
@@ -73,7 +73,7 @@ h3{
   line-height: 25vh;
   }
 
-.userImage-zone {
+#userImage-zone {
   width: 70%;
   height: 25vh;
   background-color: #888;

@@ -31,11 +31,13 @@ auth.onAuthStateChanged(user => {
 
     function onResolveIcon(url) { 
       console.log('url:',url);
+      userIcon.innerHTML = "";
       userIcon.style.backgroundImage = `url('${url}')`;
     } 
     function onRejectIcon(){
       storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
         console.log('url:',url);
+        userIcon.innerHTML = "";
         userIcon.style.backgroundImage = `url('${url}')`;
       });
     }
@@ -44,11 +46,13 @@ auth.onAuthStateChanged(user => {
 
     function onResolveImage(url){
       console.log('url:',url);
+      userImage.innerHTML = "";
       userImage.style.backgroundImage = `url('${url}')`;
     }
     function onRejectImage(){
       storage.ref(`${currentUid}/userImage.png`).getDownloadURL().then((url)=>{
         console.log('url:',url);
+        userImage.innerHTML = "";
         userImage.style.backgroundImage = `url('${url}')`;
       });
     }

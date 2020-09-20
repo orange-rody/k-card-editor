@@ -8,10 +8,11 @@ const profile = document.getElementById('profile');
 const favorite = document.getElementById('favorite');
 const form = document.getElementById('form');
 
-const userIconZone = document.querySelector('.userIcon-zone');
-const userImageZone = document.querySelector('.userImage-zone');
+const userIconZone = document.querySelector('#userIcon-zone');
+const userImageZone = document.querySelector('#userImage-zone');
 
-
+const faUser = document.querySelector('.fas fa-user');
+const faImage = document.querySelector('.fas fa-image');
 
 
 auth.onAuthStateChanged((user) => {
@@ -89,6 +90,45 @@ auth.onAuthStateChanged((user) => {
               });
       }
     }              
+
+    //Firebase StorageにuserIconファイルがあったら、'userIcon-zone'に保存する
+    let userIconZone = document.getElementById('userIcon-zone');
+    storage.ref().child(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
+    function onResolveIcon(url) { 
+      console.log('url:',url);   
+      userIconZone.style.backgroundImage = `url('${url}')`;
+    } 
+    function onRejectIcon(){
+      storage.ref().child(`${currentUid}/userIcon.png`).getDownloadURL().then(onResolveIconAppend,onRejectIconAppend);
+    }
+    function onResolveIconAppend(url){
+      console.log('url:',url);
+    
+      userIconZone.style.backgroundImage = `url('${url})`;
+    }
+    function onRejectIconAppend(){
+      console.log(error);
+    }
+
+    //Firebase StorageにuserImageファイルがあったら、'userIcon-zone'に保存する
+    let userImageZone = document.getElementById('userImage-zone');
+    storage.ref().child(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolveImage, onRejectImage);
+    function onResolveImage(url) { 
+      console.log('url:',url);   
+      userImageZone.style.backgroundImage = `url('${url}')`;
+    } 
+    function onRejectImage(){
+      storage.ref().child(`${currentUid}/userImage.png`).getDownloadURL().then(onResolveImageAppend,onRejectImageAppend);
+    }
+    function onResolveImageAppend(url){
+      console.log('url:',url);
+
+      userImageZone.style.backgroundImage = `url('${url})`;
+    }
+    function onRejectImageAppend(){
+      console.log(error);
+    }
+
 
     let uploadUserIcon = document.getElementById('upload-userIcon');
     //ファイル選択ダイアログが変化したら

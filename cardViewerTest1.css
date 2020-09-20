@@ -114,13 +114,24 @@ height: 25vh;
 background-repeat: no-repeat;
 background-position: center center;
 background-size: cover;
+font-size: 8rem;
+text-align: center;
+line-height: 25vh;
+color: #fff;
+background-color: #888;
 }
 
 #userImage {
   width: 25%;
   height: 25vh;
   background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
+  font-size: 8rem;
+  text-align: center;
+  line-height: 25vh;
+  color: #fff;
+  background-color: #888;
 }
 
 #box-title {
