@@ -44,7 +44,7 @@ auth.onAuthStateChanged(user => {
 
     function onResolveImage(url){
       console.log('url:',url);
-      userIcon.style.backgroundImage = `url('${url}')`;
+      userImage.style.backgroundImage = `url('${url}')`;
     }
     function onRejectImage(){
       storage.ref(`${currentUid}/userImage.png`).getDownloadURL().then((url)=>{

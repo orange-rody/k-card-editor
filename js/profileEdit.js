@@ -90,6 +90,49 @@ auth.onAuthStateChanged((user) => {
       }
     }              
 
+    let uploadUserIcon = document.getElementById('upload-userIcon');
+    //ファイル選択ダイアログが変化したら
+    uploadUserIcon.addEventListener('change',(event)=>{
+      const targetUserIcon = event.target;
+      //選択されたファイルを参照
+      const userIconFiles = targetUserIcon.files;
+      //配列になっているので、0番目のファイルを参照
+      const userIconFile = userIconFiles[0];
+
+      //FileReaderのインスタンスを作成
+      const userIconReader = new FileReader();
+
+      userIconReader.addEventListener('load',()=>{
+        //結果をuserIconZoneに出力する
+        userIconZone.innerHTML = '';
+        userIconZone.style.backgroundImage = `url('${userIconReader.result}')`;
+      });
+        //URL形式として読み込む
+        userIconReader.readAsDataURL(userIconFile);
+    });
+
+
+    let uploadUserImage = document.getElementById('upload-userImage');
+    //ファイル選択ダイアログが変化したら
+    uploadUserImage.addEventListener('change',(event)=>{
+      const targetUserImage = event.target;
+      //選択されたファイルを参照
+      const userImageFiles = targetUserImage.files;
+      //配列になっているので、0番目のファイルを参照
+      const userImageFile = userImageFiles[0];
+
+      //FileReaderのインスタンスを作成
+      const userImageReader = new FileReader();
+
+      userImageReader.addEventListener('load',()=>{
+        //結果をuserIconZoneに出力する
+        userImageZone.innerHTML = '';
+        userImageZone.style.backgroundImage = `url('${userImageReader.result}')`;
+      });
+        //URL形式として読み込む
+        userImageReader.readAsDataURL(userImageFile);
+    });
+
     form.addEventListener('submit',(e)=>{
       e.preventDefault();
       db.collection('user').doc(currentUid).set({
@@ -125,7 +168,7 @@ auth.onAuthStateChanged((user) => {
        setTimeout(function(){
          console.log('全ての処理が完了しました');
          location.href = 'cardViewerTest1.html';
-       },1000);
+       },3000);
     });
     }
   });
