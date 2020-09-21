@@ -365,7 +365,6 @@ background-color: #888;
 .title {
   height: 40px;
   margin: 15px 0 0 20px;
-  overflow: ellipsis;
   font-size: 25px;
 }
 
@@ -397,7 +396,7 @@ background-color: #888;
 
 .author {
   margin: 0px 10px 0px 20px;
-  width: 100%;
+  width: 646px;
   line-height: 43px;
   font-size: 25px;
 }

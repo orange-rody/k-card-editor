@@ -2,8 +2,9 @@
   margin: 0;
   background-image: url(./p0004_m.jpeg);
   background-attachment: fixed;
-  color: #333;
+  color: #555;
   font-size: 25px;
+  font-family: 'Noto Serif JP', serif;
 }
 
 p,h1,h2,h3,h4,h5,h6 {
@@ -59,11 +60,39 @@ p,h1,h2,h3,h4,h5,h6 {
   border-bottom: dashed 2px #fff;
 }
 
+#sidebar li {
+  list-style: none;
+  flex-flow: column;
+  margin: 0 0 40px 20px;
+  padding: 5px 20px 5px 20px;
+  border-radius: 40px;
+  width: 130px;
+  transition: all 0.1s ease-in-out;
+}
+
+#sidebar li a {
+  text-decoration: none;
+  color: #d8dede;
+}
+
+#sidebar li:hover {
+  background-color: #3f6f98;
+}
+
+#sidebar li a:active {
+  color: #fff;
+  text-shadow: 20px 20px 80px #fff;
+}
+
+#sidebar li i {
+  margin-right: 10px;
+}
+
 .cardWrap {
   position: absolute;
   left: 50%;
-  top: 45%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  transform: translate(-50%,-57%);
   width: 819px;
   height: 576px;
   margin: 0;
@@ -88,63 +117,53 @@ p,h1,h2,h3,h4,h5,h6 {
   padding: 0;
 }
 
-
 th, td{
   margin: 0;
   padding: 0;
 }
-tr {
-  width: 666px;
-}
-.card-main {
+
+.cardMainArea {
   width: 666px;
   height: 576px;
   float: right;
 }
 
-.side-bar {
+.card-side {
   position: absolute;
   width: 154px;
   height: 100%;
 }
 
-.blank {
-  width: 136px;
-  height: 360px;
+.text {
+  width: 646px;
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+input {
+  color: #555;
 }
 
 .title{
-  border: 1px dotted #ddd;
-  font-family: 'Noto Serif JP', serif;
-  height: 40px;
+  width: 578px;
+  height: 38px;
   font-size: 25px;
-  overflow: ellipsis;
+  margin: 15px 0 0 20px;
+  padding: 0;
+  font-family: 'Noto Serif JP', serif;
+  border: 1px dotted #ddd;
   white-space: nowrap;
   caret-color: slategray;
   background-color: transparent;
-  width: 646px;
-  padding: 0;
 }
 
-.text {
-  width: 646px;
-  height: 40px;
-  font-size: 25px;
-  margin: 15px 0 0 20px;
-}
-
-.text {
-  width: 646px;
-  height: 40px;
-  font-size: 25px;
+.leadSentence {
+  width: 624px;
+  height: 38px;
   margin: 10px 0 0 20px;
-}
-
-thead tr th .leadSentence {
-  width: 646px;
-  font-size: 25px;
   padding: 0;
-  height: 40px;
+  font-size: 25px;
   line-height: 60px;
   overflow: hidden;
   border: 1px dotted #ddd;
@@ -152,15 +171,9 @@ thead tr th .leadSentence {
   background-color: transparent;
 }
 
-.title::placeholder {
-  font-size: 30px;
-}
-
-.leadSentence::placeholder {
+input::placeholder {
   font-size: 25px;
-}
-
-thead tr input::placeholder{
+  font-size: 25px;
   color: #aaa;
 }
 
@@ -176,97 +189,84 @@ thead tr th select option {
   padding: 0;
 }
 
-thead .text {
-  float: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  caret-color: slategray;
+.mainTextArea {
+  height: 347px;
+  width: 666px;
 }
 
-thead .text input {
-  width: 700px;
-}
-
-
-tbody tr {
-  width: 700px;
-  height: 280px;
-  padding: 0;
-}
-
-tbody tr td {
-  height: 226px;
-}
-.main-text {
+.mainText {
   display: block;
-  width: 700px;
-  height: 280px;
+  width: 624px;
+  height: 261px;
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 38px;
+  margin-top: 46px;
+  padding: 0;
   font-size: 25px;
-  line-height: 48px;
+  color: #555;
   overflow: hidden;
-  margin: 55px 20px 55px 20px;
+  line-height: 43px;
+  font-family: 'Noto Serif JP', serif;
   border: 1px dotted #ddd;
-  font-family: sans-serif;
   caret-color: slategray;
   background-color: transparent;
 }
 
-
 textarea::placeholder {
- font-family: sans-serif;
+ font-family: 'Noto Serif JP', serif;
  color: #aaa;
 }
 
-tfoot tr {
-  width: 300px;
-  height: 36px;
+.information {
+  width: 666px;
+  height: 86px;
 }
 
-tfoot td {
-  height: 40px;
-  width: 300px;
-}
-
-tfoot td .author {
-  width: 700px;
-  height: 35px;
+.author {
+  width: 624px;
+  height: 38px;
   border: 1px dotted #ddd;
   font-size : 25px;
-  font-family: sans-serif;
-  margin: 2px 20px 8px 20px
+  font-family: 'Noto Serif JP', serif;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-left: 19px;
+  margin-right: 9px;
+  padding: 0;
 }
 
 .author::placeholder {
   color: #aaa;
 }
 
-tfoot tr td.book {
-  width: 498px;
+.bookTitle {
+  width: 510px;
+  height: 38px;
+  border: 1px dotted #ddd;
+  font-size : 25px;
+  font-family: 'Noto Serif JP', serif;
+  margin-top: 2px;
+  margin-bottom: 1px;
+  margin-left: 19px;
+  margin-right: 9px;
+  padding: 0;
 }
 
-.book-title::placeholder {
+.bookTitle::placeholder {
   color: #aaa;
 }
 
-tfoot td .book-title {
-  width: 610px;
-  height: 35px;
-  border: 1px dotted #ddd;
-  margin-left: 20px;
-  margin-right: 5px;
-  font-size: 25px;
-  font-family: sans-serif;
-  float: left;
-}
-
 .pages {
+  margin-top: 2px;
+  margin-bottom: 1px;
   margin-left: 10px;
   padding-right: 10px;
-  width: 48px;
-  height: 35px;
+  padding: 0;
+  width: 52px;
+  height: 38px;
   border: 1px dotted #ddd;
-  font-size: 22px;
+  font-size: 25px;
   text-align: right;
 }
 

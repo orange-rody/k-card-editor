@@ -5,6 +5,7 @@
     <title>K-Card-Editor | Editor</title>
     <link href="https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap" rel="stylesheet">
     <link rel = "stylesheet" href = "cardEditor.css">
+    <script src="https://kit.fontawesome.com/2b69526b77.js" crossorigin="anonymous"></script>
   </head>
   <!-- 複数のページを作成することを考慮してbodyタグにIDをつける -->
   <body id = "edittingPage">
@@ -14,40 +15,43 @@
         <form id="cardContainer" name='k-card-editor'>
           <div class = "cardWrap">
             <!-- カードのレイアウトをside-barとmainに２分割する -->
-            <div class = "card-main">
+            <div class = "cardMainArea">
               <table>
                 <thead>
-                  <tr>
+                  <tr class = "text">
                     <!-- カードの1段目の箇所にtitleと連番が入力できるようにする -->
-                    <th class = "text"><input type = "text" placeholder = "タイトル" class = "title" name="title">                 
+                    <th class = "text">
+                      <input type = "text" placeholder = "タイトル" class = "title text" name="title">                 
                     </th>
                   </tr>  
-                  <tr>
+                  <tr class = "text">
                     <!-- カードの2段目の箇所にカードのリード文が入力できるようにする -->
-                    <th class = "text"><input type = "text" placeholder = "リード文" class = "leadSentence" name = "leadSentence" ></th>
+                    <th class = "text"><input type = "text" placeholder = "リード文" class = "leadSentence text" name = "leadSentence" ></th>
                   </tr>      
                 </thead>
                 <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
-                <tbody>
-                  <tr>
+                <tbody class = "mainTextArea">
+                  <tr class = "mainTextArea">
                     <td>
-                      <textarea  class = "main-text" placeholder = "引用文・気付き" name = "mainText"></textarea>
+                      <textarea  class = "mainText" placeholder = "引用文・気付き" name = "mainText"></textarea>
                     </td>                
                   </tr> 
                 </tbody>
-                <tfoot>
+                <tfoot class = "information">
                   <tr>
-                    <td><input type = "text" placeholder = "著者" class = "author" name = "author"></td>
+                    <td>
+                      <input type = "text" placeholder = "著者" class = "author" name = "author">
+                    </td>
                   </tr>
                   <tr>
-                    <td class = "book"><input type = "text" placeholder = "書名" class = "book-title" name = "bookTitle">
+                    <td class = "bookInfo"><input type = "text" placeholder = "書名" class = "bookTitle" name = "bookTitle">
                       P.<input type = "text" class = "pages" name="pages"></td>
                     </tr>
                     <tr class = "blank-column"></tr>
                   </tfoot> 
                 </table>
               </div>
-              <aside class = "side-bar">
+              <aside class = "card-side">
                 <div class = "blank"></div>
               </aside> 
             </div>
@@ -62,6 +66,26 @@
           <div id = "logo">
             <h3 id = "k-card-editor-logo">K-Card-Editor</h3>
           </div>
+          <li>
+            <a href = "cardViewerTest1.html">
+              <i class = "fas fa-home" id = "homeIcon"></i> Home
+            </a>
+          </li>
+          <li>
+            <a href = "k-card-editor.html">
+              <i class = "fas fa-pen-alt" id = "writeIcon"></i> Write
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <i class = "fas fa-search" id = "search"></i> Search
+            </a>
+          </li>
+          <li>
+            <a href = "#">
+              <i class = "fas fa-sign-out-alt" id = "logoutIcon"></i> Logout
+            </a>
+          </li>
         </aside>
       </div>
     </div>
