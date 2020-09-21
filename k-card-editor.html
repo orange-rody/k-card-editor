@@ -55,10 +55,38 @@
                 <div class = "blank"></div>
               </aside> 
             </div>
+            <div id = hushTagSpace>
+              <form id = "hushTagList">
+                <tr>
+                  <td>
+                    <input type = text id = "hushTag1" class = "hushTag" name = "hushTag1" placeholder = "ハッシュタグ1">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type = text id = "hushTag2" class = "hushTag" name = "hushTag2" placeholder = "ハッシュタグ2">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type = text id = "hushTag3" placeholder = "ハッシュタグ3" class = "hushTag" name = "hushTag3">
+                  </td>
+                </tr>
+              </form>
+            </div>
             <div id = buttonSpace>
               <ul id = "buttonList">
-                <input type = "submit" value = "送信" id = "submit-button">
+                <li>
+                  <input type = "submit" value = "送信" id = "submit-button">
+                </li>
+                <li>
+                  <p id = "cancel-button">キャンセル</p>
+                </li>
+                <li>
+                  <p id = "delete-button">削除</p>
+                </li>
               </ul>
+
             </div>
           </div>
         </form>
