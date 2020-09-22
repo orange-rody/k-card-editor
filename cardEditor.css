@@ -23,7 +23,7 @@ p,h1,h2,h3,h4,h5,h6 {
 
 #main {
   display: block;
-  width: 100%;
+  width: calc(100% - 250px);
   height: 100vh;
   max-width: 1440px;
   flex: 1 1 auto;
@@ -35,14 +35,15 @@ p,h1,h2,h3,h4,h5,h6 {
 }
 
 #cardContainer {
- position: relative;
- height: 100vh;
+   
+  position: relative;
+  height: 100vh;
 }
 
 #sidebar {
   flex: 0 0 250px;
   max-width: 250px;
-  background-image: url(./p0146_m.jpeg);
+  background-image: url(./p0033_m.jpeg);
   background-position: center top;
   box-shadow: 1px 1px 2px #57bbf0;
   top: 0px;
@@ -105,15 +106,7 @@ p,h1,h2,h3,h4,h5,h6 {
 }
 
 #buttonSpace {
-  margin: 0 auto;
-  width: 780px;
-  height: 80px;
   margin: 0;
-  display: block;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 30px;
   padding: 0;
 }
 
@@ -263,7 +256,7 @@ textarea::placeholder {
   margin-left: 10px;
   padding-right: 10px;
   padding: 0;
-  width: 52px;
+  width: 64px;
   height: 38px;
   border: 1px dotted #ddd;
   font-family: 'Noto Serif JP', serif;
@@ -279,14 +272,10 @@ table {
 
 #hushTagSpace {
   width: 820px;
-  margin: 0 auto;
-  margin-top: 10px;
 }
 
 .hushTag {
   display: inline-block;
-  margin-left: 10px;
-  padding-right: 10px;
   padding: 0;
   width: 250px;
   height: 25px;
