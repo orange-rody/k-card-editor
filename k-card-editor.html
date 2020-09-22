@@ -52,36 +52,40 @@
               </table>
             </div>
             <aside class = "card-side">
-              <div class = "blank"></div>
+              <div id = hushTagSpace>
+                <form id = "hushTagList">
+                  <tr>
+                    <td>
+                      <textarea id = "hushTag1" placeholder = "タグ1" class = "hushTag" name = "hushTag1"></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <textarea id = "hushTag2" placeholder = "タグ2" class = "hushTag" name = "hushTag2"></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <textarea id = "hushTag3" placeholder = "タグ3" class = "hushTag" name = "hushTag3"></textarea>
+                    </td>
+                  </tr>
+                </form>
+              </div>
             </aside> 
-            <div id = hushTagSpace>
-              <form id = "hushTagList">
-                <tr>
-                  <td>
-                    <input type = text id = "hushTag1" class = "hushTag" name = "hushTag1" placeholder = "ハッシュタグ1">
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type = text id = "hushTag2" class = "hushTag" name = "hushTag2" placeholder = "ハッシュタグ2">
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type = text id = "hushTag3" placeholder = "ハッシュタグ3" class = "hushTag" name = "hushTag3">
-                  </td>
-                </tr>
-              </form>
-            </div>
             <ul id = "buttonList">
               <li>
-                <input type = "submit" value = "送信" id = "submit-button">
+                <input type = "submit" value = "保存" id = "submit-button">
               </li>
               <li>
                 <p id = "cancel-button">キャンセル</p>
               </li>
               <li>
                 <p id = "delete-button">削除</p>
+              </li>
+              <li>
+                <div id = "printButton">
+                  <i class="fas fa-print"></i>
+                </div>
               </li>
             </ul>
           </div>
