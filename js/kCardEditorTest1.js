@@ -1,5 +1,5 @@
 //変数formに#k-card-editorのid属性のform要素を代入する。
-const form = document.querySelector("#k-card-editor");
+const form = document.querySelector("#cardContainer");
 const auth = firebase.auth();
 
 //dbはfirebaseのfirestoreのツールのことですよ。と宣言する。
