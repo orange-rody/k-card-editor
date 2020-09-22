@@ -1,6 +1,11 @@
 //変数formに#k-card-editorのid属性のform要素を代入する。
 const form = document.querySelector("#cardContainer");
 const auth = firebase.auth();
+const cancelButton = document.getElementById('cancel-button');
+const deleteButton = document.createElement('p');
+deleteButton.setAttribute('id','delete-button');
+deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+const printButton = document.getElementById('printButton');
 
 //dbはfirebaseのfirestoreのツールのことですよ。と宣言する。
 const db = firebase.firestore();
@@ -26,9 +31,64 @@ auth.onAuthStateChanged((user) => {
     let authorRevision = form.author;
     let bookTitleRevision = form.bookTitle;
     let pagesRevision = form.pages;
+  
+    titleRevision.addEventListener('keydown',(e) => {
+      const key = e.keyCode;
+      if(key == 13){
+        e.preventDefault();
+      }
+    });
+
+    leadSentenceRevision.addEventListener('keydown',(e)=>{
+      const key = e.keyCode;
+      if(key == 13){
+        e.preventDefault();
+      }
+    });
+
+    authorRevision.addEventListener('keydown',(e)=>{
+      const key = e.keyCode;
+      if(key == 13){
+        e.preventDefault();
+      }
+    });
+
+    bookTitleRevision.addEventListener('keydown',(e)=>{
+      const key = e.keyCode;
+      if(key == 13){
+        e.preventDefault();
+      }
+    });
+
+    pagesRevision.addEventListener('keydown',(e)=>{
+      const key = e.keyCode;
+      if(key == 13){
+        e.preventDefault();
+      }
+    });
+
+    cancelButton.addEventListener('click',(e)=>{
+      const isYes = confirm('ホーム画面に戻ると、編集中の内容がリセットされてしまいます。よろしいですか?')
+      if(isYes === true){
+        location.href = "cardViewerTest1.html";
+      }
+    });
     
     function edittingCard(docId){
       if(docId){
+        document.getElementById('buttonList').insertAdjacentElement('beforeend',deleteButton);
+        deleteButton.addEventListener('click',(event) => {
+          const isYes = confirm('登録されているカードを削除します。よろしいですか?');
+          if(isYes === true){
+            db.collection('k-card').doc(docId).delete().then(()=>{
+              location.href = "cardViewerTest1.html";
+            });
+            db.collection('k-card').doc(docId).collection('bookmarkUser').delete();
+            db.collection('k-card').doc(docId).collection('comments').delete();
+          }
+        });
+
+
         let docRef = db.collection('k-card').doc(docId);
         docRef.get().then((doc)=>{
           console.log(doc.data());    
@@ -38,13 +98,6 @@ auth.onAuthStateChanged((user) => {
           authorRevision.setAttribute('value',doc.data().author);
           bookTitleRevision.setAttribute('value',doc.data().bookTitle);
           pagesRevision.setAttribute('value',doc.data().pages);
-          
-          form.addEventListener('keydown',(e)=>{
-            const key = e.keyCode;
-            if(key == 13){
-              e.preventDefault();
-            }
-          })
 
           //変数formにaddEventListenerを持たせる
           form.addEventListener('submit',(e)=>{

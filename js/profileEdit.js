@@ -252,7 +252,7 @@ deleteUserImage.addEventListener('click',(event)=>{
         userImageReader.readAsDataURL(userImageFile);
     });
 
-    form.addEventListener('keydown',(e)=>{
+    form.name.addEventListener('keydown',(e)=>{
       const key = e.keyCode;
       if(key == 13){
         e.preventDefault();
