@@ -39,6 +39,13 @@ auth.onAuthStateChanged((user) => {
           bookTitleRevision.setAttribute('value',doc.data().bookTitle);
           pagesRevision.setAttribute('value',doc.data().pages);
           
+          form.addEventListener('keydown',(e)=>{
+            const key = e.keyCode;
+            if(key == 13){
+              e.preventDefault();
+            }
+          })
+
           //変数formにaddEventListenerを持たせる
           form.addEventListener('submit',(e)=>{
             // デフォルトだと、submitするときにURLが変わることで、ブラウザの再読み込みが実行されてしまう。これを避けるため、preventDefaultを設定する。
@@ -60,7 +67,7 @@ auth.onAuthStateChanged((user) => {
             });
             form.title.value = "";
             form.leadSentence.value = "";
-            form.mainText.textContent = '';
+            form.mainText.innerHTML = '';
             form.author.value = '';
             form.bookTitle.value = '';
             form.pages.value = '';

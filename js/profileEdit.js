@@ -252,6 +252,13 @@ deleteUserImage.addEventListener('click',(event)=>{
         userImageReader.readAsDataURL(userImageFile);
     });
 
+    form.addEventListener('keydown',(e)=>{
+      const key = e.keyCode;
+      if(key == 13){
+        e.preventDefault();
+      }
+    });
+
     form.addEventListener('submit',(e)=>{
       e.preventDefault();
       db.collection('user').doc(currentUid).set({
