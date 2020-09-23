@@ -1,6 +1,5 @@
 #edittingPage {
   margin: 0;
-  background-image: url(./p0004_m.jpeg);
   background-attachment: fixed;
   color: #555;
   font-size: 25px;
@@ -27,11 +26,11 @@ p,h1,h2,h3,h4,h5,h6 {
   height: 100vh;
   max-width: 1440px;
   flex: 1 1 auto;
-  background-image: url('./edittingPage-backgroundImage.jpg');
+  background-image: url('./p0340_m.jpeg');
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: -1px -1px 2px #c6cccc;
+  box-shadow: -1px -1px 2px #95c9c9;
 }
 
 #cardContainer {
@@ -73,6 +72,9 @@ p,h1,h2,h3,h4,h5,h6 {
 
 #sidebar li a {
   text-decoration: none;
+  display: inline-block;
+  width: 150px;
+  height: 40px;
   color: #d8dede;
 }
 
@@ -89,11 +91,29 @@ p,h1,h2,h3,h4,h5,h6 {
   margin-right: 10px;
 }
 
+.bookIcon {
+  position: absolute;
+  right:3%;
+  top: 2%;
+  transform: rotate(-15deg);
+  font-size: 5rem;
+  color: #fff;
+  width: 120px;
+  height: 120px;
+  background-image: url(./p0033_m.jpeg);
+  margin: 10px 40px 20px 0;
+  line-height: 120px;
+  text-align: center;
+  border-radius: 100%;
+  box-shadow: 6px 6px 6px rgb(152, 184, 211);
+}
+
+
 .cardWrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-57%);
+  transform: translate(-55%,-55%);
   width: 819px;
   height: 576px;
   margin: 0;
@@ -101,7 +121,7 @@ p,h1,h2,h3,h4,h5,h6 {
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
-  box-shadow: 10px 10px 10px #ccc;
+  box-shadow: 10px 10px 10px rgb(152, 184, 211);
   border-radius: 10px;
 }
 
