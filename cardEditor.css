@@ -33,7 +33,7 @@ p,h1,h2,h3,h4,h5,h6 {
   height: 100vh;
   max-width: 1440px;
   flex: 1 1 auto;
-  background-image:url('./p0340_m.jpeg');
+  background-image:url('./alex-shutin-kKvQJ6rK6S4-unsplash.jpg');
   background-position: center top;
   background-repeat: repeat;
   background-size: 100% 100%;
@@ -108,8 +108,8 @@ p,h1,h2,h3,h4,h5,h6 {
 
 .bookIcon {
   position: absolute;
-  right:3%;
-  top: 2%;
+  right:0%;
+  top: 0%;
   transform: rotate(-15deg);
   font-size: 5rem;
   color: #fff;
@@ -127,7 +127,7 @@ p,h1,h2,h3,h4,h5,h6 {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-55%,-55%);
+  transform: translate(-50%,-50%);
   width: 819px;
   height: 576px;
   margin: 0;
@@ -135,7 +135,7 @@ p,h1,h2,h3,h4,h5,h6 {
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
-  box-shadow: 10px 10px 10px rgb(152, 184, 211);
+  box-shadow: 10px 10px 10px rgb(21, 77, 123);
   border-radius: 10px;
 }
 
@@ -451,36 +451,47 @@ table {
   height: 100vh;
   max-width: 1440px;
   flex: 1 1 auto;
-  background-image: url('p0153_l.jpeg');
-  background-position: center top;
-  background-repeat: repeat;
-  background-size: contain;
+  background-image: url(./sunset-1373171_1920.jpg);
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: 160%;
   box-shadow: -1px -1px 2px #95c9c9;
 }
 
-
-.penIcon {
+#writingCardTitle {
   position: absolute;
-  right:3%;
-  top: 2%;
-  transform: rotate(-15deg);
-  font-size: 5rem;
+  top: 30px;
+  left: 180px;
   color: #fff;
+  font-size: 3rem;
+  font-family: 'Sawarabi Mincho', sans-serif;
+  text-shadow: 1px 1px 5px rgb(253, 255, 208);
+}
+
+#writingIcon {
+  position: absolute;
+  left: 0%;
+  display: inline-block;
+  font-size: 3rem;
   width: 120px;
   height: 120px;
-  background-image: url(./joanna-kosinska-1_CMoFsPfso-unsplash.jpg);
-  margin: 10px 40px 20px 0;
-  line-height: 120px;
+  background-image: url('./anastasiia-kamil--uQZPtoJ8nk-unsplash.jpg');
+  border-bottom-right-radius: 100%;
   text-align: center;
-  border-radius: 100%;
-  box-shadow: 6px 6px 6px rgb(205, 171, 35);
+  vertical-align: bottom;
+  box-shadow: 5px 5px 20px rgb(39, 32, 55);
+}
+
+.fa-pen-alt {
+  margin-top: 25px;
+  color: #fff;
 }
 
 .writingWrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-55%,-55%);
+  transform: translate(-50%,-50%);
   width: 819px;
   height: 576px;
   margin: 0;
@@ -488,7 +499,7 @@ table {
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
-  box-shadow: 10px 10px 10px rgb(152, 184, 211);
+  box-shadow: 10px 10px 10px rgb(81, 50, 97);
   border-radius: 10px;
 }
 
