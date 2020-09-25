@@ -1,5 +1,5 @@
 //変数formに#k-card-editorのid属性のform要素を代入する。
-const form = document.querySelector("#cardContainer");
+const form = document.querySelector("#readingCard");
 const auth = firebase.auth();
 const cancelButton = document.getElementById('cancel-button');
 const deleteButton = document.createElement('p');
@@ -25,9 +25,9 @@ auth.onAuthStateChanged((user) => {
     let searchParam = location.search.substring(1).split('=');
     let docId = searchParam[1];
 
-    let titleRevision = form.title;
-    let leadSentenceRevision = form.leadSentence;
-    let mainTextRevision = form.mainText;
+    let titleRevision = form.readingTitle;
+    let leadSentenceRevision = form.readingLeadSentence;
+    let mainTextRevision = form.readingMainText;
     let authorRevision = form.author;
     let bookTitleRevision = form.bookTitle;
     let pagesRevision = form.pages;
