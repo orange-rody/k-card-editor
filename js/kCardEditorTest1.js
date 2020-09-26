@@ -4,7 +4,7 @@ const db = firebase.firestore();
 
 //変数readingFormに#readingCardのform要素を代入する。
 const readingForm = document.getElementById('readingCard');
-const readingCancelButton = document.getElementById('readingCancel');
+const readingCancel = document.getElementById('readingCancel');
 const readingDelete = document.createElement('p');
 readingDelete.setAttribute('id','delete-button');
 readingDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -13,7 +13,7 @@ const readingSubmit = document.getElementById('readingSubmit');
 
 //変数writingFormに#writingCardのform要素を代入する。
 const writingForm = document.getElementById('writingCard');
-const writingCancelButton = document.getElementById('writingCancel');
+const writingCancel = document.getElementById('writingCancel');
 const writingDelete = document.createElement('p');
 writingDelete.setAttribute('id','delete-button');
 writingDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -70,15 +70,25 @@ auth.onAuthStateChanged((user) => {
     let bookTitleRevision = readingForm.bookTitle;
     let pagesRevision = readingForm.pages;
     
+    // キャンセルボタンの実装
+    readingCancel.addEventListener('click',(e)=>{
+      const isYes = confirm('ホーム画面に戻ると、編集中の内容がリセットされてしまいます。よろしいですか?')
+      if(isYes === true){
+        location.href = "cardViewerTest1.html";
+      }
+    });
+
+  // キャンセルボタンの実装
+    writingCancel.addEventListener('click',(e)=>{
+      const isYes = confirm('ホーム画面に戻ると、編集中の内容がリセットされてしまいます。よろしいですか?')
+      if(isYes === true){
+        location.href = "cardViewerTest1.html";
+      }
+    });
+
+
     function readingEdittingCard(docId){
       if(cardCollection === 'reading'){
-        // キャンセルボタンの実装
-        readingCancelButton.addEventListener('click',(e)=>{
-          const isYes = confirm('ホーム画面に戻ると、編集中の内容がリセットされてしまいます。よろしいですか?')
-          if(isYes === true){
-            location.href = "cardViewerTest1.html";
-          }
-        });
 
         // 削除ボタンの実装
         document.getElementById('readingButtonList').insertAdjacentElement('beforeend',readingDelete);
@@ -166,17 +176,10 @@ auth.onAuthStateChanged((user) => {
 
     function writingEdittingCard(docId){
       if(cardCollection === 'writing'){
-        // キャンセルボタンの実装
-        writingCancelButton.addEventListener('click',(e)=>{
-          const isYes = confirm('ホーム画面に戻ると、編集中の内容がリセットされてしまいます。よろしいですか?')
-          if(isYes === true){
-            location.href = "cardViewerTest1.html";
-          }
-        });
 
         // 削除ボタンの実装
         document.getElementById('writingButtonList').insertAdjacentElement('beforeend',writingDelete);
-        writingDelete.addEventListener('click',(event) => {
+        writingDelete.addEventListener('click',() => {
           const isYes = confirm('登録されているカードを削除します。よろしいですか?');
             if(isYes === true){
               db.collection('writing').doc(docId).delete().then(()=>{
