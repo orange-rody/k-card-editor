@@ -7,10 +7,8 @@ const storage = firebase.storage();
 // currentUidを宣言する。
 let currentUid = null;
 let mainCenter = document.querySelector('#main-center');
+
 // 表示するk-cardの一覧を格納する変数cardSlidesを宣言し、定義する。
-let cardSlides = document.createElement('div');
-cardSlides.setAttribute('id','cardSlides');
-mainCenter.appendChild(cardSlides);
 
 let userIcon = document.querySelector('#userIcon');
 let userImage = document.querySelector('#userImage');
@@ -308,8 +306,7 @@ auth.onAuthStateChanged(user => {
         cardWrap.appendChild(cardViewer);
         cardWrap.appendChild(cardStatus);
         cardContainer.appendChild(cardWrap);
-        cardSlides.appendChild(cardContainer);
-        mainCenter.appendChild(cardSlides);
+        mainCenter.appendChild(cardContainer);
         cardStatus.appendChild(comments);
         cardStatus.appendChild(bookmarkUserCount);
         cardStatus.appendChild(revisionButton);
@@ -317,7 +314,7 @@ auth.onAuthStateChanged(user => {
         cardStatus.appendChild(postedUserName);
         cardStatus.appendChild(postedUserIcon);
         cardContainer.appendChild(cardWrap);
-        cardSlides.appendChild(cardContainer);
+        mainCenter.appendChild(cardContainer);
 
         let editorURL = `k-card-editor.html?doc.id=${doc.id}`;
         revisionButton.setAttribute('href',editorURL);

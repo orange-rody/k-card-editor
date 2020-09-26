@@ -188,7 +188,7 @@ background-color: #888;
   font-size: 15px;
   padding: 10px;
   text-align: center;
-  font-family: 'Sawarabi Gothic', sans-serif;
+  font-family: sans-serif;
   text-decoration: none;
 }
 
@@ -304,12 +304,6 @@ background-color: #888;
   bottom: 10%;
 } */
 
-/* #cardSlides {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-} */
-
 .profileEditWindow {
   width: 1000px;
   height: 600px;
@@ -327,7 +321,7 @@ background-color: #888;
 
 .cardContainer {
   position: relative;
-  height: 100vh;
+  height: 100%;
 }
 
 .cardWrap {
@@ -342,7 +336,8 @@ background-color: #888;
   width: 819px;
   height: 576px;
   margin: 0 auto;
-  font-size: 25px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   border:1px solid #254883;
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
@@ -360,7 +355,6 @@ background-color: #888;
 
 .cardSideArea {
   position: absolute;
-  font-size: 25px;
   list-style: none;
   width: 154px;
   height: 100%;
@@ -375,13 +369,12 @@ background-color: #888;
 .title {
   height: 40px;
   margin: 15px 0 0 20px;
-  font-size: 25px;
+  
 }
 
 .leadSentence {
   height: 40px;
   margin: 10px 0 0 20px;
-  font-size: 25px;
   overflow: hidden;
 }
 
@@ -391,7 +384,6 @@ background-color: #888;
   margin-right: 10px;
   margin-bottom: 38px;
   margin-top: 46px;
-  font-size: 25px;
   overflow: hidden;
   line-height: 43px;
 }
@@ -408,7 +400,6 @@ background-color: #888;
   margin: 0px 10px 0px 20px;
   width: 646px;
   line-height: 43px;
-  font-size: 25px;
 }
 
 #author::after {
@@ -418,7 +409,6 @@ background-color: #888;
 .bookTitle {
   margin: 5px 0px 0px 10px;
   line-height: 35px;
-  font-size: 25px;
 }
 
 .bookTitle::before {
@@ -430,7 +420,6 @@ background-color: #888;
 }
 
 .pages {
-  font-size: 25px;
   line-height: 35px;
   margin: 5px 0px 0px 10px;
 }
@@ -441,7 +430,6 @@ background-color: #888;
 
 .postedDate {
   margin: 156px 0 0 15px;
-  font-size: 22px;
   list-style: none;
 }
 
@@ -454,7 +442,7 @@ i {
   width: 100px;
   color: #fff;
   font-size: 30px;
-  font-family: 'Sawarabi Gothic', sans-serif;
+  font-family: sans-serif;
   cursor: pointer;
 }
 
@@ -464,7 +452,7 @@ i {
   margin-left: 20px;
   font-size: 30px;
   color: rgb(255, 255, 255);
-  font-family: 'Sawarabi Gothic', sans-serif;
+  font-family: sans-serif;
   cursor: pointer;
 }
 
@@ -563,7 +551,7 @@ i {
   margin-right: 20px;
   height: 20px;
   font-size: 20px;
-  font-family: 'Sawarabi Gothic', sans-serif;
+  font-family: sans-serif;
   position: absolute;
   right: 70px;
   top: 10px;

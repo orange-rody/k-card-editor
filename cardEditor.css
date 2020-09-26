@@ -3,7 +3,7 @@
   background-attachment: fixed;
   color: #555;
   font-size: 20px;
-  font-family: 'Sawarabi Mincho', sans-serif;
+  font-family: 'Noto Serif JP', serif;
 }
 
 p,h1,h2,h3,h4,h5,h6 {
@@ -17,7 +17,7 @@ p,h1,h2,h3,h4,h5,h6 {
   margin: 0 auto;
   display: flex;
   flex-flow: row-reverse;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .main {
@@ -144,6 +144,8 @@ p,h1,h2,h3,h4,h5,h6 {
   transform: translate(-50%,-50%);
   width: 819px;
   height: 576px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   margin: 0;
   border: 1px solid #00ced1;
   background-image: url("./k-card-image\(Edited\).png");
@@ -190,9 +192,9 @@ input {
   width: 576px;
   height: 38px;
   padding:0 0 0 2px;
-  font-size: 20px;
   margin: 15px 0 0 20px;
-  font-family: 'Sawarabi Mincho', sans-serif;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   border: 1px dotted #ddd;
   white-space: nowrap;
   caret-color: slategray;
@@ -203,12 +205,12 @@ input {
   width: 622px;
   height: 38px;
   margin: 10px 0 0 20px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   padding: 0 0 0 2px;
-  font-size: 20px;
   line-height: 60px;
   overflow: hidden;
   border: 1px dotted #ddd;
-  font-family: 'Sawarabi Mincho', sans-serif;
   background-color: transparent;
 }
 
@@ -238,23 +240,22 @@ thead tr th select option {
   display: block;
   width: 622px;
   height: 260px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   padding: 0 0 0 2px;
   margin-left: 20px;
   margin-right: 10px;
   margin-bottom: 41px;
   margin-top: 43px;
-  font-size: 20px;
   color: #555;
   overflow: hidden;
   line-height: 43px;
-  font-family: 'Sawarabi Mincho', sans-serif;
   border: 1px dotted #ddd;
   caret-color: slategray;
   background-color: transparent;
 }
 
 textarea::placeholder {
- font-family: 'Sawarabi Mincho', sans-serif;
  color: #aaa;
 }
 
@@ -266,9 +267,9 @@ textarea::placeholder {
 .author {
   width: 622px;
   height: 38px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   border: 1px dotted #ddd;
-  font-size : 20px;
-  font-family: 'Sawarabi Mincho', sans-serif;
   margin-top: 1px;
   margin-bottom: 1px;
   margin-left: 19px;
@@ -283,9 +284,9 @@ textarea::placeholder {
 .bookTitle {
   width: 508px;
   height: 38px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   border: 1px dotted #ddd;
-  font-size : 20px;
-  font-family: 'Sawarabi Mincho', sans-serif;
   margin-top: 2px;
   margin-bottom: 1px;
   margin-left: 19px;
@@ -304,9 +305,9 @@ textarea::placeholder {
   padding: 0 0 0 2px;
   width: 62px;
   height: 38px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   border: 1px dotted #ddd;
-  font-family: 'Sawarabi Mincho', sans-serif;
-  font-size: 20px;
   caret-color: slategray;
 }
 
@@ -332,7 +333,7 @@ table {
   border: 1px dotted #ddd;
   background-color: rgba(0,0,0,0);
   color: #555;
-  font-family: 'Sawarabi Mincho', sans-serif;
+  font-family: 'Noto Serif JP', serif;
   font-size: 15px;
   line-height: 43px;
   caret-color: slategray;
@@ -540,13 +541,12 @@ table {
 }
 
 .writingTitle {
-
   width: 576px;
   height: 38px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   padding:0 0 0 2px;
-  font-size: 20px;
   margin: 15px 0 0 20px;
-  font-family: 'Sawarabi Mincho', sans-serif;
   border: 1px dotted #ddd;
   white-space: nowrap;
   caret-color: slategray;
@@ -556,13 +556,13 @@ table {
 .writingLeadSentence {
   width: 622px;
   height: 38px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   margin: 10px 0 0 20px;
   padding: 0 0 0 2px;
-  font-size: 20px;
   line-height: 60px;
   overflow: hidden;
   border: 1px dotted #ddd;
-  font-family: 'Sawarabi Mincho', sans-serif;
   background-color: transparent;
 }
 
@@ -570,16 +570,16 @@ table {
   display: block;
   width: 622px;
   height: 261px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   padding: 0 0 0 2px;
   margin-left: 20px;
   margin-right: 10px;
   margin-bottom: 41px;
   margin-top: 43px;
-  font-size: 20px;
   color: #555;
   overflow: hidden;
   line-height: 43px;
-  font-family: 'Sawarabi Mincho', sans-serif;
   border: 1px dotted #ddd;
   caret-color: slategray;
   background-color: transparent;
@@ -589,10 +589,11 @@ table {
 .remarks {
   width: 622px;
   height: 83px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
   line-height: 43px;
+  color: #555;
   border: 1px dotted #ddd;
-  font-size : 20px;
-  font-family: 'Sawarabi Mincho', sans-serif;
   margin-top: 1px;
   margin-bottom: 1px;
   margin-left: 19px;
