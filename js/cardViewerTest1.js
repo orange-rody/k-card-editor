@@ -189,7 +189,7 @@ auth.onAuthStateChanged(user => {
       .then((bookmarkCard)=>{
         if(bookmarkCard.exists){
           console.log(bookmarkCard.data().bookmarkCardId);
-          bookmarkUserCount.style.color = '#FF474E';
+          bookmarkUserCount.style.color = '#ff9090';
         }else {
         console.log('ブックマークしたカードは存在しません');  
         }
@@ -201,10 +201,10 @@ auth.onAuthStateChanged(user => {
         db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).get()
         .then((bookmarkCard)=>{
           if(bookmarkCard.exists){
-            bookmarkUserCount.style.color = '#555';
+            bookmarkUserCount.style.color = '#fff';
             db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).delete();
           }else {
-            bookmarkUserCount.style.color = '#FF474E';
+            bookmarkUserCount.style.color = '#ff9090';
             db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).set({
               bookmarkCardId: doc,
               uid: currentUid,

@@ -102,7 +102,7 @@ body {
 #main-center {
   overflow: hidden;
   position: relative;
-  background-image: url('./sean-o-KMn4VEeEPR8-unsplash.jpg');
+  background-image: url('./antoine-rault-IhWRrZx4-kk-unsplash.jpg');
   background-position:right bottom;
   background-size: cover;
 }
@@ -343,11 +343,11 @@ background-color: #888;
   height: 576px;
   margin: 0 auto;
   font-size: 25px;
-  border:1px solid #00ced1;
+  border:1px solid #254883;
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
-  box-shadow: 10px 10px 10px rgb(159, 159, 159);
+  box-shadow: 10px 10px 10px rgb(82, 102, 154);
   position: relative;
   border-radius: 10px;
 }
@@ -452,7 +452,7 @@ i {
 .bookmarkUserCount {
   margin-top: 15px;
   width: 100px;
-  color: #555;
+  color: #fff;
   font-size: 30px;
   font-family: 'Sawarabi Gothic', sans-serif;
   cursor: pointer;
@@ -463,7 +463,7 @@ i {
   margin-top: 15px;
   margin-left: 20px;
   font-size: 30px;
-  color: #555;
+  color: rgb(255, 255, 255);
   font-family: 'Sawarabi Gothic', sans-serif;
   cursor: pointer;
 }
@@ -567,6 +567,7 @@ i {
   position: absolute;
   right: 70px;
   top: 10px;
+  color: #fff;
 }
 #postedUserName::before {
   content: "by ";

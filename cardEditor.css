@@ -2,8 +2,8 @@
   margin: 0;
   background-attachment: fixed;
   color: #555;
-  font-size: 25px;
-  font-family: 'Noto Serif JP', serif;
+  font-size: 20px;
+  font-family: 'Sawarabi Mincho', sans-serif;
 }
 
 p,h1,h2,h3,h4,h5,h6 {
@@ -17,7 +17,7 @@ p,h1,h2,h3,h4,h5,h6 {
   margin: 0 auto;
   display: flex;
   flex-flow: row-reverse;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .main {
@@ -37,7 +37,6 @@ p,h1,h2,h3,h4,h5,h6 {
   background-position: center top;
   background-repeat: repeat;
   background-size: 100% 100%;
-  box-shadow: -1px -1px 2px #95c9c9;
 }
 
 #readingCard {  
@@ -80,7 +79,9 @@ p,h1,h2,h3,h4,h5,h6 {
   padding: 5px 20px 5px 20px;
   border-radius: 40px;
   width: 130px;
-  font-family: 'Noto Serif JP', serif;
+  height: 40px;
+  font-size: 25px;
+  font-family: 'Sawarabi Mincho', sans-serif;
   transition: all 0.1s ease-in-out;
 }
 
@@ -90,7 +91,7 @@ p,h1,h2,h3,h4,h5,h6 {
   width: 150px;
   height: 40px;
   color: #d8dede;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
 }
 
 #sidebar li:hover {
@@ -108,7 +109,7 @@ p,h1,h2,h3,h4,h5,h6 {
 
 #readingCardTitle {
   position: absolute;
-  top: 10px;
+  top: 5px;
   left: 200px;
   color: #fff;
   font-size: 2.5rem;
@@ -189,9 +190,9 @@ input {
   width: 576px;
   height: 38px;
   padding:0 0 0 2px;
-  font-size: 25px;
+  font-size: 20px;
   margin: 15px 0 0 20px;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
   border: 1px dotted #ddd;
   white-space: nowrap;
   caret-color: slategray;
@@ -203,17 +204,16 @@ input {
   height: 38px;
   margin: 10px 0 0 20px;
   padding: 0 0 0 2px;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 60px;
   overflow: hidden;
   border: 1px dotted #ddd;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
   background-color: transparent;
 }
 
 input::placeholder {
-  font-size: 25px;
-  font-size: 25px;
+  font-size: 20px;
   color: #aaa;
 }
 
@@ -243,18 +243,18 @@ thead tr th select option {
   margin-right: 10px;
   margin-bottom: 41px;
   margin-top: 43px;
-  font-size: 25px;
+  font-size: 20px;
   color: #555;
   overflow: hidden;
   line-height: 43px;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
   border: 1px dotted #ddd;
   caret-color: slategray;
   background-color: transparent;
 }
 
 textarea::placeholder {
- font-family: 'Noto Serif JP', serif;
+ font-family: 'Sawarabi Mincho', sans-serif;
  color: #aaa;
 }
 
@@ -267,8 +267,8 @@ textarea::placeholder {
   width: 622px;
   height: 38px;
   border: 1px dotted #ddd;
-  font-size : 25px;
-  font-family: 'Noto Serif JP', serif;
+  font-size : 20px;
+  font-family: 'Sawarabi Mincho', sans-serif;
   margin-top: 1px;
   margin-bottom: 1px;
   margin-left: 19px;
@@ -284,8 +284,8 @@ textarea::placeholder {
   width: 508px;
   height: 38px;
   border: 1px dotted #ddd;
-  font-size : 25px;
-  font-family: 'Noto Serif JP', serif;
+  font-size : 20px;
+  font-family: 'Sawarabi Mincho', sans-serif;
   margin-top: 2px;
   margin-bottom: 1px;
   margin-left: 19px;
@@ -305,8 +305,8 @@ textarea::placeholder {
   width: 62px;
   height: 38px;
   border: 1px dotted #ddd;
-  font-family: 'Noto Serif JP', serif;
-  font-size: 25px;
+  font-family: 'Sawarabi Mincho', sans-serif;
+  font-size: 20px;
   caret-color: slategray;
 }
 
@@ -332,7 +332,7 @@ table {
   border: 1px dotted #ddd;
   background-color: rgba(0,0,0,0);
   color: #555;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
   font-size: 15px;
   line-height: 43px;
   caret-color: slategray;
@@ -355,7 +355,7 @@ table {
   font-size: 15px;
 }
 
-#buttonList {
+#readingButtonList {
   width: 70%;
   padding: 0;
   margin-bottom: 0;
@@ -365,7 +365,7 @@ table {
   justify-content: space-around;
 }
 
-#submit-button {
+#readingSubmit {
   width: 80px;
   height:35px;
   padding: 0;
@@ -383,22 +383,22 @@ table {
   transition: 0.1s all;
 }
 
-#submit-button:active,#cancel-button:active,#delete-button:active,#printButton:active {
+#readingSubmit:active,#readingCancel:active,#readingDelete:active,#readingPrint:active {
   transform: translateY(3px);
   box-shadow: none;
   border: none;
   outline: 0;
 }
 
-#submit-button:focus,#cancel-button:focus,#delete-button:focus,#printButton:focus {
+#submit-button:focus,#readingCancel:focus,#readingDelete:focus,#readingPrint:focus {
   outline: 0;
 }
 
-#submit-button:hover,#cancel-button:hover,#delete-button:hover,#printButton:hover {
+#submit-button:hover,#readingCancel:hover,#readingDelete:hover,#readingPrint:hover {
   opacity: 0.8;
 }
 
-#cancel-button {
+#readingCancel{
   width: 80px;
   height:35px;
   line-height: 35px;
@@ -417,7 +417,7 @@ table {
   transition: 0.1s all;
 }
 
-#delete-button {
+#readingDelete {
   width: 80px;
   height:35px;
   line-height: 35px;
@@ -436,7 +436,7 @@ table {
   transition: 0.1s all;
 }
 
-#printButton{
+#readingPrint{
   text-align: center;
   line-height: 35px;
   text-decoration: none;
@@ -474,7 +474,7 @@ table {
 
 #writingCardTitle {
   position: absolute;
-  top: 10px;
+  top: 5px;
   left: 200px;
   color: #fff;
   font-size: 2.5rem;
@@ -482,7 +482,7 @@ table {
   text-shadow: 1px 1px 5px rgb(253, 255, 208);
 }
 
-#writingIcon {
+#writingLogo {
   position: absolute;
   left: 0%;
   display: inline-block;
@@ -496,7 +496,7 @@ table {
   box-shadow: 5px 5px 20px rgb(39, 32, 55);
 }
 
-.fa-pen-alt {
+#writingIcon {
   margin-top: 25px;
   color: #fff;
 }
@@ -541,9 +541,9 @@ table {
   width: 576px;
   height: 38px;
   padding:0 0 0 2px;
-  font-size: 25px;
+  font-size: 20px;
   margin: 15px 0 0 20px;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
   border: 1px dotted #ddd;
   white-space: nowrap;
   caret-color: slategray;
@@ -555,11 +555,11 @@ table {
   height: 38px;
   margin: 10px 0 0 20px;
   padding: 0 0 0 2px;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 60px;
   overflow: hidden;
   border: 1px dotted #ddd;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
   background-color: transparent;
 }
 
@@ -572,11 +572,11 @@ table {
   margin-right: 10px;
   margin-bottom: 41px;
   margin-top: 43px;
-  font-size: 25px;
+  font-size: 20px;
   color: #555;
   overflow: hidden;
   line-height: 43px;
-  font-family: 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', sans-serif;
   border: 1px dotted #ddd;
   caret-color: slategray;
   background-color: transparent;
@@ -587,8 +587,8 @@ table {
   width: 622px;
   height: 38px;
   border: 1px dotted #ddd;
-  font-size : 25px;
-  font-family: 'Noto Serif JP', serif;
+  font-size : 20px;
+  font-family: 'Sawarabi Mincho', sans-serif;
   margin-top: 1px;
   margin-bottom: 1px;
   margin-left: 19px;
