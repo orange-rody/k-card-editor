@@ -355,7 +355,7 @@ table {
   font-size: 15px;
 }
 
-#readingButtonList {
+#readingButtonList,#writingButtonList {
   width: 70%;
   padding: 0;
   margin-bottom: 0;
@@ -365,7 +365,7 @@ table {
   justify-content: space-around;
 }
 
-#readingSubmit {
+#readingSubmit,#writingSubmit {
   width: 80px;
   height:35px;
   padding: 0;
@@ -383,22 +383,25 @@ table {
   transition: 0.1s all;
 }
 
-#readingSubmit:active,#readingCancel:active,#readingDelete:active,#readingPrint:active {
+#readingSubmit:active,#readingCancel:active,#readingDelete:active,#readingPrint:active
+,#writingSubmit:active,#writingCancel:active,#writingDelete:active,#writingPrint:active {
   transform: translateY(3px);
   box-shadow: none;
   border: none;
   outline: 0;
 }
 
-#submit-button:focus,#readingCancel:focus,#readingDelete:focus,#readingPrint:focus {
+#readingSubmit:focus,#readingCancel:focus,#readingDelete:focus,#readingPrint:focus 
+,#writingSubmit:focus,#writingCancel:focus,#writingDelete:focus,#writingPrint:focus{
   outline: 0;
 }
 
-#submit-button:hover,#readingCancel:hover,#readingDelete:hover,#readingPrint:hover {
+#readingSubmit:hover,#readingCancel:hover,#readingDelete:hover,#readingPrint:hover 
+,#writingSubmit:hover,#writingCancel:hover,#writingDelete:hover,#readingPrint:hover{
   opacity: 0.8;
 }
 
-#readingCancel{
+#readingCancel,#writingCancel{
   width: 80px;
   height:35px;
   line-height: 35px;
@@ -417,7 +420,7 @@ table {
   transition: 0.1s all;
 }
 
-#readingDelete {
+#readingDelete,#writingDelete {
   width: 80px;
   height:35px;
   line-height: 35px;
@@ -436,7 +439,7 @@ table {
   transition: 0.1s all;
 }
 
-#readingPrint{
+#readingPrint,#writingPrint{
   text-align: center;
   line-height: 35px;
   text-decoration: none;
@@ -566,7 +569,7 @@ table {
 .writingMainText {
   display: block;
   width: 622px;
-  height: 303px;
+  height: 261px;
   padding: 0 0 0 2px;
   margin-left: 20px;
   margin-right: 10px;
@@ -585,7 +588,8 @@ table {
 
 .remarks {
   width: 622px;
-  height: 38px;
+  height: 83px;
+  line-height: 43px;
   border: 1px dotted #ddd;
   font-size : 20px;
   font-family: 'Sawarabi Mincho', sans-serif;
@@ -594,4 +598,5 @@ table {
   margin-left: 19px;
   margin-right: 9px;
   padding: 0 0 0 2px;
+  background-color: transparent;
 }
