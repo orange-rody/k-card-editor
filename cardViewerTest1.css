@@ -102,6 +102,9 @@ body {
 #main-center {
   overflow: hidden;
   position: relative;
+  background-image: url('./sean-o-KMn4VEeEPR8-unsplash.jpg');
+  background-position:right bottom;
+  background-size: cover;
 }
 
 header {
@@ -198,6 +201,10 @@ background-color: #888;
   position: relative;
   height: 75vh;
   width: 100%;
+  background-image: url('./han-chenxu-s87ngBxo4xg-unsplash.jpg');
+  background-position: right bottom;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #profileSentence {
@@ -340,7 +347,7 @@ background-color: #888;
   background-image: url("./k-card-image\(Edited\).png");
   background-position: center top;
   background-size: cover;
-  box-shadow: 10px 10px 10px #ccc;
+  box-shadow: 10px 10px 10px rgb(159, 159, 159);
   position: relative;
   border-radius: 10px;
 }

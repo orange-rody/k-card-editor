@@ -15,7 +15,12 @@
         <div id = "reading">
           <!-- contentクラスでカードのサイズを規程する -->
           <form id="readingCard">
-           
+            <p id = "readingIcon">
+              <i class="fas fa-book"></i>
+            </p>
+            <p id = 'readingCardTitle'>
+              読書ノート
+            </p>
             <div class = "readingWrap">
               <!-- カードのレイアウトをside-barとmainに２分割する -->
               <div class = "readingMainArea">
@@ -36,7 +41,7 @@
                   <tbody class = "readingMainTextArea">
                     <tr class = "readingMainTextArea">
                       <td>
-                        <textarea  class = "readingMainText" placeholder = "引用文・気付き" name = "readingMainText"></textarea>
+                        <textarea  class = "readingMainText" placeholder = "引用文" name = "readingMainText"></textarea>
                       </td>                
                     </tr> 
                   </tbody>
@@ -96,32 +101,27 @@
                     </tr>  
                     <tr>
                       <!-- カードの2段目の箇所にカードのリード文が入力できるようにする -->
-                      <th class = "writingText"><input type = "text" placeholder = "リード文" class = "writingLeadSentence writingText" name = "leadSentence" ></th>
+                      <th class = "writingText"><input type = "text" placeholder = "リード文" class = "writingLeadSentence writingText" name = "writingLeadSentence" ></th>
                     </tr>      
                   </thead>
                   <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
                   <tbody class = "writingMainTextArea">
                     <tr class = "writingMainTextArea">
                       <td>
-                        <textarea  class = "writingMainText" placeholder = "引用文・気付き" name = "writingMainText"></textarea>
+                        <textarea  class = "writingMainText" placeholder = "気付き" name = "writingMainText"></textarea>
                       </td>                
                     </tr> 
                   </tbody>
                   <tfoot class = "writingInformation">
                     <tr>
                       <td>
-                        <input type = "writingText" placeholder = "著者" class = "author" name = "author">
+                        <input type = "writingText" placeholder = "備考" class = "remarks" name = "remarks">
                       </td>
                     </tr>
-                    <tr>
-                      <td class = "writingBookInfo"><input type = "text" placeholder = "書名" class = "writingBookTitle" name = "writingBookTitle">
-                        P.<input type = "number" class = "writingPages" name="writingPages"></td>
-                    </tr>
-                    <tr class = "blank-column"></tr>
                   </tfoot> 
                 </table>
               </div>
-              <aside class = "card-side">
+              <aside class = "writingCard-side">
                 <div id = hushTagSpace>
                   <form id = "hushTagList">
                     <tr>

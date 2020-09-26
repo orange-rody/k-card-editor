@@ -106,21 +106,34 @@ p,h1,h2,h3,h4,h5,h6 {
   margin-right: 10px;
 }
 
-.bookIcon {
+#readingCardTitle {
   position: absolute;
-  right:0%;
-  top: 0%;
-  transform: rotate(-15deg);
-  font-size: 5rem;
+  top: 10px;
+  left: 200px;
   color: #fff;
-  width: 120px;
-  height: 120px;
-  background-image: url(./p0033_m.jpeg);
-  margin: 10px 40px 20px 0;
-  line-height: 120px;
+  font-size: 2.5rem;
+  font-family: 'Sawarabi Mincho', sans-serif;
+  text-shadow: 2px 2px 5px rgba(47, 83, 228, 0.797);
+}
+
+#readingIcon {
+  position: absolute;
+  left: 0%;
+  display: inline-block;
+  font-size: 2rem;
+  width: 100px;
+  height: 100px;
+  background-image: url('./joanna-kosinska-1_CMoFsPfso-unsplash.jpg');
+  border-bottom-right-radius: 100%;
   text-align: center;
-  border-radius: 100%;
-  box-shadow: 6px 6px 6px rgb(152, 184, 211);
+  vertical-align: bottom;
+  box-shadow: 5px 5px 20px rgb(74, 99, 159);
+}
+
+.fa-book {
+  margin-top: 25px;
+  color: #fff;
+  text-shadow: 1px 1px 5px rgb(251, 255, 210);
 }
 
 .readingWrap {
@@ -345,6 +358,7 @@ table {
 #buttonList {
   width: 70%;
   padding: 0;
+  margin-bottom: 0;
   list-style: none;
   display: flex;
   flex-flow: row;
@@ -460,10 +474,10 @@ table {
 
 #writingCardTitle {
   position: absolute;
-  top: 30px;
-  left: 180px;
+  top: 10px;
+  left: 200px;
   color: #fff;
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-family: 'Sawarabi Mincho', sans-serif;
   text-shadow: 1px 1px 5px rgb(253, 255, 208);
 }
@@ -472,10 +486,10 @@ table {
   position: absolute;
   left: 0%;
   display: inline-block;
-  font-size: 3rem;
-  width: 120px;
-  height: 120px;
-  background-image: url('./anastasiia-kamil--uQZPtoJ8nk-unsplash.jpg');
+  font-size: 2rem;
+  width: 100px;
+  height: 100px;
+  background-image: url('./joanna-kosinska-1_CMoFsPfso-unsplash.jpg');
   border-bottom-right-radius: 100%;
   text-align: center;
   vertical-align: bottom;
@@ -503,8 +517,81 @@ table {
   border-radius: 10px;
 }
 
-.writingMainArea {
+.writingCardMainArea {
   width: 666px;
   height: 576px;
   float: right;
+}
+
+.writingCard-side {
+  position: absolute;
+  width: 154px;
+  height: 100%;
+}
+
+.writingText {
+  width: 646px;
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.writingTitle {
+
+  width: 576px;
+  height: 38px;
+  padding:0 0 0 2px;
+  font-size: 25px;
+  margin: 15px 0 0 20px;
+  font-family: 'Noto Serif JP', serif;
+  border: 1px dotted #ddd;
+  white-space: nowrap;
+  caret-color: slategray;
+  background-color: transparent;
+}
+
+.writingLeadSentence {
+  width: 622px;
+  height: 38px;
+  margin: 10px 0 0 20px;
+  padding: 0 0 0 2px;
+  font-size: 25px;
+  line-height: 60px;
+  overflow: hidden;
+  border: 1px dotted #ddd;
+  font-family: 'Noto Serif JP', serif;
+  background-color: transparent;
+}
+
+.writingMainText {
+  display: block;
+  width: 622px;
+  height: 303px;
+  padding: 0 0 0 2px;
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 41px;
+  margin-top: 43px;
+  font-size: 25px;
+  color: #555;
+  overflow: hidden;
+  line-height: 43px;
+  font-family: 'Noto Serif JP', serif;
+  border: 1px dotted #ddd;
+  caret-color: slategray;
+  background-color: transparent;
+}
+
+
+.remarks {
+  width: 622px;
+  height: 38px;
+  border: 1px dotted #ddd;
+  font-size : 25px;
+  font-family: 'Noto Serif JP', serif;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-left: 19px;
+  margin-right: 9px;
+  padding: 0 0 0 2px;
 }
