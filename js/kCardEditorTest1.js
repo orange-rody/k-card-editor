@@ -6,7 +6,7 @@ const db = firebase.firestore();
 const readingForm = document.getElementById('readingCard');
 const readingCancel = document.getElementById('readingCancel');
 const readingDelete = document.createElement('p');
-readingDelete.setAttribute('id','delete-button');
+readingDelete.setAttribute('id','readingDelete');
 readingDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
 const readingPrint = document.getElementById('readingPrint');
 const readingSubmit = document.getElementById('readingSubmit');
@@ -112,8 +112,8 @@ auth.onAuthStateChanged((user) => {
           bookTitleRevision.setAttribute('value',doc.data().bookTitle);
           pagesRevision.setAttribute('value',doc.data().pages);
 
-          //readingSubmitButtonにaddEventListenerを持たせる
-          readingSubmitButton.addEventListener('click',(e)=>{
+          //readingSubmitにaddEventListenerを持たせる
+          readingSubmit.addEventListener('click',(e)=>{
             e.preventDefault();
             // readingFormに入力した値をFirestoreのコレクションに渡す
             db.collection('reading').doc(docId).set({
