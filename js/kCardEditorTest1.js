@@ -15,7 +15,7 @@ const readingSubmit = document.getElementById('readingSubmit');
 const writingForm = document.getElementById('writingCard');
 const writingCancel = document.getElementById('writingCancel');
 const writingDelete = document.createElement('p');
-writingDelete.setAttribute('id','delete-button');
+writingDelete.setAttribute('id','writingDelete');
 writingDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
 const writingPrint = document.getElementById('writingPrint');
 const writingSubmit = document.getElementById('writingSubmit');
@@ -30,7 +30,8 @@ auth.onAuthStateChanged((user) => {
     // userNameに代入しようとしました。
     let userRef = db.collection('user').doc(currentUid);
     let userName = userRef.get().then((doc) => {
-                    userName = doc.data().name.toString()});
+                    userName = doc.data().name.toString()
+                  });
     console.log(typeof userName);
   
     // パラメータの各要素を格納する連想配列、Mapオブジェクトを宣言する。
@@ -62,13 +63,15 @@ auth.onAuthStateChanged((user) => {
     let cardCollection = searchParam.get('collection');
     let docId = searchParam.get('doc.id');
     
-
+    //readingCardの修正時のための変数を作る
     let readingTitleRevision = readingForm.readingTitle;
     let readingLeadSentenceRevision = readingForm.readingLeadSentence;
     let readingMainTextRevision = readingForm.readingMainText;
     let authorRevision = readingForm.author;
     let bookTitleRevision = readingForm.bookTitle;
     let pagesRevision = readingForm.pages;
+  
+    //writingCardの修正時のための変数を作る
     
     // キャンセルボタンの実装
     readingCancel.addEventListener('click',(e)=>{
@@ -116,6 +119,7 @@ auth.onAuthStateChanged((user) => {
           readingSubmit.addEventListener('click',(e)=>{
             e.preventDefault();
             // readingFormに入力した値をFirestoreのコレクションに渡す
+       
             db.collection('reading').doc(docId).set({
               title: readingForm.readingTitle.value,
               leadSentence: readingForm.readingLeadSentence.value,
@@ -142,6 +146,7 @@ auth.onAuthStateChanged((user) => {
         readingSubmit.addEventListener('click',(e)=>{
           // デフォルトだと、submitするときにURLが変わることで、ブラウザの再読み込みが実行されてしまう。これを避けるため、preventDefaultを設定する。
           e.preventDefault();
+         
           // readingFormに入力した値をFirestoreのコレクションに渡す
           db.collection('reading').add({
             title: readingForm.readingTitle.value,
@@ -169,14 +174,14 @@ auth.onAuthStateChanged((user) => {
     let writingLeadSentenceRevision = writingForm.writingLeadSentence;
     let writingMainTextRevision = writingForm.writingMainText;
     let remarks = writingForm.remarks;
-    let hushTag1 = writingForm.hushTag1;
-    let hushTag2 = writingForm.hushTag2;
-    let hushTag3 = writingForm.hushTag3;
+    let hashTag1 = writingForm.hashTag1;
+    let hashTag2 = writingForm.hashTag2;
+    let hashTag3 = writingForm.hashTag3;
 
 
     function writingEdittingCard(docId){
       if(cardCollection === 'writing'){
-
+        window.scrollTo(0,2000);
         // 削除ボタンの実装
         document.getElementById('writingButtonList').insertAdjacentElement('beforeend',writingDelete);
         writingDelete.addEventListener('click',() => {
@@ -192,27 +197,28 @@ auth.onAuthStateChanged((user) => {
 
         let writingRef = db.collection('writing').doc(docId);
         writingRef.get().then((doc)=>{
-          writingTitleRevision.setAttribute('value',doc.data().writingTitle);
-          writingLeadSentenceRevision.setAttribute('value',doc.data().writingLeadSentence);
-          writingMainTextRevision.textContent = doc.data().writingMainText;
-          remarks.setAttribute('value',doc.data().remarks);
-          hushTag1.setAttribute('value',doc.data().hushTag1);
-          hushTag2.setAttribute('value',doc.data().hushTag2);
-          hushTag3.setAttribute('value',doc.data().hushTag3);
+          writingTitleRevision.setAttribute('value',doc.data().title);
+          writingLeadSentenceRevision.setAttribute('value',doc.data().leadSentence);
+          writingMainTextRevision.textContent = doc.data().mainText;
+          remarks.textContent = doc.data().remarks;
+          hashTag1.textContent = doc.data().hashTag1;
+          hashTag2.textContent = doc.data().hashTag2;
+          hashTag3.textContent = doc.data().hashTag3;
          
 
           //readingSubmitButtonにaddEventListenerを持たせる
-          writingSubmitButton.addEventListener('click',(e)=>{
+          writingSubmit.addEventListener('click',(e)=>{
             e.preventDefault();
+       
             // readingFormに入力した値をFirestoreのコレクションに渡す
             db.collection('writing').doc(docId).set({
               title: writingForm.writingTitle.value,
               leadSentence: writingForm.writingLeadSentence.value,
               mainText: writingForm.writingMainText.value,
               remarks: writingForm.remarks.value,
-              hushTag1: writingForm.hushTag1.value,
-              hushTag2: writingForm.hushTag2.value,
-              hushTag3: writingForm.hushTag3.value,
+              hashTag1: writingForm.hashTag1.value,
+              hashTag2: writingForm.hashTag2.value,
+              hashTag3: writingForm.hashTag3.value,
               postedDate: firebase.firestore.FieldValue.serverTimestamp(),
               uid: currentUid,
               // 15~17行目で定義した変数「userName」を「k-card」コレクションに
@@ -224,24 +230,25 @@ auth.onAuthStateChanged((user) => {
             writingForm.writingLeadSentence.value = "";
             writingForm.writingMainText.value = '';
             writingForm.remarks.value = '';
-            writingForm.hushTag1.value = '';
-            writingForm.hushTag2.value = '';
-            writingForm.hushTag3.value = '';
+            writingForm.hashTag1.value = '';
+            writingForm.hashTag2.value = '';
+            writingForm.hashTag3.value = '';
           });
         });
       }else{
         writingSubmit.addEventListener('click',(e)=>{
           // デフォルトだと、submitするときにURLが変わることで、ブラウザの再読み込みが実行されてしまう。これを避けるため、preventDefaultを設定する。
           e.preventDefault();
+
           // readingFormに入力した値をFirestoreのコレクションに渡す
           db.collection('writing').add({
             title: writingForm.writingTitle.value,
               leadSentence: writingForm.writingLeadSentence.value,
               mainText: writingForm.writingMainText.value,
               remarks: writingForm.remarks.value,
-              hushTag1: writingForm.hushTag1.value,
-              hushTag2: writingForm.hushTag2.value,
-              hushTag3: writingForm.hushTag3.value,
+              hashTag1: writingForm.hashTag1.value,
+              hashTag2: writingForm.hashTag2.value,
+              hashTag3: writingForm.hashTag3.value,
               postedDate: firebase.firestore.FieldValue.serverTimestamp(),
               uid: currentUid,
           });
@@ -250,9 +257,9 @@ auth.onAuthStateChanged((user) => {
             writingForm.writingLeadSentence.value = "";
             writingForm.writingMainText.value = '';
             writingForm.remarks.value = '';
-            writingForm.hushTag1.value = '';
-            writingForm.hushTag2.value = '';
-            writingForm.hushTag3.value = '';
+            writingForm.hashTag1.value = '';
+            writingForm.hashTag2.value = '';
+            writingForm.hashTag3.value = '';
         });
       }
     }

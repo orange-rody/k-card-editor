@@ -260,8 +260,8 @@ background-color: #888;
   color: #2A5E8C;
 }
 
-#postedCardNumber::after {
-  content: "Cards Posted!!";
+#postedCardNumber::after{
+  content: "Cards Opened!";
   font-size: 30px;
 }
 

@@ -11,7 +11,6 @@ let mainCenter = document.querySelector('#main-center');
 let userIcon = document.querySelector('#userIcon');
 let userImage = document.querySelector('#userImage');
 // styleプロパティでbackgroundImageに任意の画像を設定する
-let postedCardIdList = [];
 
 //listen for auth status change
 auth.onAuthStateChanged(user => {
@@ -88,7 +87,6 @@ auth.onAuthStateChanged(user => {
       // makeCardList()で、ドキュメントの集合体からドキュメントIDの値のみ抽出して、配列を作る。
       const writingCardIdList = makeCardIdList(documents);
       console.log(writingCardIdList);
-      postedCardIdList.push(writingCardIdList);
       // 配列cardIdListの各要素(カードのドキュメントID)において、カード画面を描写するようにする。
       writingCardIdList.forEach((cardId) => {
         console.log(cardId);
@@ -113,6 +111,26 @@ auth.onAuthStateChanged(user => {
       return cardIdList;
     }
    
+
+    let postedCard = document.getElementById('postedCardNumber');
+    function postedWritingCardList(){
+      let writingCardList = [];
+      db.collection('writing').where('uid', '==', currentUid)
+        .get()
+        .then((snapshot)=>{
+          snapshot.forEach((doc)=>{
+            let writingCardId = String(doc.id);
+            writingCardList.push(writingCardId);
+          });
+          console.log(writingCardList);
+          console.log(writingCardList.length);
+          postedCard.textContent = `${writingCardList.length}`;
+        });
+    }
+
+     postedWritingCardList();
+    
+
     // 関数renderReadingを宣言する
     function renderReading(doc){
       //db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に、

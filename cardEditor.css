@@ -4,6 +4,7 @@
   color: #555;
   font-size: 20px;
   font-family: 'Noto Serif JP', serif;
+  background-image: url(./p0004_m.jpeg);
 }
 
 p,h1,h2,h3,h4,h5,h6 {
@@ -317,13 +318,13 @@ table {
   border-collapse: collapse;
 }
 
-#hushTagSpace {
+#hashTagSpace {
   width: 154px;
   height: calc(100% - 102px);
   margin-top: 102px;
 }
 
-.hushTag {
+.hashTag {
   display: inline-block;
   padding: 0 0 0 2px;
   width: 128px;
@@ -339,19 +340,19 @@ table {
   caret-color: slategray;
 }
 
-#hushTag1 {
+#hashTag1 {
   margin-top: 46px;
 }
 
-#hushTag2 {
+#hashTag2 {
   margin-top: 33px;
 }
 
-#hushTag3 {
+#hashTag3 {
   margin-top: 32px;
 }
 
-.hushTag::placeholder {
+.hashTag::placeholder {
   color: #aaa;
   font-size: 15px;
 }
