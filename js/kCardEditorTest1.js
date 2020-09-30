@@ -134,6 +134,20 @@ auth.onAuthStateChanged((user) => {
               // 多分そうした理由でうまくいったんだと思う。
               postedUserName: userName.toString(),
             });
+
+            let noticeSubmit = document.createElement('div');
+            noticeSubmit.innerHTML = '<p>読書カードを登録しました！</p>';
+            noticeSubmit.classList.add('noticeSubmit');
+            let readingWrap = document.querySelector(".readingWrap");
+            readingWrap.appendChild(noticeSubmit);
+            console.log(noticeSubmit);
+            setTimeout(function fadeOut(){
+              noticeSubmit.classList.add('fadeOut');
+              },2000)
+            setTimeout(function(){
+              readingWrap.removeChild(noticeSubmit);
+            },2490)
+
             readingForm.readingTitle.value = "";
             readingForm.readingLeadSentence.value = "";
             readingForm.readingMainText.value = '';
@@ -146,7 +160,7 @@ auth.onAuthStateChanged((user) => {
         readingSubmit.addEventListener('click',(e)=>{
           // デフォルトだと、submitするときにURLが変わることで、ブラウザの再読み込みが実行されてしまう。これを避けるため、preventDefaultを設定する。
           e.preventDefault();
-         
+     
           // readingFormに入力した値をFirestoreのコレクションに渡す
           db.collection('reading').add({
             title: readingForm.readingTitle.value,
@@ -159,6 +173,20 @@ auth.onAuthStateChanged((user) => {
             uid: currentUid,
             postedUserName: userName.toString(),
           });
+
+          let noticeSubmit = document.createElement('div');
+          noticeSubmit.innerHTML = '<p>読書カードを登録しました！</p>';
+          noticeSubmit.classList.add('noticeSubmit');
+          let readingWrap = document.querySelector(".readingWrap");
+          readingWrap.appendChild(noticeSubmit);
+          console.log(noticeSubmit);
+          setTimeout(function fadeOut(){
+            noticeSubmit.classList.add('fadeOut');
+            },2000)
+          setTimeout(function(){
+            readingWrap.removeChild(noticeSubmit);
+          },2490)
+
             // 提出後、formに入力されている文字列を消去する。
           readingForm.readingTitle.value = '';
           readingForm.readingLeadSentence.value = "";
@@ -226,6 +254,20 @@ auth.onAuthStateChanged((user) => {
               // 多分そうした理由でうまくいったんだと思う。
               postedUserName: userName.toString(),
             });
+
+            let noticeSubmit = document.createElement('div');
+            noticeSubmit.innerHTML = '<p>発見の手帳を登録しました！</p>';
+            noticeSubmit.classList.add('noticeSubmit');
+            let writingWrap = document.querySelector(".writingWrap");
+            writingWrap.appendChild(noticeSubmit);
+            console.log(noticeSubmit);
+            setTimeout(function fadeOut(){
+              noticeSubmit.classList.add('fadeOut');
+              },2000)
+            setTimeout(function(){
+              writingWrap.removeChild(noticeSubmit);
+            },2490)
+
             writingForm.writingTitle.value = "";
             writingForm.writingLeadSentence.value = "";
             writingForm.writingMainText.value = '';
@@ -252,6 +294,20 @@ auth.onAuthStateChanged((user) => {
               postedDate: firebase.firestore.FieldValue.serverTimestamp(),
               uid: currentUid,
           });
+
+          let noticeSubmit = document.createElement('div');
+          noticeSubmit.innerHTML = '<p>発見の手帳を登録しました！</p>';
+          noticeSubmit.classList.add('noticeSubmit');
+          let writingWrap = document.querySelector(".writingWrap");
+          writingWrap.appendChild(noticeSubmit);
+          console.log(noticeSubmit);
+          setTimeout(function fadeOut(){
+            noticeSubmit.classList.add('fadeOut');
+            },2000)
+          setTimeout(function(){
+            writingWrap.removeChild(noticeSubmit);
+          },2490)
+
             // 提出後、formに入力されている文字列を消去する。
             writingForm.writingTitle.value = "";
             writingForm.writingLeadSentence.value = "";

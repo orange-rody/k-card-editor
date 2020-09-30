@@ -403,6 +403,33 @@ table {
   opacity: 0.8;
 }
 
+.noticeSubmit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: block;
+  padding: 0;
+  z-index: 3;
+  width: 400px;
+  height: 50px;
+  background-color: #2bbda2;;
+  color: #fff;
+  border-radius: 10px;
+  animation: fadeInAnimation 500ms ease-out;
+}
+
+.fadeOut {
+  animation: fadeOutAnimation 500ms ease-out;
+}
+
+.noticeSubmit p {
+  line-height: 50px;
+  text-align: center;
+  font-size: 20px;
+  font-family: sans-serif;
+}
+
 #readingCancel,#writingCancel{
   width: 80px;
   height:35px;
@@ -601,4 +628,22 @@ table {
   margin-right: 9px;
   padding: 0 0 0 2px;
   background-color: transparent;
+}
+
+@keyframes fadeInAnimation{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
