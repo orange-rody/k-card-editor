@@ -168,7 +168,7 @@ auth.onAuthStateChanged(user => {
       let pages = document.createElement('p');
       let postedDate = document.createElement('li');
       let revisionButton = document.createElement('a');
-      let printButton = document.createElement('div');
+      let printButton = document.createElement('a');
       let postedUserName = document.createElement('p');
       let postedUserIcon = document.createElement('div');   
       
@@ -197,7 +197,6 @@ auth.onAuthStateChanged(user => {
 
       db.collection('reading').doc(doc).get()
         .then((doc) => {
-
         //Firestoreに保存されているpostedDateフィールドの値を、postedDateとして
         //登録できる数値に変換する。
         let time = doc.data().postedDate.toDate();
@@ -237,6 +236,9 @@ auth.onAuthStateChanged(user => {
 
         revisionButton.setAttribute('class','revisionButton');
         printButton.setAttribute('class','printButton');
+        printButton.setAttribute('type','button');
+        let printUrl = `./printCard.html?collection=reading&doc=${doc.id}`;
+        printButton.setAttribute('href', printUrl);
         postedUserName.setAttribute('class','postedUserName');
         postedUserIcon.setAttribute('class','postedUserIcon');
         cardStatus.setAttribute('class','cardStatus');
@@ -266,6 +268,7 @@ auth.onAuthStateChanged(user => {
 
         let editorURL = `k-card-editor.html?collection=reading&doc.id=${doc.id}`;
         revisionButton.setAttribute('href',editorURL);
+       
       });
     }
   
@@ -290,7 +293,7 @@ auth.onAuthStateChanged(user => {
       let bookmarkUserCount = document.createElement('div');     
       let commentUserCount = document.createElement('p');
       let revisionButton = document.createElement('a');
-      let printButton = document.createElement('div');
+      let printButton = document.createElement('a');
       let postedUserName = document.createElement('p');
       let postedUserIcon = document.createElement('div');   
      
