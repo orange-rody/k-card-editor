@@ -27,6 +27,7 @@ body {
 
 #main {
   display: block;
+  position:relative;
   width: 100%;
   max-width: 1440px;
   flex: 1 1 auto;
@@ -245,23 +246,43 @@ background-color: #888;
   padding: 0;
 }
 
-#postedCardNumber {
+#postedReading{
   position: absolute;
   margin: 0;
-  top: 60%;
-  left: 10%;
+  top: 64%;
+  left: 4%;
   width: 300px;
   height: 150px;
-  font-size: 150px;
+  font-size: 130px;
   font-family: 'Bilbo Swash Caps', cursive;
   /* border-bottom: dashed 2px #555; */
-  transform: rotate(-5deg);
   font-weight: bold;
   color: #2A5E8C;
 }
 
-#postedCardNumber::after{
-  content: "Cards Opened!";
+#postedWriting{
+  position: absolute;
+  margin: 0;
+  top: 64%;
+  left: 32%;
+  width: 300px;
+  height: 150px;
+  font-size: 130px;
+  font-family: 'Bilbo Swash Caps', cursive;
+  /* border-bottom: dashed 2px #555; */
+  font-weight: bold;
+  color: #cb8438;
+}
+
+#postedReading::before{
+  transform: rotate(-5deg);
+  content: "読書カード　";
+  font-size: 30px;
+}
+
+#postedWriting::before{
+  transform: rotate(-5deg);
+  content: "発見の手帳　";
   font-size: 30px;
 }
 
@@ -343,6 +364,35 @@ background-color: #888;
   box-shadow: 10px 10px 10px rgb(82, 102, 154);
   position: relative;
   border-radius: 10px;
+}
+
+.cardModal {
+  width: 100%;
+  height: 100%;;
+  position:absolute;
+  top: 0;
+  right: 0px;
+  background-color: rgba(0,0,0,0.5);
+  transition: all 0.5s;
+  animation: fadeInAnimation 200ms ease-out;
+}
+
+.cardModal .innerElement { 
+  width: 819px;
+  height: 576px;
+  left: 50%;
+  top: 50%;
+  transform:translate(-35%,-50%);
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
+  border:1px solid #254883;
+  background-image: url("./p0153_l.jpeg");
+  background-position: center top;
+  background-size: cover;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0,0.8);
+  position: relative;
+  border-radius: 10px;
+  animation: fadeInAnimation 200ms ease-out;
 }
 
 .cardMainArea {
@@ -582,5 +632,14 @@ i {
   box-shadow: none;
   top: 3px;
   opacity: 1;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 

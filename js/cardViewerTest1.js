@@ -112,24 +112,39 @@ auth.onAuthStateChanged(user => {
     }
    
 
-    let postedCard = document.getElementById('postedCardNumber');
-    function postedWritingCardList(){
+    let postedReading = document.getElementById('postedReading');
+    function postedReadingNumber(){
+      let readingCardList = [];
+      db.collection('reading').where('uid', '==', currentUid)
+        .get()
+        .then((snapshot)=>{
+          snapshot.forEach((doc)=>{
+            let readingCardId = String(doc.id);
+            readingCardList.push(readingCardId);
+          });
+          console.log(readingCardList);
+          console.log(readingCardList.length);
+          postedReading.textContent = `${readingCardList.length}`;
+        });
+    }
+
+    postedReadingNumber();
+    
+    let postedWriting = document.getElementById('postedWriting');
+    function postedWritingNumber(){
       let writingCardList = [];
-      db.collection('writing').where('uid', '==', currentUid)
+      db.collection('writing').where('uid','==',currentUid)
         .get()
         .then((snapshot)=>{
           snapshot.forEach((doc)=>{
             let writingCardId = String(doc.id);
             writingCardList.push(writingCardId);
-          });
-          console.log(writingCardList);
-          console.log(writingCardList.length);
-          postedCard.textContent = `${writingCardList.length}`;
+          })
+          postedWriting.textContent = `${writingCardList.length}`;
         });
     }
 
-     postedWritingCardList();
-    
+    postedWritingNumber();
 
     // 関数renderReadingを宣言する
     function renderReading(doc){
@@ -270,7 +285,6 @@ auth.onAuthStateChanged(user => {
       let title = document.createElement('p');
       let leadSentence = document.createElement('p');
       let mainText = document.createElement('p');
-      let information = document.createElement('div');
       let remarks = document.createElement('p');
       let postedDate = document.createElement('li');
       let bookmarkUserCount = document.createElement('div');     
@@ -370,6 +384,47 @@ auth.onAuthStateChanged(user => {
           }
         });
       });
+      
+      cardViewer.addEventListener('click',(e)=>{
+        displayCardModal();
+        renderBookmarkUsers();
+        }
+      );
+
+
+      function displayCardModal(){
+        let cardModal = document.createElement('div');
+        cardModal.classList.add('cardModal');
+        document.getElementById('viewer').appendChild(cardModal);
+        let innerElement = document.createElement('div');
+        innerElement.classList.add('innerElement');
+        cardModal.appendChild(innerElement);
+
+
+
+
+        cardModal.addEventListener('click',(e)=>{
+          closeCardModal(cardModal);
+ 
+        });
+      }
+
+      function closeCardModal(cardModal){
+        document.getElementById('viewer').removeChild(cardModal);
+      }
+    
+
+
+      function renderBookmarkUsers(){
+        let bookmarkUsers = [];
+        db.collection('writing').doc(doc).collection('bookmarkUser').get()
+          .then((snapshot)=>{
+            snapshot.forEach((bookmarkUser)=>{
+            bookmarkUsers.push(bookmarkUser);
+          })
+          console.log(bookmarkUsers);
+        })
+      }
 
       let commentUsers = [];
       function renderCommentUserCount(){
