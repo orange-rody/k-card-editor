@@ -370,29 +370,53 @@ background-color: #888;
   width: 100%;
   height: 100%;;
   position:absolute;
+  background-image: url(./antoine-rault-IhWRrZx4-kk-unsplash.jpg);
+  background-image: url('./antoine-rault-IhWRrZx4-kk-unsplash.jpg');
+  background-position:right bottom;
+  background-size: cover;
+  background-attachment: fixed;
   top: 0;
   right: 0px;
-  background-color: rgba(0,0,0,0.5);
-  transition: all 0.5s;
   animation: fadeInAnimation 200ms ease-out;
 }
 
-.cardModal .innerElement { 
-  width: 819px;
-  height: 576px;
-  left: 50%;
-  top: 50%;
-  transform:translate(-35%,-50%);
+.innerElement { 
+  height: 100%;
   font-size: 22px;
   font-family: 'Noto Serif JP', serif;
-  border:1px solid #254883;
-  background-image: url("./p0153_l.jpeg");
-  background-position: center top;
-  background-size: cover;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0,0.8);
+  color: #fff;
   position: relative;
-  border-radius: 10px;
-  animation: fadeInAnimation 200ms ease-out;
+  animation: fadeInAnimation 400ms ease-out;
+}
+
+.modalMainText {
+  width: 800px;
+  margin-left: 500px;
+  margin-top: 20px;
+  line-height: 50px;
+  font-size: 30px;
+  text-shadow: 1px 1px 20px;
+}
+
+.modalMainTextIcon {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 100%;
+  box-shadow: -1px -1px 70px #fff;
+  left: 330px;
+  top: -36px;
+  line-height: 5rem;
+  text-align: center;
+  font-size: 3rem;
+  color: #fff;
+}
+
+
+.fadeOut {
+  animation: fadeOutAnimation 400ms ease-out;
 }
 
 .cardMainArea {
@@ -643,3 +667,10 @@ i {
   }
 }
 
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 1;
+  }to {
+    opacity: 0;
+  }
+}

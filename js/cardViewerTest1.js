@@ -397,18 +397,50 @@ auth.onAuthStateChanged(user => {
 
       function displayCardModal(){
         let cardModal = document.createElement('div');
-        cardModal.classList.add('cardModal');
-        document.getElementById('viewer').appendChild(cardModal);
         let innerElement = document.createElement('div');
+        let modalMainTextArea = document.createElement('div');
+        let modalMainText = document.createElement('p');
+        let modalMainTextIcon = document.createElement('p');
+
+        cardModal.classList.add('cardModal');
         innerElement.classList.add('innerElement');
+        modalMainText.classList.add('modalMainText');
+        modalMainTextIcon.classList.add('modalMainTextIcon');
+       
+        db.collection('writing').doc(doc).get()
+          .then((snapshot)=>{
+            modalMainText.innerHTML = `${snapshot.data().mainText}`;
+            modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
+          });
+          
+        storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
+
+        function onResolveIcon(url) { 
+          console.log('url:',url);
+          modalMainTextIcon.innerHTML = "";
+          modalMainTextIcon.style.backgroundImage = `url('${url}')`;
+        } 
+        function onRejectIcon(){
+          storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
+            console.log('url:',url);
+            modalMainTextIcon.innerHTML = "";
+            modalMainTextIcon.style.backgroundImage = `url('${url}')`;
+          },onRejectAppend());
+        }
+        function onRejectAppend(){
+          modalMainTextIcon.innerHTML = '<i class="fas fa-user"></i>';
+          modalMainTextIcon.style.backgroundColor = '#888';
+        }
+
+        document.getElementById('viewer').appendChild(cardModal);
         cardModal.appendChild(innerElement);
-
-
-
-
+        innerElement.appendChild(modalMainTextArea);
+        modalMainTextArea.appendChild(modalMainTextIcon);
+        modalMainTextArea.appendChild(modalMainText);
+       
         cardModal.addEventListener('click',(e)=>{
-          closeCardModal(cardModal);
- 
+          cardModal.classList.add('fadeOut');
+          setTimeout(closeCardModal(cardModal),190);
         });
       }
 
