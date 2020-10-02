@@ -7,54 +7,62 @@ const storage = firebase.storage();
 // currentUidを宣言する。
 let currentUid = null;
 let mainCenter = document.querySelector('#main-center');
-
 let userIcon = document.querySelector('#userIcon');
 let userImage = document.querySelector('#userImage');
-// styleプロパティでbackgroundImageに任意の画像を設定する
 
-//listen for auth status change
+// listen for auth status change
 auth.onAuthStateChanged(user => {
   if(user){
     // ログインしたユーザーのuidをcurrentUidに代入する。
     currentUid = user.uid;
     console.log('ユーザーのID：',currentUid);
 
-    //userIconを読み込む。 ${cuttrntUid}/userIcon.jpgが存在した場合→onResolve、存在しなかった場合→onReject
-    //参考 https://stackoverflow.com/questions/43567626/how-to-check-if-a-file-exists-in-firebase-storage-from-your-android-application
-
-    storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
-
-    function onResolveIcon(url) { 
-      console.log('url:',url);
-      userIcon.innerHTML = "";
-      userIcon.style.backgroundImage = `url('${url}')`;
-    } 
-    function onRejectIcon(){
-      storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
-        console.log('url:',url);
-        userIcon.innerHTML = "";
-        userIcon.style.backgroundImage = `url('${url}')`;
-      });
+    // userIconの画像を表示するfunctionを宣言する。 
+    // ${cuttrntUid}/userIcon.jpgが存在した場合→onResolve、存在しなかった場合→onReject
+    // 参考 https://stackoverflow.com/questions/43567626/how-to-check-if-a-file-exists-in-firebase-storage-from-your-android-application
+    function renderUserIcon(element,uid){
+      storage.ref(`${uid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
+      function onResolveIcon(url) { 
+        element.innerHTML = "";
+        element.style.backgroundImage = `url('${url}')`;
+      } 
+      function onRejectIcon(){
+        storage.ref(`${uid}/userIcon.png`).getDownloadURL().then((url)=>{
+          element.innerHTML = "";
+          element.style.backgroundImage = `url('${url}')`;
+        },onRejectAppend);
+      }
+      function onRejectAppend(){
+        element.innerHTML = '<i class="fas fa-user"></i>';
+        element.style.backgroundColor = '#888';
+      }
     }
+    // renderUserIconの引数に「userIcon」と「currentUid」を指定する。
+    renderUserIcon(userIcon,currentUid);
+    
+    // userImageを読み込む。 ${currentUid}/userImage.jpgが存在した場合→onResolve、存在しなかった場合→onReject
+    function renderUserImage(element,uid){
+      storage.ref(`${uid}/userImage.jpg`).getDownloadURL().then(onResolveImage,onRejectImage);
 
-    storage.ref(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolveImage,onRejectImage);
-
-    function onResolveImage(url){
-      console.log('url:',url);
-      userImage.innerHTML = "";
-      userImage.style.backgroundImage = `url('${url}')`;
-    }
-    function onRejectImage(){
-      storage.ref(`${currentUid}/userImage.png`).getDownloadURL().then((url)=>{
+      function onResolveImage(url){
         console.log('url:',url);
         userImage.innerHTML = "";
         userImage.style.backgroundImage = `url('${url}')`;
-      });
+      }
+      function onRejectImage(){
+        storage.ref(`${uid}/userImage.png`).getDownloadURL().then((url)=>{
+          console.log('url:',url);
+          element.innerHTML = "";
+          element.style.backgroundImage = `url('${url}')`;
+        });
+      }
     }
-
+    // renderUserImageの引数に「userImage」と「currentUid」を指定する。
+    renderUserImage(userImage,currentUid);
 
     // where()メソッドで、コレクションreadingからcurrentUidのフィールドを持つドキュメントを抽出。
-    db.collection('reading').where('uid', '==', currentUid)
+    function renderCardCollection(collection){
+      db.collection(collection).where('uid', '==', currentUid)
       .get()
       // ドキュメントの集合体(documents)を取得した後にthen()の中身の処理を実行する。
       // then以降の処理は、documentsを取得するまで実行されることはないので、処理されるタイミングが
@@ -64,36 +72,25 @@ auth.onAuthStateChanged(user => {
         // .getしたdocumentsをtypeofすると、データ形式がobjectであることが確認できる。
         console.log(typeof documents);
         // makeCardList()で、ドキュメントの集合体からドキュメントIDの値のみ抽出して、配列を作る。
-        const readingCardIdList = makeCardIdList(documents);
-        console.log(readingCardIdList);
+        const cardIdList = makeCardIdList(documents);
+        console.log(cardIdList);
         // 配列cardIdListの各要素(カードのドキュメントID)において、カード画面を描写するようにする。
-        readingCardIdList.forEach((cardId) => {
+        cardIdList.forEach((cardId) => {
           console.log(cardId);
           // 関数renderCardで、登録されているカードの閲覧画面を描写する
-          renderReading(cardId);
+          if(collection === "reading"){
+            renderReading(cardId);
+          }
+          else if(collection === "writing"){
+            renderWriting(cardId);
+          }
         });
       });
-
-    // where()メソッドで、コレクションwritingからcurrentUidのフィールドを持つドキュメントを抽出。
-    db.collection('writing').where('uid', '==', currentUid)
-    .get()
-    // ドキュメントの集合体(documents)を取得した後にthen()の中身の処理を実行する。
-    // then以降の処理は、documentsを取得するまで実行されることはないので、処理されるタイミングが
-    // 他のコードと比べて遅くなってしまう。
-    // そのため、documentsの取得後に行う処理は、軒並みthenの()の中に記述した方が良い。
-    .then((documents) => {
-      // .getしたdocumentsをtypeofすると、データ形式がobjectであることが確認できる。
-      console.log(typeof documents);
-      // makeCardList()で、ドキュメントの集合体からドキュメントIDの値のみ抽出して、配列を作る。
-      const writingCardIdList = makeCardIdList(documents);
-      console.log(writingCardIdList);
-      // 配列cardIdListの各要素(カードのドキュメントID)において、カード画面を描写するようにする。
-      writingCardIdList.forEach((cardId) => {
-        console.log(cardId);
-        // 関数renderCardで、登録されているカードの閲覧画面を描写する
-        renderWriting(cardId);
-      });
-    });
+    }
+    // readingコレクションを描写
+    renderCardCollection('reading');
+    // writingコレクションを描写
+    renderCardCollection('writing');
 
     // currentIdのフィールドを持つ複数のドキュメントの集合体からドキュメントIDの値のみ
     // 抽出して、配列にするためのfunction makeCardListを宣言する。
@@ -111,24 +108,28 @@ auth.onAuthStateChanged(user => {
       return cardIdList;
     }
    
-
     let postedReading = document.getElementById('postedReading');
-    function postedReadingNumber(){
-      let readingCardList = [];
-      db.collection('reading').where('uid', '==', currentUid)
-        .get()
-        .then((snapshot)=>{
-          snapshot.forEach((doc)=>{
-            let readingCardId = String(doc.id);
-            readingCardList.push(readingCardId);
-          });
-          console.log(readingCardList);
-          console.log(readingCardList.length);
-          postedReading.textContent = `${readingCardList.length}`;
+    function postedCardNumber(collection){
+      let postedCardList = [];
+      db.collection(collection).where('uid', '==', currentUid)
+      .get()
+      .then((snapshot)=>{
+        snapshot.forEach((doc)=>{
+          let postedCardId = String(doc.id);
+          postedCardList.push(postedCardId);
         });
+        console.log(postedCardList.length);
+        if(collection === 'reading'){
+          postedReading.textContent = `${postedCardList.length}`;
+        }else if(collection === 'writing'){
+          postedWriting.textContent = `${postedCardList.length}`;
+        }
+      });
     }
-
-    postedReadingNumber();
+    // 読書カードの登録数を表示する
+    postedCardNumber('reading');
+    // 発見の手帳の登録数を表示する
+    postedCardNumber('writing');
     
     let postedWriting = document.getElementById('postedWriting');
     function postedWritingNumber(){
@@ -143,15 +144,13 @@ auth.onAuthStateChanged(user => {
           postedWriting.textContent = `${writingCardList.length}`;
         });
     }
-
     postedWritingNumber();
 
     // 関数renderReadingを宣言する
     function renderReading(doc){
-      //db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に、
-      //<div>や<p>などの外枠の箱を作る。
-      //cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
-      //cardWrapは cardViewer + cardStatus。
+      // db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に<div>や<p>などの外枠の箱を作る。
+      // cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
+      // cardWrapは cardViewer + cardStatus。
       let cardContainer = document.createElement('div');
       let cardWrap = document.createElement('div');
       let cardViewer = document.createElement('div');
@@ -172,40 +171,23 @@ auth.onAuthStateChanged(user => {
       let postedUserName = document.createElement('p');
       let postedUserIcon = document.createElement('div');   
       
-
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon,onRejectIcon);
-
-      function onResolveIcon(url){
-        console.log(`url:${url}`);
-        postedUserIcon.style.backgroundImage = `url(${url})`;
-      }
-
-      function onRejectIcon(){
-        storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then(onResolveAppend,onRejectAppend);
-        function onResolveAppend(){
-            console.log(`url:${url}`);
-            postedUserIcon.style.backgroundImage = `url(${url})`;
-        }
-        function onRejectAppend(){
-          postedUserIcon.innerHTML = '<i class="fas fa-user"></i>';
-          postedUserIcon.style.backgroundColor = '#888';
-        }
-      }
-
       db.collection('reading').doc(doc).get()
         .then((doc) => {
-        //Firestoreに保存されているpostedDateフィールドの値を、postedDateとして
-        //登録できる数値に変換する。
+        // Firestoreに保存されているpostedDateフィールドの値を、postedDateとして
+        // 登録できる数値に変換する。
         let time = doc.data().postedDate.toDate();
         const year = time.getFullYear();
         const month = time.getMonth();
         const date = time.getDate();
         const output = `${year}/${month+1}/${date}`;
+        // userIconにカード作成者のユーザーアイコンの画像を挿入する
+        let postedUserUid = doc.data().uid;
+        renderUserIcon(postedUserIcon,postedUserUid);
 
-        //先に作っておいた箱の中にFirestoreに保存している値を代入する。
+        // 先に作っておいた箱の中にFirestoreに保存している値を代入する。
         title.textContent = doc.data().title;
         leadSentence.textContent = doc.data().leadSentence;
         mainText.textContent = doc.data().mainText;
@@ -215,9 +197,9 @@ auth.onAuthStateChanged(user => {
         postedDate.textContent = output;
         postedUserName.textContent = doc.data().postedUserName;
         
-        //それぞれの要素にsetAttributeでclass名を設定する。
+        // それぞれの要素にsetAttributeでclass名を設定する。
         cardContainer.setAttribute('class','cardContainer');
-        //cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
+        // cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
         cardContainer.setAttribute('id',`${doc.id}`);
         cardWrap.setAttribute('class','cardWrap');
         cardViewer.setAttribute('class','cardViewer');
@@ -243,7 +225,7 @@ auth.onAuthStateChanged(user => {
         postedUserIcon.setAttribute('class','postedUserIcon');
         cardStatus.setAttribute('class','cardStatus');
 
-        //appendChildでそれぞれの要素の内部構造を作っていく。
+        // appendChildでそれぞれの要素の内部構造を作っていく。
         cardMainArea.appendChild(title);
         cardMainArea.appendChild(leadSentence);
         cardMainArea.appendChild(mainText);
@@ -274,16 +256,14 @@ auth.onAuthStateChanged(user => {
   
     // 関数renderReadingを宣言する
     function renderWriting(doc){
-      //db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に、
-      //<div>や<p>などの外枠の箱を作る。
-      //cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
-      //cardWrapは cardViewer + cardStatus。
+      // db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に<div>や<p>などの外枠の箱を作る。
+      // cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
+      // cardWrapは cardViewer + cardStatus。
       let cardContainer = document.createElement('div');
       let cardWrap = document.createElement('div');
       let cardViewer = document.createElement('div');
       let cardMainArea = document.createElement('div');
       let cardSideArea = document.createElement('aside');
-      let bookInfo = document.createElement('div');
       let cardStatus = document.createElement('div');
       let title = document.createElement('p');
       let leadSentence = document.createElement('p');
@@ -300,24 +280,71 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon,onRejectIcon);
+      db.collection('writing').doc(doc).get()
+        .then((doc) => {
+          // userIconにカード作成者のユーザーアイコンの画像を挿入する
+          let postedUserUid = doc.data().uid;
+          renderUserIcon(postedUserIcon,postedUserUid);
+          //Firestoreに保存されているpostedDateフィールドの値を、postedDateとして登録できる数値に変換する。
+          let time = doc.data().postedDate.toDate();
+          const year = time.getFullYear();
+          const month = time.getMonth();
+          const date = time.getDate();
+          const output = `${year}/${month+1}/${date}`;
 
-      function onResolveIcon(url){
-        console.log(`url:${url}`);
-        postedUserIcon.style.backgroundImage = `url(${url})`;
-      }
+        //先に作っておいた箱の中にFirestoreに保存している値を代入する。
+        title.textContent = doc.data().title;
+        leadSentence.textContent = doc.data().leadSentence;
+        mainText.textContent = doc.data().mainText;
+        remarks.textContent = doc.data().remarks;
+        postedDate.textContent = output;
+        postedUserName.textContent = doc.data().postedUserName;
+        
+        //それぞれの要素にsetAttributeでclass名を設定する。
+        cardContainer.setAttribute('class','cardContainer');
+        //cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
+        cardContainer.setAttribute('id',`${doc.id}`);
+        cardWrap.setAttribute('class','cardWrap');
+        cardViewer.setAttribute('class','cardViewer');
+        cardMainArea.setAttribute('class','cardMainArea');
+        cardSideArea.setAttribute('class','cardSideArea');
+        title.setAttribute('class','title');
+        leadSentence.setAttribute('class','leadSentence');
+        mainText.setAttribute('class','mainText');
+        remarks.setAttribute('class','remarks');        
+        postedDate.setAttribute('class','postedDate');
+       
 
-      function onRejectIcon(){
-        storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then(onResolveAppend,onRejectAppend);
-        function onResolveAppend(){
-            console.log(`url:${url}`);
-            postedUserIcon.style.backgroundImage = `url(${url})`;
-        }
-        function onRejectAppend(){
-          postedUserIcon.innerHTML = '<i class="fas fa-user"></i>';
-          postedUserIcon.style.backgroundColor = '#888';
-        }
-      }
+        revisionButton.setAttribute('class','revisionButton');
+        printButton.setAttribute('class','printButton');
+        postedUserName.setAttribute('class','postedUserName');
+        postedUserIcon.setAttribute('class','postedUserIcon');
+        cardStatus.setAttribute('class','cardStatus');
+
+        //appendChildでそれぞれの要素の内部構造を作っていく。
+        cardMainArea.appendChild(title);
+        cardMainArea.appendChild(leadSentence);
+        cardMainArea.appendChild(mainText);
+        cardMainArea.appendChild(remarks);
+        cardSideArea.appendChild(postedDate);
+        cardViewer.appendChild(cardMainArea);
+        cardViewer.appendChild(cardSideArea);
+        cardWrap.appendChild(cardViewer);
+        cardWrap.appendChild(cardStatus);
+        cardContainer.appendChild(cardWrap);
+        mainCenter.appendChild(cardContainer);
+        cardStatus.appendChild(commentUserCount);
+        cardStatus.appendChild(bookmarkUserCount);
+        cardStatus.appendChild(revisionButton);
+        cardStatus.appendChild(printButton);
+        cardStatus.appendChild(postedUserName);
+        cardStatus.appendChild(postedUserIcon);
+        cardContainer.appendChild(cardWrap);
+        mainCenter.appendChild(cardContainer);
+
+        let editorURL = `k-card-editor.html?collection=writing&doc.id=${doc.id}`;
+        revisionButton.setAttribute('href',editorURL);
+      });
       
         
       function renderBookmarkUserCount(){
@@ -390,7 +417,7 @@ auth.onAuthStateChanged(user => {
       
       cardViewer.addEventListener('click',(e)=>{
         displayCardModal();
-        renderBookmarkUsers();
+        modalBookmarkUsers();
         }
       );
 
@@ -401,6 +428,17 @@ auth.onAuthStateChanged(user => {
         let modalMainTextArea = document.createElement('div');
         let modalMainText = document.createElement('p');
         let modalMainTextIcon = document.createElement('p');
+        let bookmarkUsersArea = document.createElement('ul');
+        let bookmarkUserList = [];
+        db.collection("writing").doc(doc).collection('bookmarakUser')
+          .get()
+          .then((snapshot)=>{
+            snapshot.forEach((bookmarkUser)=>{
+              bookmarkUserList.push(bookmarkUser.id);
+              console.log(bookmarkUserList);
+            })
+          });
+        
 
         cardModal.classList.add('cardModal');
         innerElement.classList.add('innerElement');
@@ -435,14 +473,19 @@ auth.onAuthStateChanged(user => {
         document.getElementById('viewer').appendChild(cardModal);
         cardModal.appendChild(innerElement);
         innerElement.appendChild(modalMainTextArea);
+        innerElement.appendChild(bookmarkUsersArea);
         modalMainTextArea.appendChild(modalMainTextIcon);
         modalMainTextArea.appendChild(modalMainText);
+        
+        
+        modalBookmarkUsers();
        
         cardModal.addEventListener('click',(e)=>{
           cardModal.classList.add('fadeOut');
           setTimeout(closeCardModal(cardModal),190);
         });
-      }
+    
+
 
       function closeCardModal(cardModal){
         document.getElementById('viewer').removeChild(cardModal);
@@ -450,16 +493,24 @@ auth.onAuthStateChanged(user => {
     
 
 
-      function renderBookmarkUsers(){
-        let bookmarkUsers = [];
-        db.collection('writing').doc(doc).collection('bookmarkUser').get()
-          .then((snapshot)=>{
-            snapshot.forEach((bookmarkUser)=>{
-            bookmarkUsers.push(bookmarkUser);
+      function modalBookmarkUsers(){
+        db.collection('writing').doc(doc).collection('bookmarkUser')
+          .onSnapshot((querySnapshot)=>{
+            querySnapshot.forEach((doc)=>{
+            let bookmarkUser = doc.id;
+            bookmarkUser = String(bookmarkUser); 
+            bookmarkUserList.push(bookmarkUser);
           })
           console.log(bookmarkUsers);
-        })
+          bookmarkUsers.forEach((bookmarkUser)=>{
+            let bookmarkUserArea = createElement('li');
+            let bookmarkUserName = db.collection('user').doc(bookmarkUser).data().name;
+            bookmarkUserName.insertAdjacentElement('beforeend',bookmarkUserArea);
+            bookmarkUsersArea.appendChild(bookmarkUserArea);
+          })
+        });
       }
+    }
 
       let commentUsers = [];
       function renderCommentUserCount(){
@@ -489,70 +540,7 @@ auth.onAuthStateChanged(user => {
       }
       renderCommentUserCount();
 
-      db.collection('writing').doc(doc).get()
-        .then((doc) => {
-
-        //Firestoreに保存されているpostedDateフィールドの値を、postedDateとして
-        //登録できる数値に変換する。
-        let time = doc.data().postedDate.toDate();
-        const year = time.getFullYear();
-        const month = time.getMonth();
-        const date = time.getDate();
-        const output = `${year}/${month+1}/${date}`;
-
-        //先に作っておいた箱の中にFirestoreに保存している値を代入する。
-        title.textContent = doc.data().title;
-        leadSentence.textContent = doc.data().leadSentence;
-        mainText.textContent = doc.data().mainText;
-        remarks.textContent = doc.data().remarks;
-        postedDate.textContent = output;
-        postedUserName.textContent = doc.data().postedUserName;
-        
-        //それぞれの要素にsetAttributeでclass名を設定する。
-        cardContainer.setAttribute('class','cardContainer');
-        //cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
-        cardContainer.setAttribute('id',`${doc.id}`);
-        cardWrap.setAttribute('class','cardWrap');
-        cardViewer.setAttribute('class','cardViewer');
-        cardMainArea.setAttribute('class','cardMainArea');
-        cardSideArea.setAttribute('class','cardSideArea');
-        title.setAttribute('class','title');
-        leadSentence.setAttribute('class','leadSentence');
-        mainText.setAttribute('class','mainText');
-        remarks.setAttribute('class','remarks');        
-        postedDate.setAttribute('class','postedDate');
-       
-
-        revisionButton.setAttribute('class','revisionButton');
-        printButton.setAttribute('class','printButton');
-        postedUserName.setAttribute('class','postedUserName');
-        postedUserIcon.setAttribute('class','postedUserIcon');
-        cardStatus.setAttribute('class','cardStatus');
-
-        //appendChildでそれぞれの要素の内部構造を作っていく。
-        cardMainArea.appendChild(title);
-        cardMainArea.appendChild(leadSentence);
-        cardMainArea.appendChild(mainText);
-        cardMainArea.appendChild(remarks);
-        cardSideArea.appendChild(postedDate);
-        cardViewer.appendChild(cardMainArea);
-        cardViewer.appendChild(cardSideArea);
-        cardWrap.appendChild(cardViewer);
-        cardWrap.appendChild(cardStatus);
-        cardContainer.appendChild(cardWrap);
-        mainCenter.appendChild(cardContainer);
-        cardStatus.appendChild(commentUserCount);
-        cardStatus.appendChild(bookmarkUserCount);
-        cardStatus.appendChild(revisionButton);
-        cardStatus.appendChild(printButton);
-        cardStatus.appendChild(postedUserName);
-        cardStatus.appendChild(postedUserIcon);
-        cardContainer.appendChild(cardWrap);
-        mainCenter.appendChild(cardContainer);
-
-        let editorURL = `k-card-editor.html?collection=writing&doc.id=${doc.id}`;
-        revisionButton.setAttribute('href',editorURL);
-      });
+      
     }
   
     
