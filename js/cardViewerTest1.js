@@ -6,6 +6,7 @@ const storage = firebase.storage();
 
 // currentUidを宣言する。
 let currentUid = null;
+let viewer = document.getElementById('viewer');
 let mainCenter = document.querySelector('#main-center');
 let userIcon = document.querySelector('#userIcon');
 let userImage = document.querySelector('#userImage');
@@ -148,9 +149,10 @@ auth.onAuthStateChanged(user => {
 
     // 関数renderReadingを宣言する
     function renderReading(doc){
-      // db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に<div>や<p>などの外枠の箱を作る。
+      const readingRef = db.collection('reading').doc(doc);
+      // db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に<div>や<p>などの外枠の箱を作る
       // cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
-      // cardWrapは cardViewer + cardStatus。
+      // cardWrapは cardViewer + cardStatus
       let cardContainer = document.createElement('div');
       let cardWrap = document.createElement('div');
       let cardViewer = document.createElement('div');
@@ -174,8 +176,7 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      db.collection('reading').doc(doc).get()
-        .then((doc) => {
+      readingRef.get().then((doc) => {
         // Firestoreに保存されているpostedDateフィールドの値を、postedDateとして
         // 登録できる数値に変換する。
         let time = doc.data().postedDate.toDate();
@@ -215,7 +216,6 @@ auth.onAuthStateChanged(user => {
         information.setAttribute('class','information');
         bookInfo.setAttribute('class','bookInfo');
        
-
         revisionButton.setAttribute('class','revisionButton');
         printButton.setAttribute('class','printButton');
         printButton.setAttribute('type','button');
@@ -250,12 +250,12 @@ auth.onAuthStateChanged(user => {
 
         let editorURL = `k-card-editor.html?collection=reading&doc.id=${doc.id}`;
         revisionButton.setAttribute('href',editorURL);
-       
       });
     }
   
     // 関数renderReadingを宣言する
     function renderWriting(doc){
+      const writingRef = db.collection('writing').doc(doc);
       // db.collection('reading').doc(doc).get()でFirestoreから情報を読み取ってくる前に<div>や<p>などの外枠の箱を作る。
       // cardContainerはカード閲覧画面の１画面分。cardViewer + cardStatus + 余白
       // cardWrapは cardViewer + cardStatus。
@@ -280,8 +280,7 @@ auth.onAuthStateChanged(user => {
       revisionButton.innerHTML = '<i class="fas fa-pen-alt"></i>';
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
-      db.collection('writing').doc(doc).get()
-        .then((doc) => {
+      writingRef.get().then((doc) => {
           // userIconにカード作成者のユーザーアイコンの画像を挿入する
           let postedUserUid = doc.data().uid;
           renderUserIcon(postedUserIcon,postedUserUid);
@@ -292,72 +291,66 @@ auth.onAuthStateChanged(user => {
           const date = time.getDate();
           const output = `${year}/${month+1}/${date}`;
 
-        //先に作っておいた箱の中にFirestoreに保存している値を代入する。
-        title.textContent = doc.data().title;
-        leadSentence.textContent = doc.data().leadSentence;
-        mainText.textContent = doc.data().mainText;
-        remarks.textContent = doc.data().remarks;
-        postedDate.textContent = output;
-        postedUserName.textContent = doc.data().postedUserName;
+          //先に作っておいた箱の中にFirestoreに保存している値を代入する。
+          title.textContent = doc.data().title;
+          leadSentence.textContent = doc.data().leadSentence;
+          mainText.textContent = doc.data().mainText;
+          remarks.textContent = doc.data().remarks;
+          postedDate.textContent = output;
+          postedUserName.textContent = doc.data().postedUserName;
         
-        //それぞれの要素にsetAttributeでclass名を設定する。
-        cardContainer.setAttribute('class','cardContainer');
-        //cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
-        cardContainer.setAttribute('id',`${doc.id}`);
-        cardWrap.setAttribute('class','cardWrap');
-        cardViewer.setAttribute('class','cardViewer');
-        cardMainArea.setAttribute('class','cardMainArea');
-        cardSideArea.setAttribute('class','cardSideArea');
-        title.setAttribute('class','title');
-        leadSentence.setAttribute('class','leadSentence');
-        mainText.setAttribute('class','mainText');
-        remarks.setAttribute('class','remarks');        
-        postedDate.setAttribute('class','postedDate');
-       
+          //それぞれの要素にsetAttributeでclass名を設定する。
+          cardContainer.setAttribute('class','cardContainer');
+          //cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
+          cardContainer.setAttribute('id',`${doc.id}`);
+          cardWrap.setAttribute('class','cardWrap');
+          cardViewer.setAttribute('class','cardViewer');
+          cardMainArea.setAttribute('class','cardMainArea');
+          cardSideArea.setAttribute('class','cardSideArea');
+          title.setAttribute('class','title');
+          leadSentence.setAttribute('class','leadSentence');
+          mainText.setAttribute('class','mainText');
+          remarks.setAttribute('class','remarks');        
+          postedDate.setAttribute('class','postedDate');
+        
+          revisionButton.setAttribute('class','revisionButton');
+          printButton.setAttribute('class','printButton');
+          postedUserName.setAttribute('class','postedUserName');
+          postedUserIcon.setAttribute('class','postedUserIcon');
+          cardStatus.setAttribute('class','cardStatus');
 
-        revisionButton.setAttribute('class','revisionButton');
-        printButton.setAttribute('class','printButton');
-        postedUserName.setAttribute('class','postedUserName');
-        postedUserIcon.setAttribute('class','postedUserIcon');
-        cardStatus.setAttribute('class','cardStatus');
+          //appendChildでそれぞれの要素の内部構造を作っていく。
+          cardMainArea.appendChild(title);
+          cardMainArea.appendChild(leadSentence);
+          cardMainArea.appendChild(mainText);
+          cardMainArea.appendChild(remarks);
+          cardSideArea.appendChild(postedDate);
+          cardViewer.appendChild(cardMainArea);
+          cardViewer.appendChild(cardSideArea);
+          cardWrap.appendChild(cardViewer);
+          cardWrap.appendChild(cardStatus);
+          cardContainer.appendChild(cardWrap);
+          mainCenter.appendChild(cardContainer);
+          cardStatus.appendChild(commentUserCount);
+          cardStatus.appendChild(bookmarkUserCount);
+          cardStatus.appendChild(revisionButton);
+          cardStatus.appendChild(printButton);
+          cardStatus.appendChild(postedUserName);
+          cardStatus.appendChild(postedUserIcon);
+          cardContainer.appendChild(cardWrap);
+          mainCenter.appendChild(cardContainer);
 
-        //appendChildでそれぞれの要素の内部構造を作っていく。
-        cardMainArea.appendChild(title);
-        cardMainArea.appendChild(leadSentence);
-        cardMainArea.appendChild(mainText);
-        cardMainArea.appendChild(remarks);
-        cardSideArea.appendChild(postedDate);
-        cardViewer.appendChild(cardMainArea);
-        cardViewer.appendChild(cardSideArea);
-        cardWrap.appendChild(cardViewer);
-        cardWrap.appendChild(cardStatus);
-        cardContainer.appendChild(cardWrap);
-        mainCenter.appendChild(cardContainer);
-        cardStatus.appendChild(commentUserCount);
-        cardStatus.appendChild(bookmarkUserCount);
-        cardStatus.appendChild(revisionButton);
-        cardStatus.appendChild(printButton);
-        cardStatus.appendChild(postedUserName);
-        cardStatus.appendChild(postedUserIcon);
-        cardContainer.appendChild(cardWrap);
-        mainCenter.appendChild(cardContainer);
-
-        let editorURL = `k-card-editor.html?collection=writing&doc.id=${doc.id}`;
-        revisionButton.setAttribute('href',editorURL);
-      });
+          let editorURL = `k-card-editor.html?collection=writing&doc.id=${doc.id}`;
+          revisionButton.setAttribute('href',editorURL);
+        });
       
-        
-      function renderBookmarkUserCount(){
-        //サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきた
-        //スナップショット(querySnapshot)は複数のドキュメントが集まったもの。
-        //なので、forEachをかけて、それぞれのドキュメントからuidフィールドの
-        //値をひっぱりだす。
-        db.collection('writing').doc(doc).collection('bookmarkUser')
-        .onSnapshot(function(querySnapshot){
-          //bookmarkUsersはonSnapshotが走るたびに初期化しないといけないので、
-          //bookmarkUsersの配列はfunction renderBookmarkUserCountの中で宣言する。
-          //なぜ初期化するのか=>初期化しないと、bookmarkボタンを押すたびに、
-          //元あった配列に重複する要素がどんどんpushされてしまうため。
+      // ブックマークに登録したユーザーアカウント数を描写する
+      function renderBookmarkUserCount(element){
+        // サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきたスナップショット(querySnapshot)は複数のドキュメントが集まったもの。
+        // なので、forEachをかけて、それぞれのドキュメントからuidフィールドの値をひっぱりだす。
+        writingRef.collection('bookmarkUser').onSnapshot(function(querySnapshot){
+          //bookmarkUsersはonSnapshotが走るたびに初期化しないといけないので、bookmarkUsersの配列はfunction renderBookmarkUserCountの中で宣言する。
+          //なぜ初期化するのか=>初期化しないと、bookmarkボタンを押すたびに、元あった配列に重複する要素がどんどんpushされてしまうため。
           let bookmarkUsers = [];
           querySnapshot.forEach(function(doc){
             bookmarkUsers.push(doc.id);
@@ -365,20 +358,17 @@ auth.onAuthStateChanged(user => {
           console.log(bookmarkUsers)
           //bookmarkUsers.lengthで配列の要素数をカウントする。
           let bookmarkUsersSize = bookmarkUsers.length;
-          //bookmarkUsersSizeは数値型となっている。
-          console.log(typeof bookmarkUsersSize);
           console.log(bookmarkUsersSize);
           //insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
-          bookmarkUserCount.innerHTML=`<i class="fas fa-heart"></i> ${bookmarkUsersSize}`;
-          bookmarkUserCount.setAttribute('class','bookmarkUserCount');            
+          element.innerHTML=`<i class="fas fa-heart"></i> ${bookmarkUsersSize}`;
+          element.setAttribute('class','bookmarkUserCount');            
         });
       }
-      renderBookmarkUserCount();
+      renderBookmarkUserCount(bookmarkUserCount);
 
       db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).get()
       .then((bookmarkCard)=>{
         if(bookmarkCard.exists){
-          console.log(bookmarkCard.data().bookmarkCardId);
           bookmarkUserCount.style.color = '#ff9090';
         }else {
         console.log('ブックマークしたカードは存在しません');  
@@ -402,8 +392,7 @@ auth.onAuthStateChanged(user => {
           }
         });
 
-        db.collection('writing').doc(doc).collection('bookmarkUser').doc(currentUid).get()
-        .then((bookmarkUser)=>{
+        writingRef.collection('bookmarkUser').doc(currentUid).get().then((bookmarkUser)=>{
           if(bookmarkUser.exists){
             db.collection('writing').doc(doc).collection('bookmarkUser').doc(currentUid).delete();
           }else {
@@ -417,100 +406,61 @@ auth.onAuthStateChanged(user => {
       
       cardViewer.addEventListener('click',(e)=>{
         displayCardModal();
-        modalBookmarkUsers();
         }
       );
-
 
       function displayCardModal(){
         let cardModal = document.createElement('div');
         let innerElement = document.createElement('div');
         let modalMainTextArea = document.createElement('div');
         let modalMainText = document.createElement('p');
-        let modalMainTextIcon = document.createElement('p');
+        let cardAuthorIcon = document.createElement('p');
         let bookmarkUsersArea = document.createElement('ul');
         let bookmarkUserList = [];
-        db.collection("writing").doc(doc).collection('bookmarakUser')
-          .get()
-          .then((snapshot)=>{
-            snapshot.forEach((bookmarkUser)=>{
-              bookmarkUserList.push(bookmarkUser.id);
-              console.log(bookmarkUserList);
-            })
-          });
+        // カード作成者のユーザーアイコンを表示する
+        writingRef.get().then((snapshot)=>{
+            let cardAuthorUid = snapshot.data().uid;
+            modalMainText.innerHTML = `${snapshot.data().mainText}`;
+            modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
+            renderUserIcon(cardAuthorIcon,cardAuthorUid);
+        });
         
+        // writingRef.collection('bookmarkUser').onSnapshot((querySnapshot)=>{
+        //   querySnapshot.forEach((bookmarkUser)=>{
+        //     let bookmarkUserId = String(bookmarkUser.id);
+        //     bookmarkUserList.push(bookmarkUserId);
+        //     console.log(bookmarkUserList);
+        //   }).then(()=>{
+
+        //   });
+        // });
+        
+        // function renderModalUserList(userList){
+        //   userList.forEach((bookmarkUser)=>{
+        //     let bookmarkUserArea = document.createElement('li');
+        //     let bookmarkUserIcon = document.createElement('a');
+        //     let bookmarkUserName = document.createElement('p');
+        //   });
+        // }
 
         cardModal.classList.add('cardModal');
         innerElement.classList.add('innerElement');
         modalMainText.classList.add('modalMainText');
-        modalMainTextIcon.classList.add('modalMainTextIcon');
+        cardAuthorIcon.classList.add('cardAuthorIcon');
        
-        db.collection('writing').doc(doc).get()
-          .then((snapshot)=>{
-            modalMainText.innerHTML = `${snapshot.data().mainText}`;
-            modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
-          });
-          
-        storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
 
-        function onResolveIcon(url) { 
-          console.log('url:',url);
-          modalMainTextIcon.innerHTML = "";
-          modalMainTextIcon.style.backgroundImage = `url('${url}')`;
-        } 
-        function onRejectIcon(){
-          storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
-            console.log('url:',url);
-            modalMainTextIcon.innerHTML = "";
-            modalMainTextIcon.style.backgroundImage = `url('${url}')`;
-          },onRejectAppend());
-        }
-        function onRejectAppend(){
-          modalMainTextIcon.innerHTML = '<i class="fas fa-user"></i>';
-          modalMainTextIcon.style.backgroundColor = '#888';
-        }
-
-        document.getElementById('viewer').appendChild(cardModal);
+        viewer.appendChild(cardModal);
         cardModal.appendChild(innerElement);
         innerElement.appendChild(modalMainTextArea);
         innerElement.appendChild(bookmarkUsersArea);
-        modalMainTextArea.appendChild(modalMainTextIcon);
+        modalMainTextArea.appendChild(cardAuthorIcon);
         modalMainTextArea.appendChild(modalMainText);
         
-        
-        modalBookmarkUsers();
-       
         cardModal.addEventListener('click',(e)=>{
           cardModal.classList.add('fadeOut');
-          setTimeout(closeCardModal(cardModal),190);
-        });
-    
-
-
-      function closeCardModal(cardModal){
-        document.getElementById('viewer').removeChild(cardModal);
-      }
-    
-
-
-      function modalBookmarkUsers(){
-        db.collection('writing').doc(doc).collection('bookmarkUser')
-          .onSnapshot((querySnapshot)=>{
-            querySnapshot.forEach((doc)=>{
-            let bookmarkUser = doc.id;
-            bookmarkUser = String(bookmarkUser); 
-            bookmarkUserList.push(bookmarkUser);
-          })
-          console.log(bookmarkUsers);
-          bookmarkUsers.forEach((bookmarkUser)=>{
-            let bookmarkUserArea = createElement('li');
-            let bookmarkUserName = db.collection('user').doc(bookmarkUser).data().name;
-            bookmarkUserName.insertAdjacentElement('beforeend',bookmarkUserArea);
-            bookmarkUsersArea.appendChild(bookmarkUserArea);
-          })
+          setTimeout(viewer.removeChild(cardModal),190);
         });
       }
-    }
 
       let commentUsers = [];
       function renderCommentUserCount(){
@@ -530,7 +480,7 @@ auth.onAuthStateChanged(user => {
             commentUsers.push(commentUser);
           });
           
-          //bookmarkUsers.lengthで配列の要素数をカウントする。
+          //commentUsers.lengthで配列の要素数をカウントする。
           let commentUsersSize = commentUsers.length;
           console.log(commentUsersSize);
           // insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
