@@ -350,6 +350,11 @@ background-color: #888;
   top: 0vh;
   left: 250px;
   animation: fadeInAnimation 400ms ease-out;
+  background-image: url('./antoine-rault-IhWRrZx4-kk-unsplash.jpg');
+  background-position:right bottom;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow: scroll;
 }
 
 .innerElement { 
@@ -361,12 +366,22 @@ background-color: #888;
   animation: fadeInAnimation 400ms ease-out;
 }
 
+.bookmarkUserTitle {
+  line-height: 30px;
+  font-size: 25px;
+  text-shadow: 1px 1px 20px #fff;
+  top: 300px;
+  left: 180px;
+  position: absolute;
+  margin-bottom: 100px;
+}
+
 .modalMainText {
   width: 800px;
   margin-left: 300px;
   line-height: 50px;
   font-size: 30px;
-  text-shadow: 1px 1px 20px;
+  text-shadow: 1px 1px 20px #fff;
 }
 
 .cardAuthorIcon {
@@ -385,9 +400,37 @@ background-color: #888;
   color: #fff;
 }
 
+.bookmarkUsersArea {
+  list-style: none;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 20px #fff;
+  position: absolute;
+  left: 220px;
+  top: 370px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
 
-.fadeOut {
-  animation: fadeOutAnimation 400ms ease-out;
+.userName {
+  position: absolute;
+  width: 700px;
+  height: 20px;
+  left: 80px;
+  line-height: 1.2rem;
+}
+
+.userIcon {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 100%;
+  box-shadow: -1px -1px 90px #fff;
+  left: 0;
+  top: 0px;
+  color: #fff;
 }
 
 .cardMainArea {

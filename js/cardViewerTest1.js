@@ -392,14 +392,20 @@ auth.onAuthStateChanged(user => {
           }
         });
 
+        let bookmarkUserName= [];
+        db.collection('user').doc(currentUid).get().then((user) => {
+          bookmarkUserName.push(String(user.data().name));
+        })
+        console.log(bookmarkUserName);
+
         writingRef.collection('bookmarkUser').doc(currentUid).get().then((bookmarkUser)=>{
           if(bookmarkUser.exists){
             db.collection('writing').doc(doc).collection('bookmarkUser').doc(currentUid).delete();
-
           }else {
             db.collection('writing').doc(doc).collection('bookmarkUser').doc(currentUid).set({
               bookmarkCard: doc,
               uid: currentUid,
+              name: bookmarkUserName[0],
             });
           }
         });
@@ -413,26 +419,32 @@ auth.onAuthStateChanged(user => {
       function displayCardModal(){
         let cardModal = document.createElement('div');
         let innerElement = document.createElement('div');
+        let bookmarkUserTitle = document.createElement('h3');
         let modalMainTextArea = document.createElement('div');
         let modalMainText = document.createElement('p');
         let cardAuthorIcon = document.createElement('a');
-        let bookmarkUsersArea = document.createElement('ul');
-        let commentUsersArea = document.createElement('ul');
+        let bookmarkUsersArea = document.createElement('div');
+        let commentUsersArea = document.createElement('div');
         let bookmarkUserList = [];
         let commentUserList = [];
 
         cardWrap.style.display = 'none';
         cardModal.classList.add('cardModal');
         innerElement.classList.add('innerElement');
+        bookmarkUserTitle.classList.add('bookmarkUserTitle');
         modalMainText.classList.add('modalMainText');
         cardAuthorIcon.classList.add('cardAuthorIcon');
+        bookmarkUsersArea.classList.add('bookmarkUsersArea');
         
         viewer.appendChild(cardModal);
         cardModal.appendChild(innerElement);
+        innerElement.appendChild(bookmarkUserTitle);
         innerElement.appendChild(modalMainTextArea);
         innerElement.appendChild(bookmarkUsersArea);
         modalMainTextArea.appendChild(cardAuthorIcon);
         modalMainTextArea.appendChild(modalMainText);
+
+        bookmarkUserTitle.textContent = "ブックマークしたユーザー";
 
         // カード作成者のユーザーアイコンを表示する
         writingRef.get().then((snapshot)=>{
@@ -453,16 +465,20 @@ auth.onAuthStateChanged(user => {
         
         function renderModalUserList(userList,subCollection){
           userList.forEach((user)=>{
-            let userArea = document.createElement('li');
+            let userArea = document.createElement('div');
             let userIcon = document.createElement('a');
             let userName = document.createElement('p');
             userArea.setAttribute('class','userArea');
+            userIcon.setAttribute('class','userIcon');
             writingRef.collection(subCollection).doc(user).get().then((user)=>{
-              userName.textContent = user.id;
+              userName.textContent = user.data().name;
+              userName.setAttribute('class','userName');
               userArea.appendChild(userName);
             });
             renderUserIcon(userIcon,user);
+            userIcon.setAttribute('class','userIcon');
             userArea.appendChild(userIcon);
+
             if(subCollection === 'bookmarkUser'){
               bookmarkUsersArea.appendChild(userArea);
             }else if(subCollection === 'commentUser'){
