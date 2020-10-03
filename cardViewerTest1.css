@@ -370,10 +370,9 @@ background-color: #888;
   line-height: 30px;
   font-size: 25px;
   text-shadow: 1px 1px 20px #fff;
-  top: 300px;
-  left: 180px;
-  position: absolute;
-  margin-bottom: 100px;
+  margin-top: 100px;
+  margin-left: 180px;
+  margin-bottom: 20px;
 }
 
 .modalMainText {
@@ -406,7 +405,6 @@ background-color: #888;
   text-shadow: 1px 1px 20px #fff;
   position: absolute;
   left: 220px;
-  top: 370px;
   width: 100%;
   height: 100%;
   padding: 0;

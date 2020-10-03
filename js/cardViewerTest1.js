@@ -419,10 +419,10 @@ auth.onAuthStateChanged(user => {
       function displayCardModal(){
         let cardModal = document.createElement('div');
         let innerElement = document.createElement('div');
-        let bookmarkUserTitle = document.createElement('h3');
         let modalMainTextArea = document.createElement('div');
         let modalMainText = document.createElement('p');
         let cardAuthorIcon = document.createElement('a');
+        let bookmarkUserTitle = document.createElement('h3');
         let bookmarkUsersArea = document.createElement('div');
         let commentUsersArea = document.createElement('div');
         let bookmarkUserList = [];
@@ -438,8 +438,8 @@ auth.onAuthStateChanged(user => {
         
         viewer.appendChild(cardModal);
         cardModal.appendChild(innerElement);
-        innerElement.appendChild(bookmarkUserTitle);
         innerElement.appendChild(modalMainTextArea);
+        innerElement.appendChild(bookmarkUserTitle);
         innerElement.appendChild(bookmarkUsersArea);
         modalMainTextArea.appendChild(cardAuthorIcon);
         modalMainTextArea.appendChild(modalMainText);
