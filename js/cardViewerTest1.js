@@ -395,6 +395,7 @@ auth.onAuthStateChanged(user => {
         writingRef.collection('bookmarkUser').doc(currentUid).get().then((bookmarkUser)=>{
           if(bookmarkUser.exists){
             db.collection('writing').doc(doc).collection('bookmarkUser').doc(currentUid).delete();
+
           }else {
             db.collection('writing').doc(doc).collection('bookmarkUser').doc(currentUid).set({
               bookmarkCard: doc,
@@ -414,9 +415,25 @@ auth.onAuthStateChanged(user => {
         let innerElement = document.createElement('div');
         let modalMainTextArea = document.createElement('div');
         let modalMainText = document.createElement('p');
-        let cardAuthorIcon = document.createElement('p');
+        let cardAuthorIcon = document.createElement('a');
         let bookmarkUsersArea = document.createElement('ul');
+        let commentUsersArea = document.createElement('ul');
         let bookmarkUserList = [];
+        let commentUserList = [];
+
+        cardWrap.style.display = 'none';
+        cardModal.classList.add('cardModal');
+        innerElement.classList.add('innerElement');
+        modalMainText.classList.add('modalMainText');
+        cardAuthorIcon.classList.add('cardAuthorIcon');
+        
+        viewer.appendChild(cardModal);
+        cardModal.appendChild(innerElement);
+        innerElement.appendChild(modalMainTextArea);
+        innerElement.appendChild(bookmarkUsersArea);
+        modalMainTextArea.appendChild(cardAuthorIcon);
+        modalMainTextArea.appendChild(modalMainText);
+
         // カード作成者のユーザーアイコンを表示する
         writingRef.get().then((snapshot)=>{
             let cardAuthorUid = snapshot.data().uid;
@@ -425,40 +442,38 @@ auth.onAuthStateChanged(user => {
             renderUserIcon(cardAuthorIcon,cardAuthorUid);
         });
         
-        // writingRef.collection('bookmarkUser').onSnapshot((querySnapshot)=>{
-        //   querySnapshot.forEach((bookmarkUser)=>{
-        //     let bookmarkUserId = String(bookmarkUser.id);
-        //     bookmarkUserList.push(bookmarkUserId);
-        //     console.log(bookmarkUserList);
-        //   }).then(()=>{
-
-        //   });
-        // });
+        writingRef.collection('bookmarkUser').onSnapshot((querySnapshot)=>{
+          querySnapshot.forEach((bookmarkUser)=>{
+            let bookmarkUserId = String(bookmarkUser.id);
+            bookmarkUserList.push(bookmarkUserId);
+            console.log(bookmarkUserList);
+            renderModalUserList(bookmarkUserList,"bookmarkUser");
+          });
+        });
         
-        // function renderModalUserList(userList){
-        //   userList.forEach((bookmarkUser)=>{
-        //     let bookmarkUserArea = document.createElement('li');
-        //     let bookmarkUserIcon = document.createElement('a');
-        //     let bookmarkUserName = document.createElement('p');
-        //   });
-        // }
-
-        cardModal.classList.add('cardModal');
-        innerElement.classList.add('innerElement');
-        modalMainText.classList.add('modalMainText');
-        cardAuthorIcon.classList.add('cardAuthorIcon');
-       
-
-        viewer.appendChild(cardModal);
-        cardModal.appendChild(innerElement);
-        innerElement.appendChild(modalMainTextArea);
-        innerElement.appendChild(bookmarkUsersArea);
-        modalMainTextArea.appendChild(cardAuthorIcon);
-        modalMainTextArea.appendChild(modalMainText);
+        function renderModalUserList(userList,subCollection){
+          userList.forEach((user)=>{
+            let userArea = document.createElement('li');
+            let userIcon = document.createElement('a');
+            let userName = document.createElement('p');
+            userArea.setAttribute('class','userArea');
+            writingRef.collection(subCollection).doc(user).get().then((user)=>{
+              userName.textContent = user.id;
+              userArea.appendChild(userName);
+            });
+            renderUserIcon(userIcon,user);
+            userArea.appendChild(userIcon);
+            if(subCollection === 'bookmarkUser'){
+              bookmarkUsersArea.appendChild(userArea);
+            }else if(subCollection === 'commentUser'){
+              commentUsersArea.appendChild(userArea);
+            }
+          });
+        }
         
         cardModal.addEventListener('click',(e)=>{
-          cardModal.classList.add('fadeOut');
-          setTimeout(viewer.removeChild(cardModal),190);
+          viewer.removeChild(cardModal);
+          cardWrap.style.display = 'block';
         });
       }
 
@@ -488,75 +503,9 @@ auth.onAuthStateChanged(user => {
           commentUserCount.setAttribute('class','commentUserCount');            
         });
       }
-      renderCommentUserCount();
-
-      
+      renderCommentUserCount();      
     }
   
-    
-      
-    
-
-   
-     
-  
-  
-  
-
- //カードコンテナ1枚あたりの高さを設定(vh)
- const cardContainerHeight = 100;
-
- //index番目(0から始まる)のカードコンテナを表示する関数
- const showCardContainer = (index) => {
-   console.log(index);
-   //1番目のカードコンテナでは上矢印を非表示にする
-  //  if(index === 0){
-  //    $('#carouselControlPrev').hide();
-  //  }else {
-  //    $('#carouselControlNext').show();
-  //  }
-  //  if(index === numCardContainers - 1){
-  //    $('#carouselControlPrev').show();
-  //  }else {
-  //    $('#carouselControlNext').hide();
-  //  }
-   // 実行中のアニメーションがあればキャンセルした後、
-   // topを変化させるアニメーションを開始
-   $('#main-center')
-   .stop()
-   .animate(
-     {
-       top:`${cardContainerHeight * index}vh`
-     },600
-   );
- }
-
-  // window.addEventListener('scroll',(e)=>{
-  //   e.preventDefault();
-  //      currentCardContainer -= 1;
-  //      showCardContainer(currentCardContainer);
-  // });
-  
-  //    
-  //  })
-
-   //下矢印がクリックされたら、一つ後のカードコンテナを表示
-  // window.addEventListener('scroll',(e)=>{
-  //   e.preventDefault();
-  //      currentCardContainer += 1;
-  //      showCardContainer(currentCardContainer);
-  // });
-
-
-  //  showCardContainer(currentCardContainer);
-
-
-db.collection("reading").onSnapshot((snapshot)=>{
-  snapshot.docs.forEach((doc)=>{
-    console.log(doc.data());
-  });
-});
-
 // 関数renderUserで、登録されているユーザーのプロフィール画面を描写する
 db.collection('user').doc(currentUid).get().then((snapshot)=>{
   renderUser(snapshot);
@@ -570,31 +519,28 @@ function renderUser(doc){
 
   // ○○のカードボックスの箇所にユーザー名を入れる
   boxText.textContent = doc.data().name;
-
   // firestoreに保存しているプロフィール文をtextContentで代入する。
   profileSentence.textContent = doc.data().profile;
-
   // firestoreに保存しているfavoriteをtextContentで代入する。
   favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
  }
-  
     
 } else {
     console.log('ログインしていません');
   }
 });
 
-        // **覚書**
-        // (エラー！！)
-        // where()メソッドの後にサブコレクションを参照するコードを続けて書くと、
-        // 「snapshot.collection is not a function」というエラーが発生してしまう。
-        // db.collection('reading').where('uid', '==', currentUid)
-        // .get()
-        // .then((snapshot) => {
-        //    snapshot.collection('bookmarkUser')
-        //    .get
-        //    .then((doc)=>{
-        //      console.log(doc);
-        //     });
-        //   });
+// **覚書**
+// (エラー！！)
+// where()メソッドの後にサブコレクションを参照するコードを続けて書くと、
+// 「snapshot.collection is not a function」というエラーが発生してしまう。
+// db.collection('reading').where('uid', '==', currentUid)
+// .get()
+// .then((snapshot) => {
+//    snapshot.collection('bookmarkUser')
+//    .get
+//    .then((doc)=>{
+//      console.log(doc);
+//     });
+//   });
   

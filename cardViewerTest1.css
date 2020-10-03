@@ -14,7 +14,6 @@ body {
 
 #content {
   width: 100%;
-  height: 100%;
   max-width: 1440px;
   margin: 0 auto;
   display: flex;
@@ -100,6 +99,7 @@ body {
 
 #main-center {
   position: relative;
+  width: 100%;
 }
 
 header {
@@ -294,31 +294,6 @@ background-color: #888;
   font-weight: bold;
 }
 
-/* .carouselControl {
-  width: 50px;
-  height: 80px;
-  font-size: 40px;
-  color: #2A5E8C;
-  opacity: 0.1;
-  transition: .5s all ease-in-out;
-}
-
-.carouselControl:hover {
-  opacity: 0.8;
-}
-
-#carouselControlPrev {
-  position: absolute;
-  right: 5%;
-  top:5%;
-} */
-
-/* #carouselControlNext {
-  position: absolute;
-  right: 5%;
-  bottom: 10%;
-} */
-
 .profileEditWindow {
   width: 1000px;
   height: 600px;
@@ -341,6 +316,7 @@ background-color: #888;
   background-position:right bottom;
   background-size: cover;
   background-attachment: fixed;
+  overflow: scroll;
 }
 
 .cardWrap {
@@ -349,6 +325,7 @@ background-color: #888;
   top: 50%;
   transform: translate(-50%,-50%);
 }
+
 
 .cardViewer {
   /* 京大式カードの幅182mm・高さ128pxを4.5倍したピクセル数 */
@@ -368,16 +345,11 @@ background-color: #888;
 
 .cardModal {
   width: 100%;
-  height: 100%;;
-  position:absolute;
-  background-image: url(./antoine-rault-IhWRrZx4-kk-unsplash.jpg);
-  background-image: url('./antoine-rault-IhWRrZx4-kk-unsplash.jpg');
-  background-position:right bottom;
-  background-size: cover;
-  background-attachment: fixed;
-  top: 0;
-  right: 0px;
-  animation: fadeInAnimation 200ms ease-out;
+  height: 100%;
+  position: absolute;
+  top: 0vh;
+  left: 250px;
+  animation: fadeInAnimation 400ms ease-out;
 }
 
 .innerElement { 
@@ -391,8 +363,7 @@ background-color: #888;
 
 .modalMainText {
   width: 800px;
-  margin-left: 500px;
-  margin-top: 20px;
+  margin-left: 300px;
   line-height: 50px;
   font-size: 30px;
   text-shadow: 1px 1px 20px;
@@ -406,7 +377,7 @@ background-color: #888;
   background-position: center center;
   border-radius: 100%;
   box-shadow: -1px -1px 90px #fff;
-  left: 330px;
+  left: 150px;
   top: 0px;
   line-height: 5rem;
   text-align: center;
@@ -664,13 +635,5 @@ i {
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes fadeOutAnimation {
-  from {
-    opacity: 1;
-  }to {
-    opacity: 0;
   }
 }
