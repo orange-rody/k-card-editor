@@ -316,7 +316,6 @@ background-color: #888;
   background-position:right bottom;
   background-size: cover;
   background-attachment: fixed;
-  overflow: scroll;
 }
 
 .cardWrap {
@@ -341,6 +340,29 @@ background-color: #888;
   box-shadow: 10px 10px 10px rgb(82, 102, 154);
   position: relative;
   border-radius: 10px;
+}
+
+.writingCardViewer {
+  /* 京大式カードの幅182mm・高さ128pxを4.5倍したピクセル数 */
+  width: 819px;
+  height: 576px;
+  margin: 0 auto;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
+  border:1px solid #254883;
+  background-image: url("./k-card-image\(Edited\).png");
+  background-position: center top;
+  background-size: cover;
+  box-shadow: 10px 10px 10px rgb(82, 102, 154);
+  position: relative;
+  border-radius: 10px;
+  transition: 0.3s all ease-out;
+}
+
+.writingCardViewer:hover {
+  box-shadow: 10px 10px 40px #fff;
+  border: 1px solid #fff;
+  cursor: pointer;
 }
 
 .cardModal {

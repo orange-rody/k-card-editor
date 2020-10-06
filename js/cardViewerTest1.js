@@ -304,7 +304,7 @@ auth.onAuthStateChanged(user => {
           //cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
           cardContainer.setAttribute('id',`${doc.id}`);
           cardWrap.setAttribute('class','cardWrap');
-          cardViewer.setAttribute('class','cardViewer');
+          cardViewer.setAttribute('class','writingCardViewer');
           cardMainArea.setAttribute('class','cardMainArea');
           cardSideArea.setAttribute('class','cardSideArea');
           title.setAttribute('class','title');
@@ -388,6 +388,7 @@ auth.onAuthStateChanged(user => {
             db.collection('user').doc(currentUid).collection('bookmarkCard').doc(doc).set({
               bookmarkCardId: doc,
               uid: currentUid,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
           }
         });
@@ -406,6 +407,7 @@ auth.onAuthStateChanged(user => {
               bookmarkCard: doc,
               uid: currentUid,
               name: bookmarkUserName[0],
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
           }
         });
@@ -453,8 +455,9 @@ auth.onAuthStateChanged(user => {
             modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
             renderUserIcon(cardAuthorIcon,cardAuthorUid);
         });
-        
-        writingRef.collection('bookmarkUser').onSnapshot((querySnapshot)=>{
+
+        // ドキュメントの並び替え「orderBy()」と.onSnapshotを同時に行うには、「.orederBy(' ').onSnapshot( )」と書く
+        writingRef.collection('bookmarkUser').orderBy('timestamp').limit(20).onSnapshot((querySnapshot)=>{
           querySnapshot.forEach((bookmarkUser)=>{
             let bookmarkUserId = String(bookmarkUser.id);
             bookmarkUserList.push(bookmarkUserId);
