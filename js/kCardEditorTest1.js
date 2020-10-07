@@ -37,13 +37,13 @@ auth.onAuthStateChanged((user) => {
     // パラメータの各要素を格納する連想配列、Mapオブジェクトを宣言する。
     let searchParam = new Map();
     // location.searchで現在のページのURLからクエリパラメータを参照する。
-    // ?collection=reading&doc.id=${doc.id}
-    // ?collection=writing&doc.id=${doc.id}
+    // ?collection=reading&doc.id=${doc.id}もしくは
+    // ?collection=writing&doc.id=${doc.id}となるはず
 
     let search = location.search;
     // クエリパラメータから「?」を取り除く
-    // collection=reading&doc.id=${doc.id}
-    // collection=writing&doc.id=${doc.id}
+    // collection=reading&doc.id=${doc.id}もしくは
+    // collection=writing&doc.id=${doc.id}となるはず
     search = search.replace('?','');
     // 「&」で分割し、配列arraySearchに代入する
     // [collection=reading,doc.id=${doc.id}]
@@ -53,10 +53,10 @@ auth.onAuthStateChanged((user) => {
     arraySearch.forEach((element)=>{
       let sepalateElement = element.split('=');
     // Map「searchParam」にキーと値のセットを登録する
-    // キー sepalateElement[0]=collection
-    // 値   sepalateElement[1]=reading / writing
+    // 1週目 キー sepalateElement[0]=collection  値  sepalateElement[1]=reading / writing
+    // 2週目 キー sepalateElement[0]=doc.id      値  sepalateElement[1]={doc.id}
       searchParam.set(sepalateElement[0],sepalateElement[1]);
-    })
+    });
 
     console.log(searchParam.get('doc.id'));
     // cardのコレクションが「reading」なのか「writing」なのかを判別する変数「cardCollection」を宣言する

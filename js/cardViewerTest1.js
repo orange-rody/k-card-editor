@@ -219,7 +219,7 @@ auth.onAuthStateChanged(user => {
         revisionButton.setAttribute('class','revisionButton');
         printButton.setAttribute('class','printButton');
         printButton.setAttribute('type','button');
-        let printUrl = `./printCard.html?collection=reading&doc=${doc.id}`;
+        let printUrl = `./printReading.html?collection=reading&doc=${doc.id}`;
         printButton.setAttribute('href', printUrl);
         postedUserName.setAttribute('class','postedUserName');
         postedUserIcon.setAttribute('class','postedUserIcon');
@@ -250,6 +250,7 @@ auth.onAuthStateChanged(user => {
 
         let editorURL = `k-card-editor.html?collection=reading&doc.id=${doc.id}`;
         revisionButton.setAttribute('href',editorURL);
+
       });
     }
   
