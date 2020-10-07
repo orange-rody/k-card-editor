@@ -219,7 +219,7 @@ auth.onAuthStateChanged(user => {
         revisionButton.setAttribute('class','revisionButton');
         printButton.setAttribute('class','printButton');
         printButton.setAttribute('type','button');
-        let printUrl = `./printReading.html?collection=reading&doc=${doc.id}`;
+        let printUrl = `./printReading.html?collection=reading&doc.id=${doc.id}`;
         printButton.setAttribute('href', printUrl);
         postedUserName.setAttribute('class','postedUserName');
         postedUserIcon.setAttribute('class','postedUserIcon');

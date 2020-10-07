@@ -47,7 +47,7 @@ p,h1,h2,h3,h4,h5,h6 {
 .readingWrap {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 45%;
   transform: translate(-50%,-50%);
   width: 819px;
   height: 576px;
@@ -141,6 +141,7 @@ textarea::placeholder {
 .readingInformation {
   width: 666px;
   height: 86px;
+  margin-bottom: 38px;
 }
 
 .author {
@@ -235,13 +236,25 @@ textarea::placeholder {
 }
 
 #readingButtonList,#writingButtonList {
-  width: 70%;
+  width: 80%;
   padding: 0;
   margin-bottom: 0;
   list-style: none;
   display: flex;
   flex-flow: row;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.printButton {
+  font-family: sans-serif;
+  font-size: 15px;
+  display: flex;
+}
+
+.notice {
+  margin-top: 30px;
+  margin-left: 10px;
+  color: #fff;
 }
 
 #readingSubmit,#writingSubmit {
@@ -363,10 +376,6 @@ textarea::placeholder {
   transition: 0.1s all;
 }
 
-#readingCard {  
-  position: relative;
-  height: 100vh;
-}
 
 #writing {
   display: block;

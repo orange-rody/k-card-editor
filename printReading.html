@@ -11,42 +11,35 @@
   <body id = "printReading">
     <div id = "content">
       <div class = "main">
-        <form id="readingCard">
-          <div class = "readingWrap">
-            <!-- カードのレイアウトをside-barとmainに２分割する -->
-              <div class = "readingMainArea">
-                <div>
-                  <div class = "readingTitle readingText"></div>
-                  <div class = "readingLeadSentence readinText"></div>
-                  <div class = "readingMainText"></div>
-                  <div class = "readingInformation">
-                    <div class = "author"></div>
-                    <div class = "bookInfo">
-                      <div class = "bookTitle"></div>
-                      <div class = "pages"> P.</div>
-                    </div>
-                  </div>    
-                    </tr>
-                    <tr class = "blank-column"></tr>
-                  </tfoot> 
-                </div>
+        <div class = "readingWrap">
+        <!-- カードのレイアウトをside-barとmainに２分割する -->
+          <div class = "readingMainArea">
+            <div class = "readingTitle readingText"></div>
+            <div class = "readingLeadSentence readinText"></div>
+            <div class = "readingMainText"></div>
+            <div class = "readingInformation">
+            <div class = "author"></div>
+              <div class = "bookInfo">
+                <div class = "bookTitle"></div>
+                <div class = "pages"> P.</div>
               </div>
-              <aside class = "readingCard-side">
-              </aside> 
-              <ul id = "readingButtonList">
-                <li>
-                  <p id = "readingCancel">
-                    戻る
-                  </p>
-                </li>
-                <li>
-                  <div id = "readingPrint">
-                    <i class="fas fa-print"></i>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </form>
+            </div>    
+            <ul id = "readingButtonList">
+              <li>
+                <p id = "readingCancel">戻る</p>
+              </li>
+              <li class = "printButton">
+                <div id = "readingPrint">
+                  <i class="fas fa-print"></i>
+                </div>
+                <p class = "notice">
+                  ←あともう１回押してください！
+                </p>
+              </li>     
+            </ul>
+          </div>   
+        </div>
+      </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
