@@ -5,7 +5,8 @@
     <title>K-Card-Editor | Editor</title>
     <link href="https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
-    <link rel = "stylesheet" href = "printReading.css">
+    <link rel = "stylesheet" href = "printReadingPreview.css" media="screen">
+    <link rel = "stylesheet" href = "printReading.css" media="print">
     <script src="https://kit.fontawesome.com/2b69526b77.js" crossorigin="anonymous"></script>
   </head>
   <body id = "printReading">
@@ -21,15 +22,15 @@
             <div class = "author"></div>
               <div class = "bookInfo">
                 <div class = "bookTitle"></div>
-                <div class = "pages"> P.</div>
+                  <div class = "pages"> </div>
               </div>
             </div>    
             <ul id = "readingButtonList">
               <li>
-                <p id = "readingCancel">戻る</p>
+                <p id = "readingCancel" onclick='location.href="./cardViewerTest1.html"'>戻る</p>
               </li>
               <li class = "printButton">
-                <div id = "readingPrint">
+                <div id = "readingPrint" onClick="window.print();">
                   <i class="fas fa-print"></i>
                 </div>
                 <p class = "notice">
