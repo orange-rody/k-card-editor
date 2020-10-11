@@ -12,8 +12,8 @@
   <body id = "printReading">
     <div id = "content">
       <div class = "main">
-        <div class = "readingWrap">
         <!-- カードのレイアウトをside-barとmainに２分割する -->
+        <div class = "readingWrap">
           <div class = "readingMainArea">
             <div class = "readingTitle readingText"></div>
             <div class = "readingLeadSentence readinText"></div>
@@ -25,22 +25,22 @@
                   <div class = "pages"> </div>
               </div>
             </div>    
-            <ul id = "readingButtonList">
-              <li>
-                <p id = "readingCancel" onclick='location.href="./cardViewerTest1.html"'>戻る</p>
-              </li>
-              <li class = "printButton">
-                <div id = "readingPrint" onClick="window.print();">
-                  <i class="fas fa-print"></i>
-                </div>
-                <p class = "notice">
-                  ←あともう１回押してください！
-                </p>
-              </li>     
-            </ul>
-          </div>   
+          </div>
         </div>
       </div>
+      <ul id = "readingButtonList">
+        <li>
+          <p id = "readingCancel" onclick='location.href="./cardViewerTest1.html"'>戻る</p>
+        </li>
+        <li class = "printButton">
+          <div id = "readingPrint" onClick="window.print();">
+            <i class="fas fa-print"></i>
+          </div>
+          <p class = "notice">
+            ←あともう１回押してください！
+          </p>
+        </li>     
+      </ul>   
     </div>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
@@ -48,6 +48,7 @@
     <script>
         FontAwesomeConfig = { searchPseudoElements: true};
     </script>
+    <script src = "./html2canvas.js"></script>
     <!-- Previously loaded Firebase SDKs -->    
     <script>
       // TODO: Replace the following with your app's Firebase project configuration

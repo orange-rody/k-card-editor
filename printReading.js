@@ -3,6 +3,9 @@
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+let main = document.querySelector('.main');
+let readingWrap = document.querySelector('.readingWrap');
+let readingMainArea = document.querySelector('.readingMainArea');
 let readingTitle = document.querySelector('.readingTitle');
 let readingLeadSentence = document.querySelector('.readingLeadSentence');
 let readingMainText = document.querySelector('.readingMainText');
@@ -40,6 +43,12 @@ auth.onAuthStateChanged((user)=>{
       author.textContent = doc.data().author;
       bookTitle.textContent = doc.data().bookTitle;
       pages.textContent = doc.data().pages;
+    }).then(()=>{
+      html2canvas(document.querySelector(".readingWrap")).then(canvas => {
+        document.getElementById('printReading').appendChild(canvas);
+        // main.removeChild(readingWrap);
+        canvas.setAttribute('id','canvas');
+      });
     })
   }
-})
+});

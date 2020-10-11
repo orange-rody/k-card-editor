@@ -22,10 +22,18 @@ p,h1,h2,h3,h4,h5,h6 {
 }
 
 .main {
-  width: calc(100% - 250px);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%,-50%);
+  width: 763px;
+  height: 515px;
+  font-size: 22px;
+  font-family: 'Noto Serif JP', serif;
+  margin: 0;
+  background-image: url(./k-card-image\(Edited\).png);
+  background-position: center top;
+  background-size: cover;
 }
 
 #readingCard {  
@@ -33,31 +41,21 @@ p,h1,h2,h3,h4,h5,h6 {
   height: 100vh;
 }
 
-#readingCardTitle {
-  position: absolute;
-  top: 5px;
-  left: 200px;
-  color: #fff;
-  font-size: 2.5rem;
-  font-family: 'Sawarabi Mincho', sans-serif;
-  text-shadow: 2px 2px 5px rgba(47, 83, 228, 0.797);
+.blank {
+  width: 100%;
+  height: 30px;
+}
+.readingWrap {
+  width: 763px;
+  height: 500px;
 }
 
-
-.readingWrap {
+canvas {
+  opacity: 0.5;
   position: absolute;
   left: 50%;
   top: 45%;
-  transform: translate(-50%,-50%);
-  width: 764px;
-  height: 536px;
-  font-size: 22px;
-  font-family: 'Noto Serif JP', serif;
-  margin: 0;
-  border: 1px solid #00ced1;
-  background-image: url("./k-card-image\(Edited\).png");
-  background-position: center top;
-  background-size: cover;
+  transform: translate(-50%, -50%);
 }
 
 #buttonSpace {
@@ -67,7 +65,7 @@ p,h1,h2,h3,h4,h5,h6 {
 
 .readingMainArea {
   width: 620px;
-  height: 538px;
+  height: 500px;
   float: right;
 }
 
@@ -229,7 +227,11 @@ textarea::placeholder {
 }
 
 #readingButtonList,#writingButtonList {
-  width: 80%;
+  position: absolute;
+  bottom: 5%;
+  width: 40%;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 0;
   margin-bottom: 0;
   list-style: none;
