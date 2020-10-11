@@ -9,7 +9,7 @@
     <link rel = "stylesheet" href = "print.css" media="print">
     <script src="https://kit.fontawesome.com/2b69526b77.js" crossorigin="anonymous"></script>
   </head>
-  <body id = "printReading">
+  <body id = "printWriting">
     <div id = "content">
       <div class = "main">
         <!-- カードのレイアウトをside-barとmainに２分割する -->
@@ -19,29 +19,24 @@
             <div class = "leadSentence"></div>
             <div class = "mainText"></div>
             <div class = "information">
-            <div class = "author"></div>
-              <div class = "bookInfo">
-                <div class = "bookTitle"></div>
-                  <div class = "pages"> </div>
-              </div>
-            </div>    
+            <div class = "remarks"></div>   
           </div>
         </div>
       </div>
-      <ul id = "buttonList">
-        <li>
-          <p id = "cancel" onclick='location.href="./cardViewerTest1.html"'>戻る</p>
-        </li>
-        <li class = "printButton">
-          <div id = "print" onClick="window.print();">
-            <i class="fas fa-print"></i>
-          </div>
-          <p class = "notice">
-            ←あともう１回押してください！
-          </p>
-        </li>     
-      </ul>   
     </div>
+    <ul id = "buttonList">
+      <li>
+        <p id = "cancel" onclick='location.href="./cardViewerTest1.html"'>戻る</p>
+      </li>
+      <li class = "printButton">
+        <div id = "print" onClick="window.print();">
+          <i class="fas fa-print"></i>
+        </div>
+        <p class = "notice">
+          ←あともう１回押してください！
+        </p>
+      </li>     
+    </ul>   
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
@@ -65,6 +60,6 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       </script>
-    <script src =printReading.js></script>
+    <script src =printWriting.js></script>
   </body>  
 </html>

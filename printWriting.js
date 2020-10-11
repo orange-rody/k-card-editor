@@ -9,9 +9,7 @@ let mainArea = document.querySelector('.mainArea');
 let title = document.querySelector('.title');
 let leadSentence = document.querySelector('.leadSentence');
 let mainText = document.querySelector('.mainText');
-let author = document.querySelector('.author');
-let bookTitle = document.querySelector('.bookTitle');
-let pages = document.querySelector('.pages');
+let remarks = document.querySelector('.remarks');
 
 auth.onAuthStateChanged((user)=>{
   if(user){
@@ -40,12 +38,10 @@ auth.onAuthStateChanged((user)=>{
       title.textContent = doc.data().title;
       leadSentence.textContent = doc.data().leadSentence;
       mainText.textContent = doc.data().mainText;
-      author.textContent = doc.data().author;
-      bookTitle.textContent = doc.data().bookTitle;
-      pages.textContent = doc.data().pages;
+      remarks.textContent = doc.data().remarks
     }).then(()=>{
       html2canvas(document.querySelector(".wrap")).then(canvas => {
-        document.getElementById('printReading').appendChild(canvas);
+        document.getElementById('printWriting').appendChild(canvas);
         // main.removeChild(readingWrap);
         canvas.setAttribute('id','canvas');
       });

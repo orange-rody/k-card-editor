@@ -316,6 +316,10 @@ auth.onAuthStateChanged(user => {
         
           revisionButton.setAttribute('class','revisionButton');
           printButton.setAttribute('class','printButton');
+          printButton.setAttribute('type','button');
+          let printUrl = `./printWriting.html?collection=writing&doc.id=${doc.id}`;
+          printButton.setAttribute('href', printUrl);
+
           postedUserName.setAttribute('class','postedUserName');
           postedUserIcon.setAttribute('class','postedUserIcon');
           cardStatus.setAttribute('class','cardStatus');
