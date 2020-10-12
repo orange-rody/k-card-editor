@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 #printReading {
   margin: 0;
   background-attachment: fixed;

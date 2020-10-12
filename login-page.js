@@ -3,47 +3,61 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 const appTitle = document.getElementById('appTitle');
-const loginForm = document.getElementById('loginForm');
-const loginBUtton = document.getElementById('loginButton');
+const kCard = document.getElementById('k-card');
+const kCard2 = document.getElementById('k-card2');
+
+const loginButton = document.getElementById('loginButton');
+const makeAccountButton = document.getElementById('makeAccountButton');
 console.log(appTitle);
 setTimeout(function(){
   appTitle.classList.add('state-show');
-  loginForm.classList.add('state-show2');
+},1000);
+setTimeout(function(){
+  kCard.classList.add('state-show3');
+  kCard2.classList.add('state-show4');
+},1000);
+setTimeout(function(){
+  loginButton.classList.add('state-show5');
+  makeAccountButton.classList.add('state-show6');
 },1000);
 
-//loginする
-loginForm.addEventListener('submit',(e)=>{
-e.preventDefault();
-loginButton.value = "送信中";
-loginButton.style.backgroundColor = "tomato";
-//ユーザーの情報をGETする
-  const email = loginForm['loginEmail'].value;
-  const password = loginForm['loginPass'].value;
-  auth.signInWithEmailAndPassword(email, password).then((cred) =>{
-    console.log(cred);
-    location.href = 'cardViewerTest1.html';
-  }).catch((error)=>{
-    console.log('ログイン失敗:',error);
-    if(error.code === 'auth/user-not-found'){
-      const loginAlert = document.createElement('div');
-      loginAlert.setAttribute('id','loginAlert');
-      loginAlert.innerHTML = `
-        <h3 id = "alertTitle">Caution!</h3>
-        <p id = alertSentence>入力した情報が間違っているか、登録されているアカウントが存在しないようです。<br>メールアドレスとパスワードを確認するか、「登録する」ボタンからアカウントの登録を行ってください。</p>
-        <input type = "button" id = "closeAlertButton" name = "closeAlertButton" value = "閉じる"> 
-      `;
-      document.body.appendChild(loginAlert);
-      console.log(loginAlert);
-      document.querySelector('#closeAlertButton').addEventListener('click',() => {
-        loginAlert.classList.add('hideAlert');
-        console.log(loginAlert);
-        setTimeout(() => {
-          document.body.removeChild(loginAlert);
-        },900);
-      });
-    }
-  })
-})
+let provider = new firebase.auth.GoogleAuthProvider();
+
+firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Google Access Token. You can use it to access the Google API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+  // ...
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
+
+firebase.auth().getRedirectResult().then(function(result) {
+  if (result.credential) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // ...
+  }
+  // The signed-in user info.
+  var user = result.user;
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
 
 
   //makeAccountButtonをクリックしたときの処理
