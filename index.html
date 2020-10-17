@@ -14,7 +14,7 @@
   <body id = "login-page">
     <h1 id = "appTitle">K-Card-Editor</h1>
     <img src = "k-card-image(Edited).png" id = "k-card">
-    <img src = "k-card-image(Edited).png" id = "k-card2">
+    <img src = "k-card-image(Edited).png" id = "k-card2">    
     <div id = "firebaseui-auth-container" lang = "ja"></div>
     
     <script src = "https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
@@ -44,13 +44,15 @@
 
         // 利用する認証機能
         signInOptions: [
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID,
         ],
       };
 
       // Firebaseを使ってFirebaseUI Widgetを初期化
       let ui = new firebaseui.auth.AuthUI(firebase.auth());
       ui.start('#firebaseui-auth-container', uiConfig);
+
     </script>
     <script src = "login-page.js"></script>
   </body>
