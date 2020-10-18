@@ -3,7 +3,7 @@
   <head>
     <meta charset = "UTF-8">
     <title>K-Card-Editor</title>
-    <link rel = "stylesheet" href = "login-page.css">
+    <link rel = "stylesheet" href = "./assets/css/index.css">
     <script src="https://www.gstatic.com/firebasejs/ui/4.7.0/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" 
@@ -13,8 +13,8 @@
   </head>
   <body id = "login-page">
     <h1 id = "appTitle">K-Card-Editor</h1>
-    <img src = "k-card-image(Edited).png" id = "k-card">
-    <img src = "k-card-image(Edited).png" id = "k-card2">    
+    <img src = "./assets/img/k-card-image.png" id = "k-card">
+    <img src = "./assets/img/k-card-image.png" id = "k-card2">    
     <div id = "firebaseui-auth-container" lang = "ja"></div>
     
     <script src = "https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
@@ -40,7 +40,7 @@
       //Firebase UIの設定
       let uiConfig = {
         // ログイン完了時のリダイレクト先
-        signInSuccessUrl: './cardViewerTest1.html',
+        signInSuccessUrl: './viewer.html',
 
         // 利用する認証機能
         signInOptions: [
@@ -54,6 +54,6 @@
       ui.start('#firebaseui-auth-container', uiConfig);
 
     </script>
-    <script src = "login-page.js"></script>
+    <script src = "./assets/js/index.js"></script>
   </body>
 </html>

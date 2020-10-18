@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang = "ja">
+  <head>
+    <meta charset = "UTF-8">
+    <title>K-Card-Editor | Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
+    <link rel = "stylesheet" href = "./assets/css/editor.css">
+    <script src="https://kit.fontawesome.com/2b69526b77.js" crossorigin="anonymous"></script>
+  </head>
+  <!-- 複数のページを作成することを考慮してbodyタグにIDをつける -->
+  <body id = "editor">
+    <div id = "content">
+      <div class = "main">
+        <div id = "reading">
+          <!-- contentクラスでカードのサイズを規程する -->
+          <form id="readingCard">
+            <p id = "readingIcon">
+              <i class="fas fa-book"></i>
+            </p>
+            <p id = 'readingCardTitle'>
+              読書ノート
+            </p>
+            <div class = "readingWrap">
+              <!-- カードのレイアウトをside-barとmainに２分割する -->
+              <div class = "readingMainArea">
+                <table>
+                  <thead>
+                    <tr>
+                      <!-- カードの1段目の箇所にtitleと連番が入力できるようにする -->
+                      <th class = "readingText">
+                        <input type = "text" placeholder = "タイトル" class = "readingTitle readingText" name="readingTitle">                 
+                      </th>
+                    </tr>  
+                    <tr>
+                      <!-- カードの2段目の箇所にカードのリード文が入力できるようにする -->
+                      <th class = "readingText"><input type = "text" placeholder = "リード文" class = "readingLeadSentence text" name = "readingLeadSentence" ></th>
+                    </tr>      
+                  </thead>
+                  <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
+                  <tbody class = "readingMainTextArea">
+                    <tr class = "readingMainTextArea">
+                      <td>
+                        <textarea  class = "readingMainText" placeholder = "引用文" name = "readingMainText"></textarea>
+                      </td>                
+                    </tr> 
+                  </tbody>
+                  <tfoot class = "readingInformation">
+                    <tr>
+                      <td>
+                        <input type = "readingText" placeholder = "著者" class = "author" name = "author">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class = "bookInfo"><input type = "text" placeholder = "書名" class = "bookTitle" name = "bookTitle">
+                        P.<input type = "number" class = "pages" name="pages"></td>
+                    </tr>
+                    <tr class = "blank-column"></tr>
+                  </tfoot> 
+                </table>
+              </div>
+              <aside class = "readingCard-side">
+              </aside> 
+              <ul id = "readingButtonList">
+                <li>
+                  <input type = "button" value = "保存" id = "readingSubmit">
+                </li>
+                <li>
+                  <p id = "readingCancel">
+                    戻る
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+        <div id = "writing">
+          <a name="writing"></a> 
+          <form id="writingCard">
+            <p id = "writingLogo">
+              <i class = "fas fa-pen-alt" id = "writingIcon"></i>
+            </p>
+            <p id = 'writingCardTitle'>
+              発見の手帳
+            </p>
+            
+            <div class = "writingWrap">
+              <!-- カードのレイアウトをside-barとmainに２分割する -->
+              <div class = "writingCardMainArea">
+                <table>
+                  <thead>
+                    <tr>
+                      <!-- カードの1段目の箇所にtitleと連番が入力できるようにする -->
+                      <th class = "writingText">
+                        <input type = "text" placeholder = "タイトル" class = "writingTitle writingText" name="writingTitle">                 
+                      </th>
+                    </tr>  
+                    <tr>
+                      <!-- カードの2段目の箇所にカードのリード文が入力できるようにする -->
+                      <th class = "writingText"><input type = "text" placeholder = "リード文" class = "writingLeadSentence writingText" name = "writingLeadSentence" ></th>
+                    </tr>      
+                  </thead>
+                  <!-- カードの4段目以降の箇所に引用文や気付きの文章を入力できるようにする -->
+                  <tbody class = "writingMainTextArea">
+                    <tr class = "writingMainTextArea">
+                      <td>
+                        <textarea  class = "writingMainText" placeholder = "気付き" name = "writingMainText"></textarea>
+                      </td>                
+                    </tr> 
+                  </tbody>
+                  <tfoot class = "writingInformation">
+                    <tr>
+                      <td>
+                        <textarea placeholder = "備考" class = "remarks" name = "remarks"></textarea>
+                      </td>
+                    </tr>
+                  </tfoot> 
+                </table>
+              </div>
+              <aside class = "writingCard-side">
+                <div id = hashTagSpace>
+                  <form id = "hashTagList">
+                    <tr>
+                      <td>
+                        <textarea id = "hashTag1" placeholder = "タグ1" class = "hashTag" name = "hashTag1"></textarea>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <textarea id = "hashTag2" placeholder = "タグ2" class = "hashTag" name = "hashTag2"></textarea>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <textarea id = "hashTag3" placeholder = "タグ3" class = "hashTag" name = "hashTag3"></textarea>
+                      </td>
+                    </tr>
+                  </form>
+                </div>
+              </aside> 
+              <ul id = "writingButtonList">
+                <li>
+                  <input type = "button" value = "保存" id = "writingSubmit">
+                </li>
+                <li>
+                  <p id = "writingCancel">
+                    戻る
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+      </div>
+      <aside id = "sidebar">
+        <div id = "logo">
+          <h3 id = "k-card-editor-logo">K-Card-Editor</h3>
+        </div>
+        <li>
+          <a href = "viewer.html">
+            <i class = "fas fa-home" id = "homeIcon"></i> Home
+          </a>
+        </li>
+        <li>
+          <a href = "editor.html">
+            <i class = "fas fa-pen-alt" id = "writeIcon"></i> Write
+          </a>
+        </li>
+        <li>
+          <a href = "#">
+            <i class = "fas fa-search" id = "search"></i> Search
+          </a>
+        </li>
+        <li>
+          <a id = "signOut">
+            <i class = "fas fa-sign-out-alt" id = "logoutIcon"></i> Logout
+          </a>
+        </li>
+      </aside>
+    </div>
+    
+    <script src = "./assets/js/lib/html2canvas.js"></script>
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+        
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+        
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <!-- Previously loaded Firebase SDKs -->    
+    <script>
+      // TODO: Replace the following with your app's Firebase project configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAsdSNJ-pd_XlM2zQLD9D_tMC_fZWqaBuo",
+        authDomain: "k-card-editor.firebaseapp.com",
+        databaseURL: "https://k-card-editor.firebaseio.com",
+        projectId: "k-card-editor",
+        storageBucket: "k-card-editor.appspot.com",
+        messagingSenderId: "900874596960",
+        appId: "1:900874596960:web:43b32eeda2e10340210905",
+        measurementId: "G-4MPPMBCVF0"
+      };
+          
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src = "./assets/js/editor.js"></script>
+  </body>
+</html>
+  
+  
