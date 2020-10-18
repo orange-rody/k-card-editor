@@ -36,6 +36,7 @@ auth.onAuthStateChanged(user => {
       function onRejectAppend(){
         element.innerHTML = '<i class="fas fa-user"></i>';
         element.style.backgroundColor = '#888';
+        console.error();
       }
     }
     // renderUserIconの引数に「userIcon」と「currentUid」を指定する。
@@ -196,8 +197,9 @@ auth.onAuthStateChanged(user => {
         bookTitle.textContent = doc.data().bookTitle;
         pages.textContent = doc.data().pages;
         postedDate.textContent = output;
-        postedUserName.textContent = doc.data().postedUserName;
-        
+        if(doc.data().postedUserName !== undefined){
+          postedUserName.textContent = doc.data().postedUserName;
+        } 
         // それぞれの要素にsetAttributeでclass名を設定する。
         cardContainer.setAttribute('class','cardContainer');
         // cardContainerのみsetAttributeでid名を設定する。id名はFirestoreのdoc.idとする。
@@ -431,9 +433,7 @@ auth.onAuthStateChanged(user => {
         let cardAuthorIcon = document.createElement('a');
         let bookmarkUserTitle = document.createElement('h3');
         let bookmarkUsersArea = document.createElement('div');
-        let commentUsersArea = document.createElement('div');
         let bookmarkUserList = [];
-        let commentUserList = [];
 
         cardWrap.style.display = 'none';
         cardModal.classList.add('cardModal');
@@ -501,6 +501,91 @@ auth.onAuthStateChanged(user => {
         });
       }
 
+      commentUserCount.addEventListener('click',(e)=>{
+        displayCommentModal();
+        }
+      );
+
+      function displayCommentModal(){
+        let commentModal = document.createElement('div');
+        let innerElement = document.createElement('div');
+        let modalMainTextArea = document.createElement('div');
+        let modalMainText = document.createElement('p');
+        let cardAuthorIcon = document.createElement('a');
+        let commentUserTitle = document.createElement('h3');
+        let commentUsersArea = document.createElement('div');
+        let commentUserList = [];
+
+        cardWrap.style.display = 'none';
+        commentModal.classList.add('commentModal');
+        innerElement.classList.add('innerElement');
+        commentUserTitle.classList.add('commentUserTitle');
+        modalMainText.classList.add('modalMainText');
+        cardAuthorIcon.classList.add('cardAuthorIcon');
+        commentUsersArea.classList.add('commentUsersArea');
+        
+        viewer.appendChild(cardModal);
+        cardModal.appendChild(innerElement);
+        innerElement.appendChild(modalMainTextArea);
+        innerElement.appendChild(commentUserTitle);
+        innerElement.appendChild(commentUsersArea);
+        modalMainTextArea.appendChild(cardAuthorIcon);
+        modalMainTextArea.appendChild(modalMainText);
+
+        commentUserTitle.textContent = "ブックマークしたユーザー";
+
+        // カード作成者のユーザーアイコンを表示する
+        writingRef.get().then((snapshot)=>{
+            let cardAuthorUid = snapshot.data().uid;
+            modalMainText.innerHTML = `${snapshot.data().mainText}`;
+            modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
+            renderUserIcon(cardAuthorIcon,cardAuthorUid);
+        });
+
+        // ドキュメントの並び替え「orderBy()」と.onSnapshotを同時に行うには、「.orederBy(' ').onSnapshot( )」と書く
+        writingRef.collection('commentUser').orderBy('timestamp').limit(20).onSnapshot((querySnapshot)=>{
+          querySnapshot.forEach((bookmarkUser)=>{
+            let commentUserId = String(commentUser.id);
+            commentUserList.push(commentUserId);
+            console.log(commentUserList);
+            renderModalUserList(commentUserList,"commentUser");
+          });
+        });
+        
+        function renderModalUserList(userList,subCollection){
+          userList.forEach((user)=>{
+            let userArea = document.createElement('div');
+            let userIcon = document.createElement('a');
+            let userName = document.createElement('p');
+            userArea.setAttribute('class','userArea');
+            userIcon.setAttribute('class','userIcon');
+            writingRef.collection(subCollection).doc(user).get().then((user)=>{
+              userName.textContent = user.data().name;
+              userName.setAttribute('class','userName');
+              userArea.appendChild(userName);
+            });
+            renderUserIcon(userIcon,user);
+            userIcon.setAttribute('class','userIcon');
+            userArea.appendChild(userIcon);
+
+            if(subCollection === 'bookmarkUser'){
+              bookmarkUsersArea.appendChild(userArea);
+            }else if(subCollection === 'commentUser'){
+              commentUsersArea.appendChild(userArea);
+            }
+          });
+        }
+        commentModal.addEventListener('click',(e)=>{
+          viewer.removeChild(cardModal);
+          cardWrap.style.display = 'block';
+        });
+        cardModal.addEventListener('click',(e)=>{
+          viewer.removeChild(cardModal);
+          cardWrap.style.display = 'block';
+        });
+      }
+    
+
       let commentUsers = [];
       function renderCommentUserCount(){
         //サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきた
@@ -530,27 +615,31 @@ auth.onAuthStateChanged(user => {
       renderCommentUserCount();      
     }
   
-// 関数renderUserで、登録されているユーザーのプロフィール画面を描写する
-db.collection('user').doc(currentUid).get().then((snapshot)=>{
-  renderUser(snapshot);
-});
-
-// 関数renderUserを宣言する
-function renderUser(doc){ 
+  // 関数onResolveUserで、登録されているユーザーのプロフィール画面を描写する
+  let userRef = db.collection('user').doc(currentUid);
   let boxText = document.querySelector('#box-text');
   let profileSentence = document.querySelector('#profileSentence');
   let favorite = document.querySelector('#favorite');
 
-  // ○○のカードボックスの箇所にユーザー名を入れる
-  boxText.textContent = doc.data().name;
-  // firestoreに保存しているプロフィール文をtextContentで代入する。
-  profileSentence.textContent = doc.data().profile;
-  // firestoreに保存しているfavoriteをtextContentで代入する。
-  favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
- }
-    
-} else {
-    console.log('ログインしていません');
+    userRef.get().then((doc)=>{
+      if(doc.exists){
+        db.collection('user').doc(currentUid).get().then(()=>{  
+          // ○○のカードボックスの箇所にユーザー名を入れる
+          boxText.textContent = doc.data().name;
+          // firestoreに保存しているプロフィール文をtextContentで代入する。
+          profileSentence.textContent = doc.data().profile;
+          // firestoreに保存しているfavoriteをtextContentで代入する。
+          favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
+        });
+      } else {
+        boxText.textContent = "未編集のユーザー";
+        boxText.style.fontSize = "30px";
+        profileSentence.textContent = "プロフィール文章が未登録です。";
+        favorite.insertAdjacentHTML('beforeend','好きな本・最近読んだ本はまだ登録されていません。');
+      }
+    });
+  } else {
+      console.log('ログインしていません');
   }
 });
 

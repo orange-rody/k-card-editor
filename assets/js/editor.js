@@ -27,10 +27,20 @@ auth.onAuthStateChanged((user) => {
     // 取り出し、そのドキュメントから「name」フィールドの値を取り出し、変数
     // userNameに代入しようとしました。
     let userRef = db.collection('user').doc(currentUid);
-    let userName = userRef.get().then((doc) => {
-                    userName = doc.data().name.toString()
-                  });
-    console.log(typeof userName);
+    userRef.get().then(onResolveUserName,onRejectUserName);
+    let userName = [];
+
+    function onResolveUserName(){
+      userRef.get().then((doc)=>{
+        userName.push(doc.data().name.toString());
+      });
+    }
+
+    function onRejectUserName(){
+      userName.push('未編集のユーザー');
+    }
+
+    console.log(typeof userName[0]);
   
     // パラメータの各要素を格納する連想配列、Mapオブジェクトを宣言する。
     let searchParam = new Map();
@@ -129,7 +139,7 @@ auth.onAuthStateChanged((user) => {
               // 15~17行目で定義した変数「userName」を「k-card」コレクションに
               // setしたところ、toString()の効果により、文字列が保存される(と思いますがどうでしょう)？
               // 多分そうした理由でうまくいったんだと思う。
-              postedUserName: userName.toString(),
+              postedUserName: userName[0],
             });
 
             let noticeSubmit = document.createElement('div');
@@ -168,7 +178,7 @@ auth.onAuthStateChanged((user) => {
             pages: readingForm.pages.value,
             postedDate: firebase.firestore.FieldValue.serverTimestamp(),
             uid: currentUid,
-            postedUserName: userName.toString(),
+            postedUserName: userName[0],
           });
 
           let noticeSubmit = document.createElement('div');
@@ -249,7 +259,7 @@ auth.onAuthStateChanged((user) => {
               // 15~17行目で定義した変数「userName」を「k-card」コレクションに
               // setしたところ、toString()の効果により、文字列が保存される(と思いますがどうでしょう)？
               // 多分そうした理由でうまくいったんだと思う。
-              postedUserName: userName.toString(),
+              postedUserName: userName[0],
             });
 
             let noticeSubmit = document.createElement('div');
