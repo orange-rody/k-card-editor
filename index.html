@@ -41,7 +41,17 @@
       let uiConfig = {
         // ログイン完了時のリダイレクト先
         signInSuccessUrl: './viewer.html',
-
+        callbacks: {
+            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+              //trueにするとsignInSuccessUrlで定めた場所にリダイレクトされる
+              //falseにするとページは遷移しない
+              return true;
+            },
+            uiShown: function() {
+              // ログイン画面が出たときに行う作業
+            }
+          },
+        signInFlow: 'popup',
         // 利用する認証機能
         signInOptions: [
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,

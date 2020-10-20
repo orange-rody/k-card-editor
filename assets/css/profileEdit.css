@@ -5,7 +5,7 @@ html {
 
 #profileEdit {
   margin: 0;
-  background-image: url(../img/background-skyblue.jpeg);
+  background-color: rgb(89, 163, 193);
   font-family: 'Noto Serif JP', serif;
 }
 
@@ -22,7 +22,7 @@ h3{
 }
 
 .cover {
-  background-image: url(../img/background-white.jpeg);
+  background-color: rgb(248,249,251);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

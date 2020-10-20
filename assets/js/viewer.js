@@ -524,15 +524,15 @@ auth.onAuthStateChanged(user => {
         cardAuthorIcon.classList.add('cardAuthorIcon');
         commentUsersArea.classList.add('commentUsersArea');
         
-        viewer.appendChild(cardModal);
-        cardModal.appendChild(innerElement);
+        viewer.appendChild(commentModal);
+        commentModal.appendChild(innerElement);
         innerElement.appendChild(modalMainTextArea);
         innerElement.appendChild(commentUserTitle);
         innerElement.appendChild(commentUsersArea);
         modalMainTextArea.appendChild(cardAuthorIcon);
         modalMainTextArea.appendChild(modalMainText);
 
-        commentUserTitle.textContent = "ブックマークしたユーザー";
+        commentUserTitle.textContent = "コメントしたユーザー";
 
         // カード作成者のユーザーアイコンを表示する
         writingRef.get().then((snapshot)=>{
@@ -576,11 +576,7 @@ auth.onAuthStateChanged(user => {
           });
         }
         commentModal.addEventListener('click',(e)=>{
-          viewer.removeChild(cardModal);
-          cardWrap.style.display = 'block';
-        });
-        cardModal.addEventListener('click',(e)=>{
-          viewer.removeChild(cardModal);
+          viewer.removeChild(commentModal);
           cardWrap.style.display = 'block';
         });
       }
