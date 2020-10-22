@@ -433,6 +433,7 @@ auth.onAuthStateChanged(user => {
         let cardAuthorIcon = document.createElement('a');
         let bookmarkUserTitle = document.createElement('h3');
         let bookmarkUsersArea = document.createElement('div');
+        let closeModal = document.createElement('p');
         let bookmarkUserList = [];
 
         cardWrap.style.display = 'none';
@@ -442,17 +443,19 @@ auth.onAuthStateChanged(user => {
         modalMainText.classList.add('modalMainText');
         cardAuthorIcon.classList.add('cardAuthorIcon');
         bookmarkUsersArea.classList.add('bookmarkUsersArea');
+        closeModal.classList.add('closeModal');
         
         viewer.appendChild(cardModal);
         cardModal.appendChild(innerElement);
         innerElement.appendChild(modalMainTextArea);
+        bookmarkUsersArea.appendChild(closeModal);
         innerElement.appendChild(bookmarkUserTitle);
         innerElement.appendChild(bookmarkUsersArea);
         modalMainTextArea.appendChild(cardAuthorIcon);
         modalMainTextArea.appendChild(modalMainText);
 
         bookmarkUserTitle.textContent = "ブックマークしたユーザー";
-
+        closeModal.innerHTML = '<i class="fas fa-window-close"></i>';
         // カード作成者のユーザーアイコンを表示する
         writingRef.get().then((snapshot)=>{
             let cardAuthorUid = snapshot.data().uid;
@@ -495,7 +498,7 @@ auth.onAuthStateChanged(user => {
           });
         }
         
-        cardModal.addEventListener('click',(e)=>{
+        closeModal.addEventListener('click',(e)=>{
           viewer.removeChild(cardModal);
           cardWrap.style.display = 'block';
         });
@@ -512,6 +515,7 @@ auth.onAuthStateChanged(user => {
         let modalMainTextArea = document.createElement('div');
         let modalMainText = document.createElement('p');
         let cardAuthorIcon = document.createElement('a');
+        let commentForm = document.createElement('textarea');
         let commentUserTitle = document.createElement('h3');
         let commentUsersArea = document.createElement('div');
         let commentUserList = [];
@@ -519,6 +523,8 @@ auth.onAuthStateChanged(user => {
         cardWrap.style.display = 'none';
         commentModal.classList.add('commentModal');
         innerElement.classList.add('innerElement');
+        commentForm.classList.add('commentForm');
+        commentForm.setAttribute('placeholder','コメントする')
         commentUserTitle.classList.add('commentUserTitle');
         modalMainText.classList.add('modalMainText');
         cardAuthorIcon.classList.add('cardAuthorIcon');
@@ -529,6 +535,7 @@ auth.onAuthStateChanged(user => {
         innerElement.appendChild(modalMainTextArea);
         innerElement.appendChild(commentUserTitle);
         innerElement.appendChild(commentUsersArea);
+        commentUsersArea.appendChild(commentForm);
         modalMainTextArea.appendChild(cardAuthorIcon);
         modalMainTextArea.appendChild(modalMainText);
 

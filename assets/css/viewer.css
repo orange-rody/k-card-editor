@@ -42,11 +42,9 @@ body {
   flex: 0 0 250px;
   max-width: 250px;
   background-color: rgb(55, 95, 147);
-  background-position: center top;
   color: #fff;
   box-shadow: 1px 1px 2px #2A5E8C;
   top: 0px;
-  position: sticky;
   z-index: 1;
   height: 100vh;
 }
@@ -213,10 +211,8 @@ background-color: #888;
   border-top-right-radius: 300px 250px;
   border-bottom-right-radius: 350px 300px;
   border-bottom-left-radius: 400px 300px;
-  background-color: rgb(250,180,0);
+  background-color: rgb(270,200,0);
   margin: 0 0 0 20px;
-  background-position: right top;
-  
 }
 
 #favorite {
@@ -233,7 +229,6 @@ background-color: #888;
   border-bottom-left-radius: 300px 200px;
   background-color: rgb(89, 163, 193);
   margin-right: 10px;
-  background-position: right top;
   /* transform: rotate(4deg); */
   color: #fff;
 }
@@ -307,7 +302,6 @@ background-color: #888;
   transform: translate(-50%,-50%);
 }
 
-
 .cardViewer {
   /* 京大式カードの幅182mm・高さ128pxを4.5倍したピクセル数 */
   width: 819px;
@@ -315,7 +309,7 @@ background-color: #888;
   margin: 0 auto;
   font-size: 22px;
   font-family: 'Noto Serif JP', serif;
-  border:1px solid #254883;
+  
   background-image: url("../img/k-card-image.png");
   background-position: center top;
   background-size: cover;
@@ -361,13 +355,15 @@ background-color: #888;
   height: 100vh;
   max-width: 1440px;
   margin: 0 auto;
-  background-image: url("../img/background-mountain1.jpg");
+  background-image: url(../img/background-mountain1.jpg);
   background-position: right bottom;
   background-size: cover;
   background-attachment: fixed;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
 }
+
 
 .bookmarkUserTitle, .commentUserTitle {
   line-height: 30px;
@@ -387,6 +383,22 @@ background-color: #888;
   font-size: 30px;
   color: #fff;
   text-shadow: 1px 1px 20px #fff;
+}
+
+.commentUsersArea {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff3b;
+  position: absolute;
+  right: 0;
+  top: 350px;
+}
+
+.commentForm {
+  width: 60%;
+  height: 200px;
+  border: none;
+  border-radius: 10px;
 }
 
 .cardAuthorIcon {
@@ -418,6 +430,21 @@ background-color: #888;
   height: 100%;
   padding: 0;
 }
+
+.closeModal {
+  font-size: 4rem;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  right: 10vw;
+  bottom: 90vh;
+  line-height: 5rem;
+  top: 200px;
+  color: #fff;
+  cursor: pointer;
+}
+
 
 .userName {
   position: absolute;

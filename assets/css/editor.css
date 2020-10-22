@@ -4,7 +4,6 @@ body {
 
 #editor{
   margin: 0;
-  background-attachment: fixed;
   color: #555;
   font-size: 20px;
   font-family: 'Noto Serif JP', serif;
@@ -38,7 +37,7 @@ p,h1,h2,h3,h4,h5,h6 {
   height: 100vh;
   max-width: 1440px;
   flex: 1 1 auto;
-  background-image:url("../img/background-mountain2.jpg");
+  background-image: url("../img/background-mountain2.jpg");
   background-position: center top;
   background-repeat: repeat;
   background-size: 100% 100%;
@@ -58,11 +57,9 @@ p,h1,h2,h3,h4,h5,h6 {
   flex: 0 0 250px;
   max-width: 250px;
   background-color: rgb(55, 95, 147);
-  background-position: center top;
   color: #fff;
   box-shadow: 1px 1px 2px #2A5E8C;
   top: 0px;
-  position: sticky;
   z-index: 1;
   height: 100vh;
 }
@@ -405,7 +402,7 @@ table {
   outline: 0;
 }
 
-#readingSubmit:focus,#readingCancel:focus,#readingDelete:focus,#writingSubmit:focus,#writingCancel:focus,#writingDelete:focus,
+#readingSubmit:focus,#readingCancel:focus,#readingDelete:focus,#writingSubmit:focus,#writingCancel:focus,#writingDelete:focus
 {
   outline: 0;
 }
