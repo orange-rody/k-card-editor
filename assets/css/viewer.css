@@ -4,7 +4,7 @@ html {
 
 body { 
   width: 100vw;
-  font-size: 25px;
+  font-size: 24px;
   color:#555;
   margin: 0;
   font-family: 'Noto Serif JP', serif;
@@ -154,16 +154,11 @@ background-color: #888;
 #box-text {
   width: 55%;
   position: absolute;
-  font-size: 60px;
+  font-size: 35px;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
   margin: 0;
-}
-
-#box-text:after {
-  content: "のカードボックス";
-  font-size: 20px;
 }
 
 #profileEditButton {
@@ -286,6 +281,17 @@ background-color: #888;
   font-weight: bold;
 }
 
+#messageBox {
+  width: 100%;
+}
+
+#messageBox p {
+  width: 60%;
+  margin: 0 auto;
+  font-size: 40px;
+  color: #033F8C;
+}
+
 .cardContainer {
   position: relative;
   height: 100%;
@@ -388,7 +394,6 @@ background-color: #888;
 .commentUsersArea {
   width: 100%;
   height: 100%;
-  background-color: #ffffff3b;
   position: absolute;
   right: 0;
   top: 350px;
@@ -396,6 +401,7 @@ background-color: #888;
 
 .commentForm {
   width: 60%;
+  margin: 0 auto;
   height: 200px;
   border: none;
   border-radius: 10px;
@@ -437,12 +443,13 @@ background-color: #888;
   width: 100px;
   height: 100px;
   position: fixed;
-  right: 10vw;
-  bottom: 90vh;
+  right: 0;
+  bottom: 0;
   line-height: 5rem;
-  top: 200px;
   color: #fff;
   cursor: pointer;
+  text-shadow: none;
+  margin: 20px;
 }
 
 
@@ -570,7 +577,7 @@ background-color: #888;
 }
 
 i {
-  margin-right: 20px;
+  margin-right: 0px;
 }
 
 .bookmarkUserCount {
@@ -580,6 +587,7 @@ i {
   font-size: 30px;
   font-family: sans-serif;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .commentUserCount {
@@ -593,8 +601,6 @@ i {
 }
 
 .bookmarkUserCount:active, .comments:active {
-  font-size: 32px;
-  transform: translateY(-2px);
   opacity: 1;
 }
 

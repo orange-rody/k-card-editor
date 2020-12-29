@@ -3,16 +3,14 @@
 const db = firebase.firestore();
 const storage = firebase.storage();
 const auth = firebase.auth();
-const name = document.getElementById('name');
-const profile = document.getElementById('profile');
-const favorite = document.getElementById('favorite');
 const form = document.getElementById('form');
-
-const userIconZone = document.querySelector('#userIcon-zone');
-const userImageZone = document.querySelector('#userImage-zone');
-
 const faUser = document.getElementById('faUser');
 const faImage = document.getElementById('faImage');
+const userIconZone = document.querySelector('#userIcon-zone');
+const userImageZone = document.querySelector('#userImage-zone');
+const userName = document.getElementById('userName');
+const profile = document.getElementById('profile');
+const favorite = document.getElementById('favorite');
 
 auth.onAuthStateChanged((user) => {
   if(user){
@@ -20,22 +18,20 @@ auth.onAuthStateChanged((user) => {
 
     db.collection('user').doc(currentUid).get()
     .then((user)=>{
-      name.setAttribute('value',user.data().name);
+      userName.setAttribute('value',user.data().userName);
       profile.innerHTML = `${user.data().profile}`;
       favorite.innerHTML = `${user.data().favorite}`;
     });
 
-
     function putUserIcon(){
       const userIconFiles = document.getElementById('upload-userIcon').files;
-      //配列userIconFilesの先頭のファイルのみ受け取るようにする。
+      //配列userIconFilesの先頭のファイルのみ受け取るようにする
       const userIconFile = userIconFiles[0];
       //userIconファイルのファイル名を取得する 例：dog.jpg  dog.png
       const userIconFileName = userIconFile.name;
-      //split()を使って'.'を区切りとして文字列を分割。pop()で末尾の要素(jpg,pngなどの拡張子)を切り取る。
+      //split()を使って'.'を区切りとして文字列を分割し、pop()で末尾の要素(jpg,pngなどの拡張子)を切り取る
       const userIconFileType = userIconFileName.split('.').pop();
       console.log(userIconFileType);
-      //userIconFileType === jpg か、userIconFileType === pngで場合分け
       if(userIconFileType === 'jpg' || userIconFileType === 'JPG'){
         storage.ref().child(`${currentUid}/userIcon.png`).delete();
         //Storageに「userIcon.jpg」の名称で画像データを保存。
@@ -43,10 +39,11 @@ auth.onAuthStateChanged((user) => {
         //userImageFileは元のファイル名のままでOK。
                .put(userIconFile)
                //画像ファイルをStorageの指定の場所にアップロード。
-               //storageへの登録は一番時間がかかる処理なので、それが完了してから
-               //viewer.htmlに戻るようにする。※でないと、画像登録できないままになってしまう
+               /*storageへの登録は一番時間がかかる処理なので、それが完了してから
+                 viewer.htmlに戻るようにする。※でないと、画像登録できないままになってしまう*/
                //currentUidしかデータを編集できないようにするため、一番上位の親フォルダにcurrentUidフォルダを作成する。
-               //画像ファイルに個人名をつけるユーザーも想定されることから、匿名性を保つ必要がある。したがって、登録する画像のタイトルを固定し、拡張子のみ反映されるようにする。
+               /*画像ファイルに個人名をつけるユーザーも想定されることから、匿名性を保つ必要がある。したがって、登録する画像のタイトルを固定し、
+                 拡張子のみ反映されるようにする。*/
                .then(()=>{
                   console.log('アイコン画像の登録処理が完了しました');
               });
@@ -114,7 +111,7 @@ auth.onAuthStateChanged((user) => {
         userIconZone.style.backgroundImage = `url('${url}')`;
       }
       function onRejectIconAppend(){
-        console.log(error);
+        return;
       }
     }
 
@@ -138,7 +135,7 @@ auth.onAuthStateChanged((user) => {
         userImageZone.style.backgroundImage = `url('${url})`;
       }
       function onRejectImageAppend(){
-        console.log(error);
+        return;
       }
     }
     
@@ -175,36 +172,36 @@ auth.onAuthStateChanged((user) => {
       }
     });
 
-//ユーザーイメージ画像を削除する
-const deleteUserImage = document.getElementById('delete-userImage');
-deleteUserImage.addEventListener('click',(event)=>{
-  const isYes = confirm('ユーザーのイメージ画像を削除します。よろしいですか？');
-  if(isYes === true){
-    const isTrue = confirm('ページを再読み込みしますがよろしいですか？※入力途中の文章は消去されてしまいます。')
-    if(isTrue === true){
-      storage.ref().child(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolve,onReject);
-      function onResolve(){
-        storage.ref().child(`${currentUid}/userImage.jpg`).delete().then(()=>{
-          location.reload();
-        });
-        alert('登録されているユーザーのイメージ画像を削除しました。');
-      }
-      function onReject(){
-        storage.ref().child(`${currentUid}/userImage.png`).getDownloadURL().then(onResolveAppend,onRejectAppend);
-        function onResolveAppend(){
-          storage.ref().child(`${currentUid}/userImage.png`).delete().then(()=>{
-            location.reload();
-          });
-          alert('登録されているユーザーのイメージ画像を削除しました。');
+    //ユーザーイメージ画像を削除する
+    const deleteUserImage = document.getElementById('delete-userImage');
+    deleteUserImage.addEventListener('click',(event)=>{
+      const isYes = confirm('ユーザーのイメージ画像を削除します。よろしいですか？');
+      if(isYes === true){
+        const isTrue = confirm('ページを再読み込みしますがよろしいですか？※入力途中の文章は消去されてしまいます。')
+        if(isTrue === true){
+          storage.ref().child(`${currentUid}/userImage.jpg`).getDownloadURL().then(onResolve,onReject);
+          function onResolve(){
+            storage.ref().child(`${currentUid}/userImage.jpg`).delete().then(()=>{
+              location.reload();
+            });
+            alert('登録されているユーザーのイメージ画像を削除しました。');
+          }
+          function onReject(){
+            storage.ref().child(`${currentUid}/userImage.png`).getDownloadURL().then(onResolveAppend,onRejectAppend);
+            function onResolveAppend(){
+              storage.ref().child(`${currentUid}/userImage.png`).delete().then(()=>{
+                location.reload();
+              });
+              alert('登録されているユーザーのイメージ画像を削除しました。');
+            }
+            function onRejectAppend(){
+              alert('登録されているユーザーのイメージ画像はありませんでした。');
+              location.reload();
+            }
+          }
         }
-        function onRejectAppend(){
-          alert('登録されているユーザーのイメージ画像はありませんでした。');
-          location.reload();
-        }
       }
-    }
-  }
-});
+    });
 
 
     //ファイルを選択をクリックした後の処理
@@ -251,7 +248,8 @@ deleteUserImage.addEventListener('click',(event)=>{
         userImageReader.readAsDataURL(userImageFile);
     });
 
-    form.name.addEventListener('keydown',(e)=>{
+    // returnキーを押下したときの動作を向こうにする。
+    form.userName.addEventListener('keydown',(e)=>{
       const key = e.keyCode;
       if(key == 13){
         e.preventDefault();
@@ -261,7 +259,7 @@ deleteUserImage.addEventListener('click',(event)=>{
     form.addEventListener('submit',(e)=>{
       e.preventDefault();
       db.collection('user').doc(currentUid).set({
-        name: form.name.value,
+        userName: form.userName.value,
         profile: form.profile.value,
         favorite: form.favorite.value,
       });
@@ -270,13 +268,13 @@ deleteUserImage.addEventListener('click',(event)=>{
       const userImageFiles = document.getElementById('upload-userImage').files;
       
       if(userIconFiles.length===0 && userImageFiles.length===0){
-        setTimeout(function(){location.href='../../viewer.html'},2000);
+        setTimeout(function(){location.href='viewer.html'},2000);
       }
       else if(userIconFiles.length===0){
         putUserImage();
         setTimeout(function(){
           console.log('ユーザーアイコン登録の処理が完了しました');
-          location.href = '../../viewer.html';
+          location.href = 'viewer.html';
           },5000
         );
       } 
@@ -284,16 +282,18 @@ deleteUserImage.addEventListener('click',(event)=>{
         putUserIcon();
         setTimeout(function(){
           console.log('ユーザーイメージ登録の処理が完了しました');
-          location.href = '../../viewer.html';
+          location.href = 'viewer.html';
           },5000
         );
       }
-       putUserIcon();
-       putUserImage();
-       setTimeout(function(){
-         console.log('全ての処理が完了しました');
-         location.href = '../../viewer.html';
-       },5000);
+      else{
+        putUserIcon();
+        putUserImage();
+        setTimeout(function(){
+          console.log('全ての処理が完了しました');
+          location.href = 'viewer.html';
+        },5000);
+      }
     });
-    }
-  });
+  }
+});
