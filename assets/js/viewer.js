@@ -28,15 +28,15 @@ auth.onAuthStateChanged(user => {
     // userIconの画像を表示する
     // ${cuttrntUid}/userIcon.jpgが存在した場合→onResolve、存在しなかった場合→onReject
     // 参考 https://stackoverflow.com/questions/43567626/how-to-check-if-a-file-exists-in-firebase-storage-from-your-android-application
-    function renderUserIcon(userIcon){
-      storage.ref(`${currentUid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
+    function renderUserIcon(userIcon,uid){
+      storage.ref(`${uid}/userIcon.jpg`).getDownloadURL().then(onResolveIcon, onRejectIcon);
       function onResolveIcon(url) { 
         // <div id='userIcon'>の中身を空にする
         userIcon.innerHTML = "";
         userIcon.style.backgroundImage = `url('${url}')`;
       } 
       function onRejectIcon(){
-        storage.ref(`${currentUid}/userIcon.png`).getDownloadURL().then((url)=>{
+        storage.ref(`${uid}/userIcon.png`).getDownloadURL().then((url)=>{
           userIcon.innerHTML = "";
           userIcon.style.backgroundImage = `url('${url}')`;
         },onRejectAppend);
@@ -46,7 +46,7 @@ auth.onAuthStateChanged(user => {
         userIcon.style.backgroundColor = '#888';
       }
     }
-    renderUserIcon(userIcon);
+    renderUserIcon(userIcon,currentUid);
     
     // userImageの画像を表示する
     function renderUserImage(){
@@ -137,7 +137,7 @@ auth.onAuthStateChanged(user => {
         let time = doc.data().postedDate.toDate();
         const output = `${time.getFullYear()}/${time.getMonth()+1}/${time.getDate()}`;
         postedDate.textContent = output;
-        renderUserIcon(postedUserIcon);
+        renderUserIcon(postedUserIcon,currentUid);
 
         if(doc.data().postedUserName !== undefined){
           postedUserName.textContent = doc.data().postedUserName;
@@ -223,7 +223,8 @@ auth.onAuthStateChanged(user => {
       printButton.innerHTML = '<i class="fas fa-print"></i>'
 
       writingRef.get().then((doc) => {
-        renderUserIcon(postedUserIcon);
+        let postedUid = doc.data().uid
+        renderUserIcon(postedUserIcon,postedUid);
         //postedDateフィールドの値をyyyy/mm/ddに変換する。
         let time = doc.data().postedDate.toDate();
         const output = `${time.getFullYear()}/${time.getMonth()}/${time.getDate()}`;
@@ -389,10 +390,10 @@ auth.onAuthStateChanged(user => {
         closeModal.innerHTML = '<i class="fas fa-window-close"></i>';
         // カード作成者のユーザーアイコンを表示する
         writingRef.get().then((snapshot)=>{
-            let cardAuthorUid = snapshot.data().uid;
+            let postedUid = snapshot.data().uid;
             modalMainText.innerHTML = `${snapshot.data().mainText}`;
             modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
-            renderUserIcon(cardAuthorIcon,cardAuthorUid);
+            renderUserIcon(cardAuthorIcon,postedUid);
         });
 
         // ドキュメントの並び替え「orderBy()」と.onSnapshotを同時に行うには、「.orederBy(' ').onSnapshot( )」と書く
@@ -447,10 +448,13 @@ auth.onAuthStateChanged(user => {
         let modalMainText = document.createElement('p');
         let cardAuthorIcon = document.createElement('a');
         let commentForm = document.createElement('form');
+        let currentUser = document.createElement('div');
         let currentUserIcon = document.createElement('a');
-        let currentUser = document.createElement('p');
-        let commentTextArea = document.createElement('textArea');
+        let currentUserName = document.createElement('p');
+        let commentTextArea = document.createElement('textarea');
+        commentTextArea.disabled = false;
         let commentSubmit = document.createElement('input');
+        commentSubmit.setAttribute('type','submit');
         let commentUserTitle = document.createElement('h3');
         let commentUsersArea = document.createElement('div');
         let commentUserList = [];
@@ -460,8 +464,9 @@ auth.onAuthStateChanged(user => {
         commentModal.classList.add('commentModal');
         innerElement.classList.add('innerElement');
         commentForm.classList.add('commentForm');
-        currentUserIcon.classList.add('currentUserIcon');
         currentUser.classList.add('currentUser');
+        currentUserIcon.classList.add('currentUserIcon');
+        currentUserName.classList.add('currentUser');
         
         commentTextArea.classList.add('commentTextArea');
         commentSubmit.classList.add('commentSubmit');
@@ -475,8 +480,9 @@ auth.onAuthStateChanged(user => {
         commentModal.appendChild(innerElement);
         innerElement.appendChild(modalMainTextArea);
         innerElement.appendChild(commentForm);
-        commentForm.appendChild(currentUserIcon);
         commentForm.appendChild(currentUser);
+        currentUser.appendChild(currentUserIcon);
+        currentUser.appendChild(currentUserName);
         commentForm.appendChild(commentTextArea);
         commentForm.appendChild(commentSubmit);
         innerElement.appendChild(commentUserTitle);
@@ -485,17 +491,23 @@ auth.onAuthStateChanged(user => {
         modalMainTextArea.appendChild(cardAuthorIcon);
         modalMainTextArea.appendChild(modalMainText);
 
+        db.collection('user').doc(currentUid).get().then((user)=>{
+          renderUserIcon(currentUserIcon,currentUid);
+          currentUserName.textContent = String(user.data().userName);
+        });
 
-        commentUserTitle.textContent = "コメントしたユーザー";
         closeModal.innerHTML = '<i class="fas fa-window-close"></i>';
-
+        
         // カード作成者のユーザーアイコンを表示する
         writingRef.get().then((snapshot)=>{
-            let cardAuthorUid = snapshot.data().uid;
-            modalMainText.innerHTML = `${snapshot.data().mainText}`;
-            modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
-            renderUserIcon(cardAuthorIcon,cardAuthorUid);
+          let postedUid = snapshot.data().uid;
+          modalMainText.innerHTML = `${snapshot.data().mainText}`;
+          modalMainTextArea.insertAdjacentElement('beforeend',modalMainText);
+          renderUserIcon(cardAuthorIcon,postedUid);
         });
+        
+        commentUserTitle.textContent = "コメントしたユーザー";
+
 
         // ドキュメントの並び替え「orderBy()」と.onSnapshotを同時に行うには、「.orederBy(' ').onSnapshot( )」と書く
         writingRef.collection('commentUser').orderBy('timestamp').limit(20).onSnapshot((querySnapshot)=>{
@@ -572,14 +584,12 @@ auth.onAuthStateChanged(user => {
   let favorite = document.querySelector('#favorite');
 
     userRef.get().then((doc)=>{
-      db.collection('user').doc(currentUid).get().then(()=>{  
-        // ○○のカードボックスの箇所にユーザー名を入れる
-        boxText.textContent = doc.data().userName;
-        // firestoreに保存しているプロフィール文をtextContentで代入する。
-        profileSentence.textContent = doc.data().profile;
-        // firestoreに保存しているfavoriteをtextContentで代入する。
-        favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
-      });
+      // ○○のカードボックスの箇所にユーザー名を入れる
+      boxText.textContent = doc.data().userName;
+      // firestoreに保存しているプロフィール文をtextContentで代入する。
+      profileSentence.textContent = doc.data().profile;
+      // firestoreに保存しているfavoriteをtextContentで代入する。
+      favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
     });
   } else {
       console.log('ログインしていません');

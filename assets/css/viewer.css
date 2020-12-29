@@ -370,14 +370,60 @@ background-color: #888;
   position: relative;
 }
 
+.commentForm {
+  color: #fff;
+  width: 100%;
+  max-width: 1490px;
+  margin: 80px 330px 100px;
+  height: 320px;
+  border: none;
+  border-radius: 10px;
+  text-shadow: 1px 1px 20px #fff;
+}
+
+.currentUser {
+  display: flex;
+  flex-flow: row;
+}
+
+.currentUserIcon {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 100%;
+  margin-right: 20px;
+  top: 10px;
+  line-height: 5rem;
+  text-align: center;
+  font-size: 3rem;
+  color: #fff;
+}
+
+.commentTextArea { 
+  width: 800px;
+  height: 200px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  font-size: 20px;
+  background-color: rgba(255,255,255,0.4);
+  color:#555;
+  z-index: 99;
+}
+
+input {
+  caret-color: #555;
+}
 
 .bookmarkUserTitle, .commentUserTitle {
+  max-width: 1110px;
   line-height: 30px;
   font-size: 25px;
   text-shadow: 1px 1px 20px #fff;
   margin-top: 80px;
   position: relative;
-  left: 330px;
+  margin-left: 330px;
   margin-bottom: 30px;
   color: #fff;
 }
@@ -397,14 +443,6 @@ background-color: #888;
   position: absolute;
   right: 0;
   top: 350px;
-}
-
-.commentForm {
-  width: 60%;
-  margin: 0 auto;
-  height: 200px;
-  border: none;
-  border-radius: 10px;
 }
 
 .cardAuthorIcon {
@@ -428,30 +466,31 @@ background-color: #888;
   text-shadow: 1px 1px 20px #fff;
   color: #fff;
   position: relative;
-  left: 250px;
-  margin: 0 0 20px 100px;
-  /* margin-bottom: 20px; */
+  margin-left: 350px;
   width: 100%;
-  max-width: 1190px;
+  max-width: 1090px;
   height: 100%;
   padding: 0;
 }
 
 .closeModal {
   font-size: 4rem;
-  position: absolute;
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  max-width: 1050px;
   position: fixed;
-  right: 0;
   bottom: 0;
   line-height: 5rem;
   color: #fff;
   cursor: pointer;
   text-shadow: none;
-  margin: 20px;
+  margin: 0px 20px 20px 0px;
+  text-align: right;
+  transition: all 0.2s ease-in-out;
 }
 
+.closeModal:hover {
+  text-shadow: 1px 1px 20px #fff;
+}
 
 .userName {
   position: absolute;
