@@ -6,7 +6,7 @@
     <title>K-Card-Editor | Viewer</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap" rel="stylesheet">
-    <link rel='stylesheet' href = "./assets/css/viewer.css">
+    <link rel='stylesheet' href = "./assets/css/comment.css">
     <link rel='stylesheet' href = "./assets/css/css/all.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
@@ -40,45 +40,36 @@
         </li>
       </aside>
       <div id = "main">
-        <div id = "usersInfo">
-          <header>
-            <div id = "userImage">
-              <i class="fas fa-image"></i>
-            </div>
-            <div id = "userIcon">
-              <i class="fas fa-user"></i>
-            </div>
-            <div id = "box-title">
-              <div id = "title-mask">
-                <p id = "box-text"></p>
-              </div>
-            </div>
-            <a id = "profileEditButton" href = "profileEdit.html">プロフィールを編集する</a>
-          </header>
-          <div id = "userProfile">
-            <p id = "profileSentence"></p>
-            <div id = "favorite">
-              <p>好きな本・最近読んだ本</p>
-              <p id = "favoriteBook"></p>
-            </div>  
-            <p id = "postedReading"></p>
-            <p id = "postedWriting"></p>
-            <small id = "notice"><i class="fas fa-arrow-circle-down"></i>下にスクロールでカードをチェック!!</small>
+        <div class = "innerElement">
+          <div class = "modalMainTextArea">
+            <a id = "cardAuthorIcon"></a>
+            <p id = "cardMainText"></p>
           </div>
+          <div class = "currentUser">
+            <a id = "currentUserIcon"></a>
+            <p id = "currentUserName"></p>
+          </div>
+          <div id = "commentInput">
+            <input type = "button" class = "commentSubmit" />
+          </div>
+          <h3 class = "commentUserTitle">コメントしたユーザー</h3>
+            <div id = "commentUsersArea"></div>
         </div>
-        <div id = "main-center"></div>
+        <div class = "buttonaArea">
+          <p id = "submitButton">投稿する</p>
+          <p id = "cancelButton">戻る</p>
+        </div>
       </div>
-      
-      
-      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
-      <script>
-        FontAwesomeConfig = { searchPseudoElements: true};
-      </script>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
+    <script>
+      FontAwesomeConfig = { searchPseudoElements: true};
+    </script>
     <!-- Previously loaded Firebase SDKs -->    
-      <script>
+    <script>
       // TODO: Replace the following with your app's Firebase project configuration
       var firebaseConfig = {
         apiKey: "AIzaSyAsdSNJ-pd_XlM2zQLD9D_tMC_fZWqaBuo",
@@ -90,11 +81,9 @@
         appId: "1:900874596960:web:43b32eeda2e10340210905",
         measurementId: "G-4MPPMBCVF0"
       };
-      
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       </script>
-    <script src = "./assets/js/viewer.js"></script>
-    </div>
+    <script src = "./assets/js/comment.js"></script>
   </body>
-  </html>
+</html>
