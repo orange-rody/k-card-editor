@@ -280,8 +280,43 @@ auth.onAuthStateChanged(user => {
         cardContainer.appendChild(cardWrap);
         mainCenter.appendChild(cardContainer);
 
-        commentUserCount.addEventListener('click',(e)=>{
-          location.href = `comment.html?collection=writing&doc.id=${doc.id}`;
+        commentUserCount.addEventListener('click',()=>{
+          cardWrap.style.display = 'none';
+          let commentForm = document.createElement('form');
+          let buttonArea = document.createElement('div');
+          commentForm.setAttribute('id','commentForm');
+          buttonArea.setAttribute('class','buttonArea');
+          commentForm.innerHTML = '<textarea id = "commentTextarea" name = "commentTextarea" placeholder = "コメントを入力" required></textarea>';
+          buttonArea.innerHTML = '<p id="commentSubmit">投稿する</p><i class="fas fa-window-close" id = "closeModal"></i>';
+          cardContainer.appendChild(commentForm);
+          cardContainer.appendChild(buttonArea);
+
+          let commentUserName = [];
+          let commentSubmit = document.getElementById('commentSubmit');
+          commentSubmit.addEventListener('click',()=>{
+            let commentCard = db.collection('user').doc(currentUid).collection('commentCard').doc();
+            commentCard.set({
+              comment: commentForm.commentTextarea.value,
+              commentCardId: doc.id,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log(commentCard.id);
+            db.collection('user').doc(currentUid).get().then((user) => {
+              commentUserName.push(String(user.data().userName));
+            });
+            let commentUser = String(commentUserName[0]);
+            db.collection('writing').doc(doc.id).collection('commentUser').add({
+              commentUser: commentUser,
+              uid: currentUid,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+          });
+          let closeModal = document.getElementById('closeModal');
+          closeModal.addEventListener('click',()=>{
+            cardWrap.style.display = 'block';
+            cardContainer.removeChild(commentForm);
+            cardContainer.removeChild(buttonArea);
+          })
         });
         let editorURL = `editor.html?collection=writing&doc.id=${doc.id}`;
         revisionButton.setAttribute('href',editorURL);
@@ -371,8 +406,6 @@ auth.onAuthStateChanged(user => {
         let closeModal = document.createElement('p');
         let bookmarkUserList = [];
 
-        
-
         cardWrap.style.display = 'none';
         cardModal.classList.add('cardModal');
         innerElement.classList.add('innerElement');
@@ -439,7 +472,6 @@ auth.onAuthStateChanged(user => {
         }
       }
       
-      let commentUsers = [];
       function renderCommentUserCount(){
         //サブコレクション(bookmarkUser)から、onSnapshot()メソッドで取ってきた
         //スナップショット(querySnapshot)は複数のドキュメントが集まったもの。
@@ -447,26 +479,28 @@ auth.onAuthStateChanged(user => {
         //値をひっぱりだす。
         db.collection('writing').doc(doc).collection('commentUser')
         .onSnapshot((querySnapshot)=>{
-          //bookmarkUsersはonSnapshotが走るたびに初期化しないといけないので、
-          //bookmarkUsersの配列はfunction renderBookmarkUserCountの中で宣言する。
+          // onSnapshotを呼び出す度に初期化しないと、commentUsersの配列の要素数がfirestoreの内容が更新されるたびに増え続けて行ってしまう
+          let commentUsers = [];
+          console.log(querySnapshot);
+          //commentUsersはonSnapshotが走るたびに初期化しないといけないので、
+          //commentUsersの配列はfunction renderBookmarkUserCountの中で宣言する。
           //なぜ初期化するのか=>初期化しないと、bookmarkボタンを押すたびに、
           //元あった配列に重複する要素がどんどんpushされてしまうため。
           querySnapshot.forEach((user)=>{
             let commentUser = user.id;
             commentUser = String(commentUser);
             commentUsers.push(commentUser);
+            console.log(commentUser);
           });
-          
+          console.log(commentUsers);
           //commentUsers.lengthで配列の要素数をカウントする。
           let commentUsersSize = commentUsers.length;
-          console.log(commentUsersSize);
           // insertAdjacentHTMLでbookmarkUserCountの要素に挿入する。
           commentUserCount.innerHTML=`<i class="fas fa-comment"></i> ${commentUsersSize}`;
           commentUserCount.setAttribute('class','commentUserCount');
         });
       }
-      renderCommentUserCount();      
-    }
+      renderCommentUserCount();
     
   // 関数onResolveUserで、登録されているユーザーのプロフィール画面を描写する
   let boxText = document.querySelector('#box-text');
@@ -481,9 +515,8 @@ auth.onAuthStateChanged(user => {
       // firestoreに保存しているfavoriteをtextContentで代入する。
       favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
     });
-  } else {
-      console.log('ログインしていません');
   }
+} else {console.log('ログインしていません');}
 });
 
 document.getElementById('signOut').addEventListener('click',(e)=>{
