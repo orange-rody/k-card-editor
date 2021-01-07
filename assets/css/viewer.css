@@ -698,6 +698,38 @@ i {
   outline: 0;
 }
 
+.noticeSubmit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: block;
+  z-index: 3;
+  width: 400px;
+  height: 50px;
+  background-color: #2bbda2;;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  animation: fadeInAnimation 500ms ease-out;
+}
+
+.noticeSubmit p {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 20px;
+  font-family: sans-serif;
+  margin: 0 auto;
+  width:400px;
+  height: 30px;
+}
+
+
+.fadeOut {
+  animation: fadeOutAnimation 500ms ease-out;
+}
+
+
 .bookmarkUserCount:active, .commentUserCount:active {
   opacity: 1;
 }
@@ -813,11 +845,20 @@ i {
   opacity: 1;
 }
 
-@keyframes fadeInAnimation {
+@keyframes fadeInAnimation{
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

@@ -291,6 +291,24 @@ auth.onAuthStateChanged(user => {
           cardContainer.appendChild(commentForm);
           cardContainer.appendChild(buttonArea);
 
+          function commentNotice(){
+            let noticeSubmit = document.createElement('div');
+            noticeSubmit.innerHTML = '<p>コメントを投稿しました！</p>';
+            noticeSubmit.classList.add('noticeSubmit');
+            commentForm.appendChild(noticeSubmit);
+            setTimeout(function fadeOut(){
+              noticeSubmit.classList.add('fadeOut');
+            },2000)
+            setTimeout(function(){
+              commentForm.removeChild(noticeSubmit);
+            },2490);
+            setTimeout(function(){
+              cardWrap.style.display = 'block';
+              cardContainer.removeChild(commentForm);
+              cardContainer.removeChild(buttonArea);          
+            },2600);
+          }
+
           let commentUserName = [];
           let commentSubmit = document.getElementById('commentSubmit');
           commentSubmit.addEventListener('click',()=>{
@@ -310,6 +328,7 @@ auth.onAuthStateChanged(user => {
               uid: currentUid,
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
+            commentNotice();
           });
           let closeModal = document.getElementById('closeModal');
           closeModal.addEventListener('click',()=>{
@@ -505,7 +524,7 @@ auth.onAuthStateChanged(user => {
   // 関数onResolveUserで、登録されているユーザーのプロフィール画面を描写する
   let boxText = document.querySelector('#box-text');
   let profileSentence = document.querySelector('#profileSentence');
-  let favorite = document.querySelector('#favorite');
+  let favoriteBook = document.querySelector('#favoriteBook');
 
     userRef.get().then((doc)=>{
       // ○○のカードボックスの箇所にユーザー名を入れる
@@ -513,7 +532,7 @@ auth.onAuthStateChanged(user => {
       // firestoreに保存しているプロフィール文をtextContentで代入する。
       profileSentence.textContent = doc.data().profile;
       // firestoreに保存しているfavoriteをtextContentで代入する。
-      favorite.insertAdjacentHTML('beforeend',doc.data().favorite);
+      favoriteBook.textContent = doc.data().favorite;
     });
   }
 } else {console.log('ログインしていません');}
