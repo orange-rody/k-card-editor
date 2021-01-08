@@ -17,7 +17,7 @@ auth.onAuthStateChanged(user => {
     // collection('user')に登録がなければprofileEdit.htmlにリダイレクトする
     userRef.get().then((user)=>{
       if(user.exists!==true){
-        db.collection('user').doc(uid).set({
+        db.collection('user').doc(currentUid).set({
           userName: 'ゲストユーザー',
           profile: 'プロフィール文章はまだ登録されていません。',
           favorite: '好きな本・最近読んだ本はまだ登録されていません。'

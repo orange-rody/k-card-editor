@@ -66,3 +66,24 @@ a {
   top: 67%;
   left: 70%;
 }
+
+#loginInfo{
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+  width: 500px;
+  height: 250px;
+  background-color: #fff;
+  border-top-right-radius: 30px;
+  font-size: 15px;
+}
+
+#loginInfo p {
+  margin-left: 50px;
+}
+
+#loginAddress,#loginPassword {
+  width: 300px;
+  font-size: 20px;
+  background: linear-gradient(transparent 80%,rgb(255, 120, 214) 0%);
+}
