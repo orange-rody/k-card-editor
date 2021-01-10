@@ -520,7 +520,7 @@ auth.onAuthStateChanged(user => {
         });
       }
       renderCommentUserCount();
-    
+    }  
   // 関数onResolveUserで、登録されているユーザーのプロフィール画面を描写する
   let boxText = document.querySelector('#box-text');
   let profileSentence = document.querySelector('#profileSentence');
@@ -534,8 +534,7 @@ auth.onAuthStateChanged(user => {
       // firestoreに保存しているfavoriteをtextContentで代入する。
       favoriteBook.textContent = doc.data().favorite;
     });
-  }
-} else {console.log('ログインしていません');}
+  } else {console.log('ログインしていません');}
 });
 
 document.getElementById('signOut').addEventListener('click',(e)=>{
